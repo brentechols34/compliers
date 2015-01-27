@@ -33,7 +33,8 @@ public class Dispatcher {
 		for(State s: State.values()){
 			if(s.matches(temp)){
 				System.out.println(s.name());
-				return s.run(reader);
+				String ret = s.run(reader);
+				return ret;
 			}
 		}
 		return null;

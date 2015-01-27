@@ -6,9 +6,10 @@ import java.io.IOException;
 public enum State {
 	LETTER("[a-zA-Z](_?[\\w])*"),
 	DIGIT ("\\d+(\\.\\d+)?"),
-	LEFT_PAREN (""),
-	RIGHT_PAREN (""),
-	OPERATOR ("");
+	LEFT_PAREN ("\\("),
+	RIGHT_PAREN ("\\)"),
+	EQUALITY ("([<>]=?)|=="),
+	OPERATOR ("[\\+\\-\\*/]");
 	
 	private final String regex;
 	
@@ -22,11 +23,16 @@ public enum State {
 		try {
 			char c = Character.toChars(s.read())[0];
 			token = new StringBuilder(""+c);
+			int r = -1;
 			while(token.toString().matches(regex)){
-				token.append(Character.toChars(s.read())[0]);
+				r = s.read();
+				if (r==-1) break;
+				token.append(Character.toChars(r)[0]);
 			}
-			s.unread(token.charAt(token.length()-1));
-			token.deleteCharAt(token.length()-1);
+			if (r!=-1) {
+				s.unread((char) r);
+				token.deleteCharAt(token.length()-1);
+			}
 			return token.toString();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
