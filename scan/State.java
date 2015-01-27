@@ -3,7 +3,8 @@ package scan;
 import java.util.Scanner;
 
 public enum State {
-	LETTER (""),
+	DISPATCHER (""),
+	LETTER(""),
 	DIGIT (""),
 	LEFT_PAREN (""),
 	RIGHT_PAREN (""),
