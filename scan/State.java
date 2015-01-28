@@ -5,18 +5,19 @@ import java.io.IOException;
 
 public enum State {
 	LETTER("[a-zA-Z](_?[\\w])*"),
-	DIGIT ("\\d+(\\.\\d+)?"),
-	LEFT_PAREN ("\\("),
-	RIGHT_PAREN ("\\)"),
-	EQUALITY ("([<>]=?)|=="),
-	OPERATOR ("[\\+\\-\\*/]");
+	DIGIT ("((\\d+(\\.\\d*)?)|(\\.\\d+))([eE][\\+-]?((\\d+(\\.\\d*)?)|(\\.\\d*)))?"),
+	PUNCTUATOR ("[\\(\\)\\[\\],\\.:;]"),
+	EQUALITY ("([<>]=?)|(==)"),
+	OPERATOR ("[\\+\\-\\*/]"),
+	WHITESPACE ("[\\s\\n\\t\\r]+");
+	
 	
 	private final String regex;
 	
 	private State(String regex){
 		this.regex = regex;
-		
 	}
+	
 	
 	public String run(PushbackReader s){
 		StringBuilder token;
@@ -35,7 +36,6 @@ public enum State {
 			}
 			return token.toString();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "";

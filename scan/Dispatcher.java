@@ -23,17 +23,14 @@ public class Dispatcher {
 
 	public String run() throws IOException{
 		char temp;
-		
-		do {
-			int r = reader.read();
-			if (r == -1) return null;
-			temp = Character.toChars(r)[0];
-		} while(Character.isWhitespace(temp));
+		int r = reader.read();
+		if (r == -1) return null;
+		temp = Character.toChars(r)[0];
 		reader.unread(temp);
 		for(State s: State.values()){
 			if(s.matches(temp)){
-				System.out.println(s.name());
 				String ret = s.run(reader);
+				System.out.println("(" + ret + ", " + s.name() + ")");
 				return ret;
 			}
 		}

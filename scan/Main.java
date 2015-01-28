@@ -10,7 +10,6 @@ class Main {
 			try {
 				String s = d.run();
 				if (s == null) return;
-				else System.out.println(s);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
