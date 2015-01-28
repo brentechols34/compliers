@@ -5,17 +5,52 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PushbackReader;
 import java.nio.charset.UnsupportedCharsetException;
+import java.util.HashSet;
 
 
 public class Dispatcher {
 
 	private PushbackReader reader;
+	
+	static final HashSet<String> reserved_words = new HashSet<>(Arrays.asList(
+			new String[] {"and",
+					"begin",
+					"Boolean",
+					"div",
+					"do",
+					"downto",
+					"else",
+					"end",
+					"false",
+					"fixed",
+					"float",
+					"for",
+					"function",
+					"if",
+					"integer",
+					"mod",
+					"not",
+					"or",
+					"procedure",
+					"program",
+					"read",
+					"repeat",
+					"string",
+					"then",
+					"true",
+					"to",
+					"type",
+					"until",
+					"var",
+					"while",
+					"write",
+					"writeln"});
 
 	public Dispatcher(String fName){
 		try {
 			reader = new PushbackReader(new FileReader(fName));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			System.out.println("NON EXISTENT FILE DUMBASS");
 			e.printStackTrace();
 			System.exit(0);
 		}
