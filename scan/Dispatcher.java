@@ -5,46 +5,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PushbackReader;
 import java.nio.charset.UnsupportedCharsetException;
+import java.util.Arrays;
 import java.util.HashSet;
 
 
 public class Dispatcher {
 
 	private PushbackReader reader;
-	
-	static final HashSet<String> reserved_words = new HashSet<>(Arrays.asList(
-			new String[] {"and",
-					"begin",
-					"Boolean",
-					"div",
-					"do",
-					"downto",
-					"else",
-					"end",
-					"false",
-					"fixed",
-					"float",
-					"for",
-					"function",
-					"if",
-					"integer",
-					"mod",
-					"not",
-					"or",
-					"procedure",
-					"program",
-					"read",
-					"repeat",
-					"string",
-					"then",
-					"true",
-					"to",
-					"type",
-					"until",
-					"var",
-					"while",
-					"write",
-					"writeln"});
+
 
 	public Dispatcher(String fName){
 		try {
@@ -56,7 +24,7 @@ public class Dispatcher {
 		}
 	}
 
-	public String run() throws IOException{
+	public Token run() throws IOException{
 		char temp;
 		int r = reader.read();
 		if (r == -1) return null;
@@ -65,10 +33,50 @@ public class Dispatcher {
 		for(State s: State.values()){
 			if(s.matches(temp)){
 				String ret = s.run(reader);
-				System.out.println("(" + ret + ", " + s.name() + ")");
-				return ret;
+				State t = (isReservedWord(ret))?State.RESERVED:s;
+				return new Token(ret, t);
 			}
 		}
 		return null;
+	}
+
+	//EVEN BETTER
+	public boolean isReservedWord(String token) {
+		switch (token) {
+		case "and":
+		case "begin":
+		case "Boolean":
+		case "div":
+		case "do":
+		case "downto":
+		case "else":
+		case "end":
+		case "false":
+		case "fixed":
+		case "float":
+		case "for":
+		case "function":
+		case "if":
+		case "integer":
+		case "mod":
+		case "not":
+		case "or":
+		case "procedure":
+		case "program":
+		case "read":
+		case "repeat":
+		case "string":
+		case "then":
+		case "true":
+		case "to":
+		case "type":
+		case "until":
+		case "var":
+		case "while":
+		case "write":
+		case "writeln":
+			return true;
+		default: return false;
+		}
 	}
 }

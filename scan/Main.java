@@ -8,8 +8,8 @@ class Main {
 		Dispatcher d = new Dispatcher("test.txt");
 		while(true){
 			try {
-				String s = d.run();
-				if (s == null) return;
+				Token t = d.run();
+				if (t == null) return;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

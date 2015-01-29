@@ -5,11 +5,12 @@ import java.io.IOException;
 
 public enum State {
 	LETTER("[a-zA-Z](_?[\\w])*"),
-	DIGIT ("((\\d+(\\.\\d*)?)|(\\.\\d+))([eE][\\+-]?((\\d+(\\.\\d*)?)|(\\.\\d*)))?"),
+	DIGIT ("(\\d+(\\.\\d*)?)([eE][\\+-]?(\\d+(\\.\\d*)?))?"),
 	PUNCTUATOR ("[\\(\\)\\[\\],\\.:;]"),
 	EQUALITY ("([<>]=?)|(==)"),
 	OPERATOR ("[\\+\\-\\*/]"),
-	WHITESPACE ("[\\s\\n\\t\\r]+");
+	WHITESPACE ("[\\s\\n\\t\\r]+"),
+	RESERVED ("");
 	
 	
 	private final String regex;
