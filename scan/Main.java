@@ -9,6 +9,7 @@ class Main {
 		while(true){
 			try {
 				Token t = d.run();
+				System.out.println(t);
 				if (t == null) return;
 			} catch (IOException e) {
 				e.printStackTrace();

@@ -10,10 +10,8 @@ import java.util.HashSet;
 
 
 public class Dispatcher {
-
+	
 	private PushbackReader reader;
-
-
 	public Dispatcher(String fName){
 		try {
 			reader = new PushbackReader(new FileReader(fName));
@@ -26,15 +24,19 @@ public class Dispatcher {
 
 	public Token run() throws IOException{
 		char temp;
+		String ret;
 		int r = reader.read();
 		if (r == -1) return null;
 		temp = Character.toChars(r)[0];
 		reader.unread(temp);
 		for(State s: State.values()){
 			if(s.matches(temp)){
-				String ret = s.run(reader);
-				State t = (isReservedWord(ret))?State.RESERVED:s;
-				return new Token(ret, t);
+				ret = s.run(reader);
+				if (s != State.WHITESPACE) {
+					return new Token(ret, (isReservedWord(ret))?State.RESERVED:s);
+				} else {
+					return run();
+				}
 			}
 		}
 		return null;
