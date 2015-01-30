@@ -7,5 +7,8 @@ public class Token {
 		this.type = type;
 		this.val = val;
 	}
-	
+	public String toString() {
+		return "("+val+","+type.name()+")";
+	}
+
 }

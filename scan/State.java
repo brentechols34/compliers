@@ -4,21 +4,15 @@ import java.io.PushbackReader;
 import java.io.IOException;
 
 public enum State {
-	LETTER("[a-zA-Z](_?[\\w])*"),
-	DIGIT ("(\\d+(\\.\\d*)?)([eE][\\+-]?(\\d+(\\.\\d*)?))?"),
-	PUNCTUATOR ("[\\(\\)\\[\\],\\.:;]"),
-	EQUALITY ("([<>]=?)|(==)"),
-	OPERATOR ("[\\+\\-\\*/]"),
+	LETTER("([a-zA-Z]|_\\w)(_?[\\w])*"),
+	DIGIT ("(\\d+(\\.\\d*)?)([eE][\\+\\-]?\\d+"),
+	SINGLE_STRING ("(:=?)|,|=|/|(>=?)|(<=?)|\\(|\\)|<|>|<>|\\-|\\.|\\+|;|\\*"),
 	WHITESPACE ("[\\s\\n\\t\\r]+"),
+	STRING_LIT ("'(^'||'')*'"),
 	RESERVED ("");
 	
-	
 	private final String regex;
-	
-	private State(String regex){
-		this.regex = regex;
-	}
-	
+	private State(String regex){this.regex = regex;}
 	
 	public String run(PushbackReader s){
 		StringBuilder token;
