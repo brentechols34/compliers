@@ -4,7 +4,7 @@ import java.io.PushbackReader;
 import java.io.IOException;
 
 public enum State {
-	LETTER("([a-zA-Z]|_\\w)(_?[\\w])*"),
+	IDENTIFIER("([a-zA-Z]|_\\w)(_?[\\w])*"),
 	DIGIT ("(\\d+(\\.\\d*)?)([eE][\\+\\-]?\\d+)?"),
 	SINGLE_STRING ("(:=?)|,|=|/|(>=?)|(<=?)|\\(|\\)|<|>|<>|\\-|\\.|\\+|;|\\*"),
 	WHITESPACE ("[\\s\\n\\t\\r]+"),
