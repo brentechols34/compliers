@@ -1,6 +1,10 @@
 package DFA;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class FuckThisShit {
@@ -30,10 +34,27 @@ public class FuckThisShit {
 			this.start = start;
 			this.nodes = nodes;
 		}
+		public boolean matches(String s) {
+			Node t = start;
+			for (char c : s.toCharArray()) {
+				t = nodes.get(t.read(c));
+				if (t == null) return false;
+			}
+			return t.accepting;
+		}
+		
+		public Node[] getStates() {
+			Collection<Node> n = nodes.values();
+			Node[] n2 = new Node[n.size()];
+			int i = 0; 
+			for (Node nr : n) {
+				n2[i++] = nr;
+			}
+			return n2;
+		}
 	}
 	
 	public static final String alphabetic = "abcdefghijklmopqrstuvwxyz";
-	public static final String numeric = "0123456789";
 	
 	public static DFA String2DFA(String s, String start) {
 		String[] nodes = s.split(" ");
@@ -48,7 +69,9 @@ public class FuckThisShit {
 			int nameDex = str.indexOf(':');
 			String name = str.substring(0, nameDex);
 			accepting =  (name.length() > 1 && name.substring(name.length() - 2, name.length()).equals("<<"));
-
+			if (accepting) {
+				name = name.substring(0,name.length() - 2);
+			}
 			if (!graph.containsKey(name)) {
 				graph.put(name,count++);
 			}
@@ -67,13 +90,13 @@ public class FuckThisShit {
 				for (int i = 0; i < t2.length; i++) {
 					if (t2[i]=='\\') {
 						i++;
-						ed.put(t2[i], graph.get(to));
 					}
+					ed.put(t2[i], graph.get(to));
 				}
 				
 			}
 			Node n =  new Node(name, ed, accepting);
-			System.out.println("Node: " + name);
+			System.out.println("Node: " + name + " " + ed.keySet().toString());
 			forDFA.put(graph.get(name), n);
 			
 		}
@@ -84,7 +107,68 @@ public class FuckThisShit {
 	
 	
 	public static void main(String[] args) {
-		String s = "a:("+alphabetic+")b b:(" + alphabetic +")a";
-		String2DFA(s, "a");
+		String NUMBER = "a:(0123456789)b b<<:(0123456789)b";
+		try {
+			make(NUMBER, "a", "Number");
+		} catch (Exception e) { }
+	}
+	
+	/**
+	 * So the general gist is that we have a class variable representing the state we are in
+	 * Then we have a run function that accepts a string
+	 * and it calls a function dependent on the class variable for each character it reads.
+	 * we'll scan through the dfa and get all possible states and make a big ol switch
+	 * @param dfa
+	 * @param className
+	 * @return
+	 */
+	public static String DFA2Class(DFA dfa, String className) {
+		Node[] allStates = dfa.getStates();
+		
+		ArrayList<Node> accepting = new ArrayList<>();
+		for (Node n : allStates) {
+			if (n.accepting) accepting.add(n);
+		}
+		String header = "public class " + className + " { \n";
+		String vars = "private static String currentState;\n\n";
+		String func = "public static boolean matches(String s) {\n"
+				+ "for (char c : s.toCharArray()) {\n"
+				+ "\t switch(currentState) {\n";
+		for (Node n : allStates) {
+			func += "case " + "\"" + n.name + "\"" + ": currentState = " + n.name +"(c); break;\n";
+		}
+		func += "if (currentState == null) return false;}\n}\n";
+		func += "return (";
+		boolean m = false;
+		for (Node n : accepting) {
+			if (m) func += " || ";
+			else m = true;
+			func += "currentState.equals(\""+n.name+"\")";
+		}
+		func += ");\n}\n\n";
+		for (Node n : allStates) {
+			func+= nodeToFunc(dfa,n)+"\n\n";
+		}
+		func+="}";
+		return header + vars +func;
+	}
+	
+	private static String nodeToFunc(DFA dfa, Node n) {
+		String funcHeader = "public static String " + n.name + "(char c) {";
+		String swtch = "switch(c) {\n";
+		HashMap<Character, Integer> edges = n.edges;
+		for (char c : edges.keySet()) {
+			swtch+= "case " + "'" + c + "'" + ": return " + "\"" + dfa.nodes.get(edges.get(c)).name + "\";\n";
+		}
+		swtch += "default: return null;";
+		return funcHeader + "\n" + swtch + "\n}\n" + "}";
+	}
+	
+	public static void make(String format, String startState, String fname) throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(fname + ".java");
+		DFA d = String2DFA(format, startState);
+		String clazz = DFA2Class(d, fname);
+		pw.print(clazz);
+		pw.close();
 	}
 }
