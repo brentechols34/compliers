@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class FuckThisShit {
+public class Str2DFA {
 	//format is
 	//1.the name of your node
 	//followed by a colon
@@ -17,61 +17,9 @@ public class FuckThisShit {
 	//followed by that node's name
 	//IF THERE ARE MORE EDGES FOR THIS NODE followed by a comma GO TO STEP 2 DUMBASS
 	//OTHERWISE IF THERE ARE MORE NODES GO TO STEP 1
-	//
+	//OTHERWISE YOU BE DUN
 	//don't fuck up
-	
-	/**
-	 * Node class, for use with the DFA
-	 * @author Alex
-	 *
-	 */
-	private static class Node {
-		HashMap<Character, Integer> edges;
-		boolean accepting;
-		String name;
-		public Node(String name, HashMap<Character, Integer> edges, boolean accepting) {
-			this.name = name;
-			this.edges = edges;
-			this.accepting = accepting;
-		}
-		public Integer read(char c) {
-			return edges.get(c);
-		}
-	}
-	
-	/**
-	 * Simple DFA, buncha nodes with integer ids
-	 * @author Alex
-	 *
-	 */
-	public static class DFA {
-		HashMap<Integer, Node> nodes;
-		Node start;
-		public DFA(Node start, HashMap<Integer, Node> nodes) {
-			this.start = start;
-			this.nodes = nodes;
-		}
-		public boolean matches(String s) {
-			Node t = start;
-			for (char c : s.toCharArray()) {
-				t = nodes.get(t.read(c));
-				if (t == null) return false;
-			}
-			return t.accepting;
-		}
-		
-		public Node[] getStates() {
-			Collection<Node> n = nodes.values();
-			Node[] n2 = new Node[n.size()];
-			int i = 0; 
-			for (Node nr : n) {
-				n2[i++] = nr;
-			}
-			return n2;
-		}
-	}
-	
-	
+
 	/**
 	 * Converts a string representing a DFA into a DFA
 	 * I was going to comment this, and then I realized that I had no idea how it worked
@@ -80,15 +28,15 @@ public class FuckThisShit {
 	 * @param start
 	 * @return
 	 */
-	public static DFA String2DFA(String s, String start) {
+	public static DFA String2DFA(String s) {
 		String[] nodes = s.split(" "); //Split on spaces
-		System.out.println(Arrays.toString(nodes));
 		int count = 0;
 		HashMap<String, Integer> graph = new HashMap<>();
 		String t, to;
 		String[] edges;
 		boolean accepting;
 		HashMap<Integer, Node> forDFA = new HashMap<Integer, Node>();
+		String first_name = null;
 		for (String str : nodes) {
 			int nameDex = str.indexOf(':');
 			String name = str.substring(0, nameDex);
@@ -96,12 +44,12 @@ public class FuckThisShit {
 			if (accepting) {
 				name = name.substring(0,name.length() - 2);
 			}
+			if (first_name == null) first_name = name;
 			if (!graph.containsKey(name)) {
 				graph.put(name,count++);
 			}
 			t = str.substring(nameDex+1, str.length());
 			edges = t.split("(?<!\\\\),"); //lol
-			System.out.println(Arrays.toString(edges));
 			HashMap<Character, Integer> ed = new HashMap<>();
 			for (String e : edges) {
 				int close = e.lastIndexOf(")")+1;
@@ -110,7 +58,6 @@ public class FuckThisShit {
 					graph.put(to,count++);
 				}
 				char[] t2 = e.substring(1,close-1).toCharArray(); //these are the chars we need
-				System.out.println(Arrays.toString(t2));
 				for (int i = 0; i < t2.length; i++) {
 					if (t2[i]=='\\') {
 						i++;
@@ -131,14 +78,13 @@ public class FuckThisShit {
 
 					} else {ed.put(t2[i], graph.get(to));}
 				}
-				
+
 			}
 			Node n =  new Node(name, ed, accepting);
-			System.out.println("Node: " + name + " " + ed.keySet().toString());
 			forDFA.put(graph.get(name), n);
-			
+
 		}
-		return new DFA(forDFA.get(graph.get(start)), forDFA);
+		return new DFA(forDFA.get(graph.get(first_name)), forDFA);
 	}
 
 	/**
@@ -152,22 +98,39 @@ public class FuckThisShit {
 	 */
 	public static String DFA2Class(DFA dfa, String className) {
 		Node[] allStates = dfa.getStates();
-		
+
 		ArrayList<Node> accepting = new ArrayList<>();
 		for (Node n : allStates) {
 			if (n.accepting) accepting.add(n);
 		}
-		String header = "public class " + className + " { \n";
-		String vars = "private static String currentState;\n\n";
-		String func = "public static boolean matches(String s) {\n"
-				+ "currentState = \"" + dfa.start.name +"\";\n"
-				+ "for (char c : s.toCharArray()) {\n"
+		String header = "public class " + className + " implements DFAS { \n";
+		String vars = "private String currentState;\n\n";
+		String constr = "public " + className + "() {\n"
+				+ "currentState = \"" + dfa.start.name +"\";\n}\n";
+		String func = "public boolean rejected(char c) {\n"
 				+ "\t switch(currentState) {\n";
 		for (Node n : allStates) {
-			func += "case " + "\"" + n.name + "\"" + ": currentState = " + n.name +"(c); break;\n";
+			func += "\t\tcase " + "\"" + n.name + "\"" + ": currentState = " + n.name +"(c); break;\n";
 		}
-		func += "}\nif (currentState == null) return false;}\n";
-		func += "return (";
+		func += "\t}\n\tif (currentState == null) return true;\n";
+		func += "\treturn false;\n}\n";
+		for (Node n : allStates) {
+			func+= nodeToFunc(dfa,n)+"\n\n";
+		}
+		func += "public boolean isAccepting() {\n";
+		func += "return ";
+		boolean m = false;
+		for (Node n : accepting) {
+			if (m) func += " || ";
+			else m = true;
+			func += "currentState.equals(\""+n.name+"\")";
+		}
+		func += ";\n}\n\n";
+		func+="}";
+		return header + constr + vars +func;
+	}
+	/**
+	 * (";
 		boolean m = false;
 		for (Node n : accepting) {
 			if (m) func += " || ";
@@ -175,13 +138,13 @@ public class FuckThisShit {
 			func += "currentState.equals(\""+n.name+"\")";
 		}
 		func += ");\n}\n\n";
-		for (Node n : allStates) {
-			func+= nodeToFunc(dfa,n)+"\n\n";
-		}
-		func+="}";
-		return header + vars +func;
-	}
-	
+	 *
+	 *
+	 *
+	 *
+	 */
+
+
 	private static String nodeToFunc(DFA dfa, Node n) {
 		String funcHeader = "public static String " + n.name + "(char c) {";
 		String swtch = "switch(c) {\n";
@@ -192,10 +155,10 @@ public class FuckThisShit {
 		swtch += "default: return null;";
 		return funcHeader + "\n" + swtch + "\n}\n" + "}";
 	}
-	
-	public static void make(String format, String startState, String fname) throws FileNotFoundException {
+
+	public static void make(String format, String fname) throws FileNotFoundException {
 		PrintWriter pw = new PrintWriter(fname + ".java");
-		DFA d = String2DFA(format, startState);
+		DFA d = String2DFA(format);
 		String clazz = DFA2Class(d, fname);
 		pw.print(clazz);
 		pw.close();
