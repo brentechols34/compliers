@@ -75,6 +75,7 @@ public class FuckThisShit {
 	/**
 	 * Converts a string representing a DFA into a DFA
 	 * I was going to comment this, and then I realized that I had no idea how it worked
+	 * Good luck I guess
 	 * @param s
 	 * @param start
 	 * @return
