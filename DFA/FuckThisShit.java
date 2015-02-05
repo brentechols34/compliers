@@ -16,7 +16,7 @@ public class FuckThisShit {
 	//followed by a close paren
 	//followed by that node's name
 	//IF THERE ARE MORE EDGES FOR THIS NODE followed by a comma GO TO STEP 2 DUMBASS
-	//OTHERWISE IF THERE ARE MORE NODES GO TO STEP 1 FUCKTARD
+	//OTHERWISE IF THERE ARE MORE NODES GO TO STEP 1
 	//
 	//don't fuck up
 	
@@ -126,17 +126,7 @@ public class FuckThisShit {
 		}
 		return new DFA(forDFA.get(graph.get(start)), forDFA);
 	}
-	
-	
-	
-	
-	public static void main(String[] args) {
-		String NUMBER = "a:(0123456789)b b<<:(0123456789)b";
-		try {
-			make(NUMBER, "a", "Number");
-		} catch (Exception e) { }
-	}
-	
+
 	/**
 	 * So the general gist is that we have a class variable representing the state we are in
 	 * Then we have a run function that accepts a string
@@ -161,7 +151,7 @@ public class FuckThisShit {
 		for (Node n : allStates) {
 			func += "case " + "\"" + n.name + "\"" + ": currentState = " + n.name +"(c); break;\n";
 		}
-		func += "if (currentState == null) return false;}\n}\n";
+		func += "}\nif (currentState == null) return false;}\n";
 		func += "return (";
 		boolean m = false;
 		for (Node n : accepting) {
