@@ -114,8 +114,22 @@ public class FuckThisShit {
 				for (int i = 0; i < t2.length; i++) {
 					if (t2[i]=='\\') {
 						i++;
-					}
-					ed.put(t2[i], graph.get(to));
+						switch(t2[i]) {
+						case 'a': {
+							for (char c2 : "abcedfghijklmopqrstuvwxyz".toCharArray()) {
+								ed.put(c2, graph.get(to));
+							}
+							break;
+						}
+						case 'd': {
+							for (char c2 : "0123456789".toCharArray()) {
+								ed.put(c2, graph.get(to));
+							}
+						}
+						default: {ed.put(t2[i], graph.get(to));}
+						}
+
+					} else {ed.put(t2[i], graph.get(to));}
 				}
 				
 			}
@@ -146,6 +160,7 @@ public class FuckThisShit {
 		String header = "public class " + className + " { \n";
 		String vars = "private static String currentState;\n\n";
 		String func = "public static boolean matches(String s) {\n"
+				+ "currentState = \"" + dfa.start.name +"\";\n"
 				+ "for (char c : s.toCharArray()) {\n"
 				+ "\t switch(currentState) {\n";
 		for (Node n : allStates) {
