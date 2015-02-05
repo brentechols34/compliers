@@ -60,7 +60,7 @@ public class Generator {
 		master+="\t\tint notRejected_count = " + strs.length + ";\n";
 		master+= "\t\tString s = \"\";\n";
 		master += "\t\tint r=0;\n";
-		master += "\t\tchar c;\n";
+		master += "\t\tchar c=0;\n";
 		master += theFunction(names.length);
 		master+="\t}";
 		return master;
@@ -74,12 +74,16 @@ public class Generator {
 		the+= "for (DFAS d : allStates) {\n";
 		the+= "if (d.isAccepting()) return new Token(s, d);\n";
 		the+="}\n";
+		the+= "return null;";
 		the+= "}\n";
 		the+="c = Character.toChars(r)[0];\n";
+		the+= "s+=c;\n";
 		the+="for (int i = 0; i < allStates.length; i++) {\n";
 		the+= "if (notRejected[i] && allStates[i].rejected(c)) {\n";
 		the+= "notRejected[i] = false; notRejected_count--;\n";
-		the+= "}\n}\n}\n";
+		the+= "}\n}\n";
+		the+= "}\n";
+		the+= "s = s.substring(0,s.length()-1);";
 		the+= "pr.unread(r);\n";
 		the+= "for (int i = 0; i < allStates.length; i++) {\n";
 		the+= "if (wereNotRejected[i]) return new Token(s, allStates[i]);\n";

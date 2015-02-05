@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 public class Str2DFA {
 	//format is
+	//The first node is the start node
 	//1.the name of your node
 	//followed by a colon
 	//2. followed by an open paren
@@ -118,7 +119,7 @@ public class Str2DFA {
 			func+= nodeToFunc(dfa,n)+"\n\n";
 		}
 		func += "public boolean isAccepting() {\n";
-		func += "return ";
+		func += "return currentState != null && ";
 		boolean m = false;
 		for (Node n : accepting) {
 			if (m) func += " || ";
