@@ -6,14 +6,17 @@ import java.util.HashMap;
 public class FuckThisShit {
 	//format is
 	//name:(edge-letters)name,(edge-letters)name,....... name: .... name:....
+	//a "<<" IMMEDIATELY AFTER a name makes that state accepting
 	//don't fuck up
 	
 	static class Node {
 		HashMap<Character, Integer> edges;
+		boolean accepting;
 		String name;
-		public Node(String name, HashMap<Character, Integer> edges) {
+		public Node(String name, HashMap<Character, Integer> edges, boolean accepting) {
 			this.name = name;
 			this.edges = edges;
+			this.accepting = accepting;
 		}
 		public Integer read(char c) {
 			return edges.get(c);
@@ -39,10 +42,13 @@ public class FuckThisShit {
 		HashMap<String, Integer> graph = new HashMap<>();
 		String t, to;
 		String[] edges;
+		boolean accepting;
 		HashMap<Integer, Node> forDFA = new HashMap<Integer, Node>();
 		for (String str : nodes) {
 			int nameDex = str.indexOf(':');
 			String name = str.substring(0, nameDex);
+			accepting =  (name.length() > 1 && name.substring(name.length() - 2, name.length()).equals("<<"));
+
 			if (!graph.containsKey(name)) {
 				graph.put(name,count++);
 			}
@@ -66,7 +72,7 @@ public class FuckThisShit {
 				}
 				
 			}
-			Node n =  new Node(name, ed);
+			Node n =  new Node(name, ed, accepting);
 			System.out.println("Node: " + name);
 			forDFA.put(graph.get(name), n);
 			
@@ -78,7 +84,7 @@ public class FuckThisShit {
 	
 	
 	public static void main(String[] args) {
-		String s = "1:(abc)2 2:(abc)1 3:(\\(\\))2";
-		String2DFA(s, "1");
+		String s = "a:("+alphabetic+")b b:(" + alphabetic +")a";
+		String2DFA(s, "a");
 	}
 }
