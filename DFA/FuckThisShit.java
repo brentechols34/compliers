@@ -9,11 +9,23 @@ import java.util.HashMap;
 
 public class FuckThisShit {
 	//format is
-	//name:(edge-letters)name,(edge-letters)name,....... name: .... name:....
-	//a "<<" IMMEDIATELY AFTER a name makes that state accepting
+	//1.the name of your node
+	//followed by a colon
+	//2. followed by an open paren
+	//followed by all characters that connect to a specific node
+	//followed by a close paren
+	//followed by that node's name
+	//IF THERE ARE MORE EDGES FOR THIS NODE followed by a comma GO TO STEP 2 DUMBASS
+	//OTHERWISE IF THERE ARE MORE NODES GO TO STEP 1 FUCKTARD
+	//
 	//don't fuck up
 	
-	static class Node {
+	/**
+	 * Node class, for use with the DFA
+	 * @author Alex
+	 *
+	 */
+	private static class Node {
 		HashMap<Character, Integer> edges;
 		boolean accepting;
 		String name;
@@ -27,7 +39,12 @@ public class FuckThisShit {
 		}
 	}
 	
-	static class DFA {
+	/**
+	 * Simple DFA, buncha nodes with integer ids
+	 * @author Alex
+	 *
+	 */
+	public static class DFA {
 		HashMap<Integer, Node> nodes;
 		Node start;
 		public DFA(Node start, HashMap<Integer, Node> nodes) {
@@ -54,10 +71,16 @@ public class FuckThisShit {
 		}
 	}
 	
-	public static final String alphabetic = "abcdefghijklmopqrstuvwxyz";
 	
+	/**
+	 * Converts a string representing a DFA into a DFA
+	 * I was going to comment this, and then I realized that I had no idea how it worked
+	 * @param s
+	 * @param start
+	 * @return
+	 */
 	public static DFA String2DFA(String s, String start) {
-		String[] nodes = s.split(" ");
+		String[] nodes = s.split(" "); //Split on spaces
 		System.out.println(Arrays.toString(nodes));
 		int count = 0;
 		HashMap<String, Integer> graph = new HashMap<>();
@@ -76,7 +99,7 @@ public class FuckThisShit {
 				graph.put(name,count++);
 			}
 			t = str.substring(nameDex+1, str.length());
-			edges = t.split("(?<!\\\\),");
+			edges = t.split("(?<!\\\\),"); //lol
 			System.out.println(Arrays.toString(edges));
 			HashMap<Character, Integer> ed = new HashMap<>();
 			for (String e : edges) {
