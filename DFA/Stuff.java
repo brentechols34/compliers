@@ -7,7 +7,7 @@ public class Stuff {
 	private static String fixed = "a:(\\d)b b:(\\d)b,(.)c c:(\\d)d d<<:(\\d)d";
 	private static String fp = "a:(\\d)b b:(\\d)b,(.)c,(eE)d c:(\\d)e d:(+-)f,(\\d)g e:(\\d)e,(eE)d f:(\\d)g g<<:(\\d)g";
 	private static String identifier = "a:(\\a)c,(_)b b:(\\a\\d)c c<<:(_)d,(\\a\\d)c d:(\\a\\d)c";
-	private static String unclosedComment = "a:({)b b:(\\a\\s)b,(\\$)c c<<:()c";
+	private static String unclosedComment = "a:({)b b<<:(\\a\\s)b";
 	private static String comment = "a:({)b b:(\\a\\s\\d)b,(})c c<<:()";
 	private static String stringLiteral = "a:(')b b:(\\a\\d\\s)b,(')c c<<:(')b";
 	

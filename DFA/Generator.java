@@ -92,13 +92,7 @@ public class Generator {
 		the+= "for (int i = 0; i < allStates.length; i++) {wereNotRejected[i] = notRejected[i]; wereAccepting[i] = allStates[i].isAccepting();}\n";
 		the+= "r = pr.read();\n";
 		the+= "if (r == -1) {\n"; //if we have reached the end of file
-		the+= "r=0;";
-		the+= "for (int i = 0; i < allStates.length; i++) {\n";
-		the+= "DFAS d = allStates[i];\n";
-		the+= "if (notRejected[i] && !d.rejected(Character.toChars(r)[0])) return new Token(s, d, false);\n";
-		the+="}\n";
-		the+= "return null;\n";
-		the+= "}\n";
+		the+= "break;\n}\n";
 		the+="c = Character.toChars(r)[0];\n";
 		the+= "s+=c;\n";
 		the+="for (int i = 0; i < allStates.length; i++) {\n";
@@ -106,7 +100,7 @@ public class Generator {
 		the+= "notRejected[i] = false; notRejected_count--;\n";
 		the+= "}\n}\n";
 		the+= "}\n";
-		the+= "s = s.substring(0,s.length()-1);";
+		the+= "if (r!=-1) {s = s.substring(0,s.length()-1);}";
 		the+= "pr.unread(r);\n";
 		the+= "for (int i = 0; i < allStates.length; i++) {\n";
 		the+= "if (wereNotRejected[i] && wereAccepting[i]) return new Token(s, allStates[i], isReserved(s));\n";

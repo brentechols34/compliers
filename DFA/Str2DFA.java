@@ -64,7 +64,7 @@ public class Str2DFA {
 						i++;
 						switch(t2[i]) {
 						case 'a': {
-							for (char c2 : "abcedfghijklmnopqrstuvwxyz".toCharArray()) {
+							for (char c2 : "abcedfghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray()) {
 								ed.put(c2, graph.get(to));
 							}
 							break;
