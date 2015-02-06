@@ -89,7 +89,7 @@ public class Generator {
 	
 	private static String theFunction(int count) {
 		String the = "while (notRejected_count > 0) {\n";
-		the+= "for (int i = 0; i < allStates.length; i++) {wereNotRejected[i] = notRejected[i]; wereAccepting[i] = allStates[i].isAccepting();}\n";
+		the+= "for (int i = 0; i < allStates.length; i++) {wereNotRejected[i] = notRejected[i]; if (wereNotRejected[i]) wereAccepting[i] = allStates[i].isAccepting();}\n";
 		the+= "r = pr.read();\n";
 		the+= "if (r == -1) {\n"; //if we have reached the end of file
 		the+= "break;\n}\n";
@@ -100,11 +100,12 @@ public class Generator {
 		the+= "notRejected[i] = false; notRejected_count--;\n";
 		the+= "}\n}\n";
 		the+= "}\n";
-		the+= "if (r!=-1) {s = s.substring(0,s.length()-1);}";
-		the+= "pr.unread(r);\n";
+		the+= "if (r!=-1) {s = s.substring(0,s.length()-1);";
+		the+= "pr.unread(r);}\n";
 		the+= "for (int i = 0; i < allStates.length; i++) {\n";
 		the+= "if (wereNotRejected[i] && wereAccepting[i]) return new Token(s, allStates[i], isReserved(s));\n";
 		the+= "}\n";
+		the+= "if (r==-1) return null;\n";
 		the+= "return Token.ERROR;\n}\n";
 		
 		return the;
