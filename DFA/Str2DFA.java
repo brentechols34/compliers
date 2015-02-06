@@ -64,7 +64,7 @@ public class Str2DFA {
 						i++;
 						switch(t2[i]) {
 						case 'a': {
-							for (char c2 : "abcedfghijklmopqrstuvwxyz".toCharArray()) {
+							for (char c2 : "abcedfghijklmnopqrstuvwxyz".toCharArray()) {
 								ed.put(c2, graph.get(to));
 							}
 							break;
@@ -73,6 +73,15 @@ public class Str2DFA {
 							for (char c2 : "0123456789".toCharArray()) {
 								ed.put(c2, graph.get(to));
 							}
+							break;
+						}
+						case '$': {
+							ed.put((char) 0, graph.get(to));
+							break;
+						}
+						case 's': {
+							ed.put(' ', graph.get(to));
+							break;
 						}
 						default: {ed.put(t2[i], graph.get(to));}
 						}
@@ -151,7 +160,7 @@ public class Str2DFA {
 		String swtch = "switch(c) {\n";
 		HashMap<Character, Integer> edges = n.edges;
 		for (char c : edges.keySet()) {
-			swtch+= "case " + "'" + c + "'" + ": return " + "\"" + dfa.nodes.get(edges.get(c)).name + "\";\n";
+			swtch+= "case " + "'" + ((c=='\'')?"\\'":c) + "'" + ": return " + "\"" + dfa.nodes.get(edges.get(c)).name + "\";\n";
 		}
 		swtch += "default: return null;";
 		return funcHeader + "\n" + swtch + "\n}\n" + "}";
