@@ -8,6 +8,7 @@ public class Generator {
 		String DFAS = DFAS();
 		String master = master(names,strs, reserved);
 		String token = token();
+		String dr = DoubleReader();
 		try {
 			PrintWriter ms = new PrintWriter("out/Master.java");
 			ms.print(master);
@@ -17,6 +18,9 @@ public class Generator {
 			ms.close();
 			ms = new PrintWriter("out/Token.java");
 			ms.print(token);
+			ms.close();
+			ms = new PrintWriter("out/DoubleReader.java");
+			ms.print(dr);
 			ms.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -40,9 +44,9 @@ public class Generator {
 		}
 		//now we gotta generate a master class file
 
-		String master = "import java.io.PushbackReader;\nimport java.io.IOException;\n\n";
+		String master = "\nimport java.io.IOException;\n\n";
 		master += "public class Master {\n"
-				+ "\tpublic static Token nextToken(PushbackReader pr) throws IOException {\n";
+				+ "\tpublic static Token nextToken(DoubleReader pr) throws IOException {\n";
 		String allStates = "\t\tDFAS[] allStates = new DFAS[] {";
 		String notRejected = "\t\tboolean[] notRejected = new boolean[] {";
 		String wereNotRejected = "\t\tboolean[] wereNotRejected = new boolean[] {";
@@ -88,7 +92,10 @@ public class Generator {
 	}
 	
 	private static String theFunction(int count) {
-		String the = "while (notRejected_count > 0) {\n";
+		String the = "while(true){\nr=pr.read();\nif(r==-1)return null;\nc=Character.toChars(r)[0];\nif(!Character.isWhitespace(c)){\npr.unread(c);\nbreak;\n}\n}";
+		the+= "int col = pr.col;\n";
+		the+= "int row = pr.row;\n";
+		the+= "while (notRejected_count > 0) {\n";
 		the+= "for (int i = 0; i < allStates.length; i++) {wereNotRejected[i] = notRejected[i]; if (wereNotRejected[i]) wereAccepting[i] = allStates[i].isAccepting();}\n";
 		the+= "r = pr.read();\n";
 		the+= "if (r == -1) {\n"; //if we have reached the end of file
@@ -103,7 +110,7 @@ public class Generator {
 		the+= "if (r!=-1) {s = s.substring(0,s.length()-1);";
 		the+= "pr.unread(r);}\n";
 		the+= "for (int i = 0; i < allStates.length; i++) {\n";
-		the+= "if (wereNotRejected[i] && wereAccepting[i]) return new Token(s, allStates[i], isReserved(s));\n";
+		the+= "if (wereNotRejected[i] && wereAccepting[i]) return new Token(s, allStates[i], isReserved(s), col, row);\n";
 		the+= "}\n";
 		the+= "if (r==-1) return null;\n";
 		the+= "return Token.ERROR;\n}\n";
@@ -117,13 +124,49 @@ public class Generator {
 				+ "\tpublic String val;\n"
 				+ "\tpublic DFAS type;\n"
 				+ "\tpublic boolean isReserved;\n"
-				+ "\tpublic final static Token ERROR = new Token(\"\",null,true);\n"
-				+ "\tpublic Token(String val, DFAS type, boolean isReserved) {\n"
+				+ "\tpublic int col;\n"
+				+ "\tpublic int row;\n"
+				+ "\tpublic final static Token ERROR = new Token(\"\",null,true,-1,-1);\n"
+				+ "\tpublic Token(String val, DFAS type, boolean isReserved, int col, int row) {\n"
 				+ "\t\tthis.val=val;\n"
 				+ "\t\tthis.type=type;\n"
 				+ "\t\tthis.isReserved=isReserved;\n"
+				+ "\t\tthis.row=row;\n"
+				+ "\t\tthis.col=col;\n"
 				+ "\t}\n}";
 		return token;			
+	}
+	
+	public static String DoubleReader() {
+		String r = "import java.io.FileNotFoundException;\n"
+				+ "import java.io.FileReader;\n"
+				+ "import java.io.IOException;\n"
+				+ "import java.io.PushbackReader;\n"
+				+ "public class DoubleReader {"
+				+ "\tprivate PushbackReader pr;\n"
+				+ "\tpublic int row;\n"
+				+ "\tpublic int col;\n"
+				+ "public DoubleReader(String fname) throws FileNotFoundException {\n"
+				+ "\tthis.pr = new PushbackReader(new FileReader(fname));"
+				+ "\tthis.row=0;"
+				+ "\tthis.col=0;"
+				+ "}"
+				+ "public int read() throws IOException {\n"
+				+ "\tint r = pr.read();\n"
+				+ "\tif(r==-1) return -1;"
+				+ "\tchar c = Character.toChars(r)[0];\n"
+				+ "\tif (c== \'\\n\') row++;\n"
+				+ "else col++;\n"
+				+ "return r;\n"
+				+ "}"
+				+ "public void unread(int r) throws IOException {\n"
+				+ "\tpr.unread(r);\n"
+				+ "\tchar c = Character.toChars(r)[0];\n"
+				+ "\tif (c== \'\\n\') row--;\n"
+				+ "else col--;\n"
+				+ "}"
+				+ "}";
+		return r;
 	}
 	
 	public static String DFAS() {
