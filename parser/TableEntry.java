@@ -39,4 +39,12 @@ public class TableEntry {
 		this.parameters = parameters;
 		this.kind = kind;
 	}
+	//Getters
+	public String getType() { return type; }
+	public String getKind() { return kind; }
+	public String getMode() { return mode; }
+	public int size() { return size; }
+	public String[] getParameters() { return parameters; }
 }
+
+

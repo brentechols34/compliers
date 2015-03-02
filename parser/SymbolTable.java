@@ -1,20 +1,20 @@
 package parser;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 
 public class SymbolTable {
 	
 	String name, label;
 	int nestingLevel;
 	
-	Hashtable<String,TableEntry> entries;
+	HashMap<String,TableEntry> entries;
 	
 	public SymbolTable(String name, String label, int nestingLevel){
 		this.name = name;
 		this.label = label;
 		this.nestingLevel = nestingLevel;
 		
-		entries = new Hashtable<String,TableEntry>();
+		entries = new HashMap<String,TableEntry>();
 	}
 	
 	//Encompasses All
