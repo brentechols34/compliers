@@ -3,6 +3,9 @@ package parser;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.HashSet;
+
+import util.Token;
+import util.TokenType;
     
 public class Parse {
 	HashMap<String,HashMap<TokenType,Integer>> LL1;

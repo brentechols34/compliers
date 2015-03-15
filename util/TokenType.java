@@ -1,7 +1,8 @@
-package parser;
+package util;
 
 
 public enum TokenType {
+	MP_AND,
 	MP_BEGIN,
 	MP_BOOLEAN,
 	MP_DIV,
@@ -27,7 +28,7 @@ public enum TokenType {
 	MP_THEN,
 	MP_TRUE,
 	MP_TO,
-	MP_Type,
+	MP_TYPE,
 	MP_UNTIL,
 	MP_VAR,
 	MP_WHILE,
@@ -58,6 +59,7 @@ public enum TokenType {
 	MP_EOF,
 	MP_RUN_COMMENT,
 	MP_RUN_STRING,
-	MP_ERROR
+	MP_ERROR,
+	MP_COMMENT
 
 }
