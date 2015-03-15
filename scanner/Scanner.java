@@ -18,6 +18,7 @@ public class Scanner {
 	public Scanner(String fname) throws FileNotFoundException {
 		pr = new DoubleReader(fname);
 	}
+	
 	public Token nextToken() throws IOException {
 		DFAS[] allStates = new DFAS[] {new integer(), new fixed(), new fp(), new identifier(), new unclosedComment(), new comment(), new stringLiteral(), new unclosedString(), new arith(), new equality(), new nequal(), new oparen(), new cparen(), new set(), new scolon()};
 		boolean[] notRejected = new boolean[] {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true};

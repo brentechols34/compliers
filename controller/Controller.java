@@ -19,7 +19,7 @@ public class Controller {
 		sc = new Scanner(fname);
 	}
 	
-	public void tokenize() throws IOException {
+	public void tokenize() throws IOException { //generate tokens
 		tokens = new ArrayList<>();
 		Token t;
 		do {
@@ -29,13 +29,19 @@ public class Controller {
 		} while (true);
 	}
 	
-	public void parsify() {
+	public void parsify() { //generate parse tree (TODO: Symbol table)
 		if (tokens == null) {
 			System.out.println("No: Tokenize the file first.");
 			return;
 		}
 		pr = new Parse(tokens);
 		parseTree = pr.make();
+	}
+	
+	public static void main(String[] args) throws IOException {
+		Controller c = new Controller("test.txt");
+		c.tokenize();
+		System.out.println(c.tokens);
 	}
 	
 	

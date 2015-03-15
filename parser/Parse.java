@@ -9,7 +9,7 @@ import util.TokenType;
     
 public class Parse {
 	HashMap<String,HashMap<TokenType,Integer>> LL1;
-	HashSet<String>ruleNames;
+	HashSet<String> ruleNames;
 	String[][] rules;
 	ArrayList<Integer> parseTree;
 	
@@ -21,6 +21,7 @@ public class Parse {
 		parseTree = new ArrayList<>();
 		this.tokens = tokens;
 		token_index = 0;
+		populate();
 	}
 	
 	public void parse(int curRule, int curIndex, Token curToken){
@@ -52,11 +53,19 @@ public class Parse {
 		return tr;
 	}
 	
-	private int nextRule(int curRule,int curIndex,Token t) {
+	private int nextRule(int curRule, int curIndex, Token t) {
 		return 0;
 	}
 	
 	boolean isTerminal(int curRule, int curIndex){
 		return ruleNames.contains(rules[curRule][curIndex]);
+	}
+	
+	/**
+	 * Let's have this function fill the rule_names hashset, as well as the LL1 hashmap
+	 */
+	public void populate() {
+		String LL1_fname = "LL1.csv";
+		String rule_fname = "rules.txt";
 	}
 }
