@@ -13,9 +13,14 @@ public class Parse {
 	String[][] rules;
 	ArrayList<Integer> parseTree;
 	
-	public Parse(){
+	ArrayList<Token> tokens;
+	private int token_index;
+	
+	public Parse(ArrayList<Token> tokens){
 		LL1 = new HashMap<>();
 		parseTree = new ArrayList<>();
+		this.tokens = tokens;
+		token_index = 0;
 	}
 	
 	public void parse(int curRule, int curIndex, Token curToken){
@@ -35,7 +40,16 @@ public class Parse {
 	}
 	
 	private Token getToken(){
-		return null;
+		return tokens.get(token_index++);
+	}
+	
+	public int[] make() {
+		parse(0,0,getToken());
+		int[] tr = new int[parseTree.size()];
+		for (int i = 0; i < tr.length; i++) {
+			tr[i] = parseTree.get(i);
+		}
+		return tr;
 	}
 	
 	private int nextRule(int curRule,int curIndex,Token t) {
