@@ -1,0 +1,116 @@
+<SystemGoal> <Progrm> EOF
+<Progrm> <ProgramHeading> ; <Block> .
+<ProgramHeading> program <ProgramIdentifier>
+<Block> <VariableDeclarationPart> <ProcedureAndFunctionDeclarationPart> <StatementPart>
+<VariableDeclarationPart> var <VariableDeclaration> ; <VariableDeclarationTail>
+<VariableDeclarationPart> lambda
+<VariableDeclarationTail> <VariableDeclaration> ; <VariableDeclarationTail>
+<VariableDeclarationTail> lambda
+<VariableDeclaration> <IdentifierList> : <Type>
+<Type> Integer
+<Type> Float
+<Type> String
+<Type> Boolean
+<ProcedureAndFunctionDeclarationPart> <ProcedureDeclaration> <ProcedureAndFunctionDeclarationPart>
+<ProcedureAndFunctionDeclarationPart> <FunctionDeclaration> <ProcedureAndFunctionDeclarationPart>
+<ProcedureAndFunctionDeclarationPart> lambda
+<ProcedureDeclaration> <ProcedureHeading> ; <Block> ;
+<FunctionDeclaration> <FunctionHeading> ; <Block> ;
+<ProcedureHeading> procedure <ProcedureIdentifier> <OptionalFormalParameterList>
+<FunctionHeading> function <FunctionIdentifier> <OptionalFormalParameterList> : <Type>
+<OptionalFormalParameterList> ( <FormalParameterSection> <FormalParameterSectionTail> )
+<OptionalFormalParameterList> lambda
+<FormalParameterSectionTail> ; <FormalParameterSection> <FormalParameterSectionTail>
+<FormalParameterSectionTail> lambda
+<FormalParameterSection> <ValueParameterSection>
+<FormalParameterSection> <VariableParameterSection>
+<ValueParameterSection> <IdentifierList> : <Type>
+<VariableParameterSection> var <IdentifierList> : <Type>
+<StatementPart> <CompoundStatement>
+<CompoundStatement> begin <StatementSequence> end
+<StatementSequence> <Statement> <StatementTail>
+<StatementTail> ; <Statement> <StatementTail>
+<StatementTail> lambda
+<Statement> <EmptyStatement>
+<Statement> <CompoundStatement>
+<Statement> <ReadStatement>
+<Statement> <WriteStatement>
+<Statement> <AssignmentStatement>
+<Statement> <IfStatement>
+<Statement> <WhileStatement>
+<Statement> <RepeatStatement>
+<Statement> <ForStatement>
+<Statement> <ProcedureStatement>
+<EmptyStatement> lambda
+<ReadStatement> read ( <ReadParameter> <ReadParameterTail> )
+<ReadParameterTail> , <ReadParameter> <ReadParameterTail>
+<ReadParameterTail> lambda
+<ReadParameter> <VariableIdentifier>
+<WriteStatement> write ( <WriteParameter> <WriteParameterTail> )
+<WriteStatement> writeln ( <WriteParameter> <WriteParameterTail> )
+<WriteParameterTail> , <WriteParameter> <WriteParameterTail>
+<WriteParameterTail> lambda
+<WriteParameter> <OrdinalExpression>
+<AssignmentStatement> <VariableIdentifier> := <Expression>
+<AssignmentStatement> <FunctionIdentifier> := <Expression>
+<IfStatement> if <BooleanExpression> then <Statement> <OptionalElsePart>
+<OptionalElsePart> else <Statement>
+<OptionalElsePart> lambda
+<RepeatStatement> repeat <StatementSequence> until <BooleanExpression>
+<WhileStatement> while <BooleanExpression> do <Statement>
+<ForStatement> for <ControlVariable> := <InitialValue> <StepValue> <FinalValue> do <Statement>
+<ControlVariable> <VariableIdentifier>
+<InitialValue> <OrdinalExpression>
+<StepValue> to
+<StepValue> downto
+<FinalValue> <OrdinalExpression>
+<ProcedureStatement> <ProcedureIdentifier> <OptionalActualParameterList>
+<OptionalActualParameterList> ( <ActualParameter> <ActualParameterTail> )
+<OptionalActualParameterList> lambda
+<ActualParameterTail> , <ActualParameter> <ActualParameterTail>
+<ActualParameterTail> lambda
+<ActualParameter> <OrdinalExpression>
+<Expression> <SimpleExpression> <OptionalRelationalPart>
+<OptionalRelationalPart> <RelationalOperator> <SimpleExpression>
+<OptionalRelationalPart> lambda
+<RelationalOperator> =
+<RelationalOperator> <
+<RelationalOperator> >
+<RelationalOperator> <=
+<RelationalOperator> >=
+<RelationalOperator> <>
+<SimpleExpression> <OptionalSign> <Term> <TermTail>
+<TermTail> <AddingOperator> <Term> <TermTail>
+<TermTail> lambda
+<OptionalSign> +
+<OptionalSign> -
+<OptionalSign> lambda
+<AddingOperator> +
+<AddingOperator> -
+<AddingOperator> or
+<Term> <Factor> <FactorTail>
+<FactorTail> <MultiplyingOperator> <Factor> <FactorTail>
+<FactorTail> lambda
+<MultiplyingOperator> *
+<MultiplyingOperator> /
+<MultiplyingOperator> div
+<MultiplyingOperator> mod
+<MultiplyingOperator> and
+<Factor> unsignedInteger
+<Factor> unsignedFloat
+<Factor> stringLiteral
+<Factor> TRUE
+<Factor> FALSE
+<Factor> not <Factor>
+<Factor> ( <Expression> )
+<Factor> <FunctionIdentifier> <OptionalActualParameterList>
+<ProgramIdentifier> identifier
+<VariableIdentifier> identifier
+<ProcedureIdentifier> identifier
+<FunctionIdentifier> identifier
+<BooleanExpression> <Expression>
+<OrdinalExpression> <Expression>
+<IdentifierList> identifier <IdentifierTail>
+<IdentifierTail> , identifier <IdentifierTail>
+<IdentifierTail> lambda
+<Factor> <VariableIdentifier>
