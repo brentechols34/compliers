@@ -30,11 +30,13 @@ public class Parse {
 		populate();
 	}
 	
-	public void parse(int curRule, int curIndex, Token curToken){
+	public void parse(int curRule, int curIndex, Token curToken) throws IllegalArgumentException {
 		//If rule is terminal
 		if(isTerminal(curRule,curIndex)){
 			if(rules[curRule][curIndex].equals(curToken.val)){
 				curToken = getToken();
+			} else {
+				throw new IllegalArgumentException("Token " + curToken.toString() + " can not resolve at rule [" + curRule + "," + curIndex + "]");
 			}
 		} else {
 			int nextRule = LL1.get(rules[curRule][curIndex]).get(curToken.type);
@@ -50,7 +52,7 @@ public class Parse {
 		return tokens.get(token_index++);
 	}
 	
-	public int[] make() {
+	public int[] make() throws IllegalArgumentException {
 		parse(0,0,getToken());
 		int[] tr = new int[parseTree.size()];
 		for (int i = 0; i < tr.length; i++) {
