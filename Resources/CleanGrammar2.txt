@@ -1,0 +1,116 @@
+SystemGoal: Program MP_EOF
+Program: ProgramHeading MP_SCOLON Block MP_PERIOD
+ProgramHeading: MP_PROGRAM ProgramIdentifier
+Block: VariableDeclarationPart ProcedureAndFunctionDeclarationPart StatementPart
+VariableDeclarationPart: MP_VAR VariableDeclaration MP_SCOLON VariableDeclarationTail
+VariableDeclarationPart: lambda
+VariableDeclarationTail: VariableDeclaration MP_SCOLON VariableDeclarationTail
+VariableDeclarationTail: lambda
+VariableDeclaration: IdentifierList MP_COLON Type
+Type: MP_INTEGER
+Type: MP_FLOAT
+Type: MP_STRING
+Type: MP_BOOLEAN
+ProcedureAndFunctionDeclarationPart: ProcedureDeclaration ProcedureAndFunctionDeclarationPart
+ProcedureAndFunctionDeclarationPart: FunctionDeclaration ProcedureAndFunctionDeclarationPart
+ProcedureAndFunctionDeclarationPart: lambda
+ProcedureDeclaration: ProcedureHeading MP_SCOLON Block MP_SCOLON
+FunctionDeclaration: FunctionHeading MP_SCOLON Block MP_SCOLON
+ProcedureHeading: MP_PROCEDURE ProcedureIdentifier OptionalFormalParameterList
+FunctionHeading: MP_FUNCTION FunctionIdentifier OptionalFormalParameterList MP_COLON Type
+OptionalFormalParameterList: MP_LPAREN FormalParameterSection FormalParameterSectionTail MP_RPAREN
+OptionalFormalParameterList: lambda
+FormalParameterSectionTail: MP_SCOLON FormalParameterSection FormalParameterSectionTail
+FormalParameterSectionTail: lambda
+FormalParameterSection: ValueParameterSection
+FormalParameterSection: VariableParameterSection
+ValueParameterSection: IdentifierList MP_COLON Type
+VariableParameterSection: MP_VAR IdentifierList MP_COLON Type
+StatementPart: CompoundStatement
+CompoundStatement: MP_BEGIN StatementSequence MP_END
+StatementSequence: Statement StatementTail
+StatementTail: MP_SCOLON Statement StatementTail
+StatementTail: lambda
+Statement: EmptyStatement
+Statement: CompoundStatement
+Statement: ReadStatement
+Statement: WriteStatement
+Statement: AssignmentStatement
+Statement: IfStatement
+Statement: WhileStatement
+Statement: RepeatStatement
+Statement: ForStatement
+Statement: ProcedureStatement
+EmptyStatement: lambda
+ReadStatement: MP_READ MP_LPAREN ReadParameter ReadParameterTail MP_RPAREN
+ReadParameterTail: MP_COMMA ReadParameter ReadParameterTail
+ReadParameterTail: lambda
+ReadParameter: VariableIdentifier
+WriteStatement: MP_WRITE MP_LPAREN WriteParameter WriteParameterTail MP_RPAREN
+WriteStatement: MP_WRITELN MP_LPAREN WriteParameter WriteParameterTail MP_RPAREN
+WriteParameterTail: MP_COMMA WriteParameter WriteParameterTail
+WriteParameterTail: lambda
+WriteParameter: OrdinalExpression
+AssignmentStatement: VariableIdentifier MP_ASSIGN Expression
+AssignmentStatement: FunctionIdentifier MP_ASSIGN Expression
+IfStatement: MP_IF BooleanExpression MP_THEN Statement OptionalElsePart
+OptionalElsePart: MP_ELSE Statement
+OptionalElsePart: lambda
+RepeatStatement: MP_REPEAT StatementSequence MP_UNTIL BooleanExpression
+WhileStatement: MP_WHILE BooleanExpression MP_DO Statement
+ForStatement: MP_FOR ControlVariable MP_ASSIGN InitialValue StepValue FinalValue MP_DO Statement
+ControlVariable: VariableIdentifier
+InitialValue: OrdinalExpression
+StepValue: MP_TO
+StepValue: MP_DOWNTO
+FinalValue: OrdinalExpression
+ProcedureStatement: ProcedureIdentifier OptionalActualParameterList
+OptionalActualParameterList: MP_LPAREN ActualParameter ActualParameterTail MP_RPAREN
+OptionalActualParameterList: lambda
+ActualParameterTail: MP_COMMA ActualParameter ActualParameterTail
+ActualParameterTail: lambda
+ActualParameter: OrdinalExpression
+Expression: SimpleExpression OptionalRelationalPart
+OptionalRelationalPart: RelationalOperator SimpleExpression
+OptionalRelationalPart: lambda
+RelationalOperator: MP_EQUAL
+RelationalOperator: MP_LTHAN
+RelationalOperator: MP_GTHAN
+RelationalOperator: MP_LEQUAL
+RelationalOperator: MP_GEQUAL
+RelationalOperator: MP_NEQUAL
+SimpleExpression: OptionalSign Term TermTail
+TermTail: AddingOperator Term TermTail
+TermTail: lambda
+OptionalSign: MP_PLUS
+OptionalSign: MP_MINUS
+OptionalSign: lambda
+AddingOperator: MP_PLUS
+AddingOperator: MP_MINUS
+AddingOperator: MP_OR
+Term: Factor FactorTail
+FactorTail: MultiplyingOperator Factor FactorTail
+FactorTail: lambda
+MultiplyingOperator: MP_TIMES
+MultiplyingOperator: MP_FLOAT_DIVIDE
+MultiplyingOperator: MP_DIV
+MultiplyingOperator: MP_MOD
+MultiplyingOperator: MP_AND
+Factor: MP_INT_LIT
+Factor: MP_FLOAT_LIT
+Factor: MP_STRING_LIT
+Factor: MP_TRUE
+Factor: MP_FALSE
+Factor: MP_NOT Factor
+Factor: MP_LPAREN Expression MP_RPAREN
+Factor: FunctionIdentifier OptionalActualParameterList
+ProgramIdentifier: MP_IDENTIFIER
+VariableIdentifier: MP_IDENTIFIER
+ProcedureIdentifier: MP_IDENTIFIER
+FunctionIdentifier: MP_IDENTIFIER
+BooleanExpression: Expression
+OrdinalExpression: Expression
+IdentifierList: MP_IDENTIFIER IdentifierTail
+IdentifierTail: MP_COMMA MP_IDENTIFIER IdentifierTail
+IdentifierTail: lambda
+Factor: VariableIdentifier
