@@ -84,14 +84,27 @@ public class Parse {
 		for (ArrayList<String> row : LL) {
 			rules.add(row.get(0));
 			row.remove(0);
-			System.out.println(row);
 		}
-		System.out.println(rules);
-		System.out.println(tokens);
+		LLTable LLT = new LLTable();
+		for (int i = 0; i < rules.size(); i++) {
+			for (int j = 0; j < tokens.size(); j++) {
+				if (!LL.get(i).get(j).equals(".")) {
+					LLT.addEntry(rules.get(i), TokenType.valueOf(tokens.get(j)), getIndices(LL.get(i).get(j)));
+					System.out.println(rules.get(i) + " " + TokenType.valueOf(tokens.get(j)) + Arrays.toString(getIndices(LL.get(i).get(j))));
+				}
+			}
+		}
 		
 		
 	}
-	
+	public int[] getIndices(String str) {
+		String[] splt = str.split("|");
+		int[] splt_int = new int[splt.length];
+		for (int i = 0; i < splt.length; i++) {
+			splt_int[i] = Integer.parseInt(splt[i]);
+		}
+		return splt_int;
+	}
 	public ArrayList<String> convLine(String line) {
 		String[] splt = line.split(",");
 		ArrayList<String> arrl = new ArrayList<>(Arrays.asList(splt));
