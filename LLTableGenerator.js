@@ -103,11 +103,11 @@ var tokens = Object.keys(Object.keys(table).reduce(function (a, b) {
 var llTable = Object.keys(table).map(function (a) {
     return a + ',' + tokens.map(function (b) {
         if (!table[a][b]) {
-          return '';
+          return '.';
         }
 
         var text = JSON.stringify(table[a][b]);
-        return '"' + text.slice(1, text.length - 1) + '"';
+        return text.slice(1, text.length - 1).replace(/\,/g, '|');
     }).join(',');
 });
 
