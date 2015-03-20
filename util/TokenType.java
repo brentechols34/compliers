@@ -60,6 +60,7 @@ public enum TokenType {
 	MP_RUN_COMMENT,
 	MP_RUN_STRING,
 	MP_ERROR,
-	MP_COMMENT
+	MP_COMMENT,
+	lambda
 
 }

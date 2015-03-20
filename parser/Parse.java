@@ -98,7 +98,8 @@ public class Parse {
 		
 	}
 	public int[] getIndices(String str) {
-		String[] splt = str.split("|");
+		String[] splt = str.split("\\|");
+		System.out.println(Arrays.toString(splt));
 		int[] splt_int = new int[splt.length];
 		for (int i = 0; i < splt.length; i++) {
 			splt_int[i] = Integer.parseInt(splt[i]);

@@ -96,7 +96,7 @@ MultiplyingOperator: MP_FLOAT_DIVIDE
 MultiplyingOperator: MP_DIV
 MultiplyingOperator: MP_MOD
 MultiplyingOperator: MP_AND
-Factor: MP_INT_LIT
+Factor: MP_INTEGER_LIT
 Factor: MP_FLOAT_LIT
 Factor: MP_STRING_LIT
 Factor: MP_TRUE
