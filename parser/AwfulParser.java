@@ -13,37 +13,48 @@ import java.util.HashSet;
 import util.Token;
 import util.TokenType;
     
-public class Parse {
-	HashMap<String,HashMap<TokenType,Integer>> LL1; //rule, tokentype
+public class AwfulParser {
 	HashSet<String> ruleNames;
 	String[][] rules;
+	HashMap<String, ArrayList<Integer>> rules_map;
 	ArrayList<Integer> parseTree;
 	
 	ArrayList<Token> tokens;
 	private int token_index;
 	
-	public Parse(ArrayList<Token> tokens) throws IOException{
-		LL1 = new HashMap<>();
+	public AwfulParser(ArrayList<Token> tokens) throws IOException{
 		parseTree = new ArrayList<>();
 		this.tokens = tokens;
 		token_index = 0;
 		populate();
 	}
 	
-	public void parse(int curRule, int curIndex, Token curToken){
-		//If rule is terminal
-		if(isTerminal(curRule,curIndex)){
-			if(rules[curRule][curIndex].equals(curToken.val)){
-				curToken = getToken();
+	public ArrayList<Integer> parse(int cr, Token ct) {
+		ArrayList<Integer> mytree = new ArrayList<>();
+		mytree.add(cr); //assume this works and add me as root
+		//we need to try to build the sub parse trees for each section of this rule
+		String[] mahRule = rules[cr];
+		for (int i = 1; i < mahRule.length; i++) {
+			if (isTerminal(cr,i)) {
+				//hang this token, move to next
+				//TODO
+				//All the rules use annoying different syntax than the token names
+			} else { //if it is not terminal, try to apply every rule after this one
+				ArrayList<Integer> possibles = rules_map.get(mahRule[i].replaceAll("<|>", ""));
+				boolean success = false;
+				for (Integer in : possibles) {
+					ArrayList<Integer> attempt = parse(in,ct);
+					if (attempt != null) {
+						mytree.addAll(attempt);
+						success = true;
+						break;
+					}
+					if (!success) return null; //couldn't hang this token, return null
+				}
 			}
-		} else {
-			int nextRule = LL1.get(rules[curRule][curIndex]).get(curToken.type);
-			parseTree.add(nextRule);
-			parse(nextRule,0,curToken);
-		} 
-		if (curIndex < rules[curRule].length - 1){
-			parse(curRule,++curIndex,curToken);
 		}
+		
+		return null;
 	}
 	
 	private Token getToken(){
@@ -51,7 +62,7 @@ public class Parse {
 	}
 	
 	public int[] make() {
-		parse(0,0,getToken());
+		parse(0,getToken());
 		int[] tr = new int[parseTree.size()];
 		for (int i = 0; i < tr.length; i++) {
 			tr[i] = parseTree.get(i);
@@ -68,7 +79,6 @@ public class Parse {
 	 * @throws IOException 
 	 */
 	public void populate() throws IOException {
-		String LL1_fname = "Resources/LL1.csv";
 		String rules_fname = "Resources/rules.ssv";
 		String names_fname = "Resources/names.txt";
 		String tokens_fname = "Resources/tokens.txt";
@@ -81,31 +91,31 @@ public class Parse {
 		ruleNames = new HashSet<>();
 		ruleNames.addAll(names); //put all the rule names into a hashset for O(1) contains checking
 		
-		for (String name : names) { //init all the sub hashmaps for the LL1
-			LL1.put(name, new HashMap<>());
+		ArrayList<String[]> rules_temp = readSV(rules_fname, " ");
+		
+		rules_map = new HashMap<>();
+		for (String name : names) {
+			rules_map.put(name, new ArrayList<>());
 		}
-		
-		ArrayList<String[]> LL1_temp = readSV(LL1_fname, ","); //scan in the LL1
-		
-		for (int i = 0; i < LL1_temp.size(); i++) { //populates the LL1, hopefully
-			HashMap<TokenType, Integer> mah_map = LL1.get(names.get(i)); 
-			String[] mah_row = LL1_temp.get(i); //this is the row of the LL1 table for the i-th rule
-			System.out.println(i + ": " + Arrays.toString(mah_row));
-			for (int j = 0; j < mah_row.length; j++) {
-				if (!mah_row[j].equals(".")) {
-					mah_map.put(TokenType.valueOf(tokens.get(j)), Integer.parseInt(mah_row[j])); //wooooooooo
-				}
+		rules = new String[rules_temp.size()][];
+		for (int i = 0; i < rules_temp.size(); i++) {
+			String[] rule = rules_temp.get(i);
+			String[] right_side = new String[rule.length-1];
+			for (int j = 1; j < rule.length; j++) {
+				right_side[j-1] = rule[j];
 			}
+			rules[i] = right_side;
+		    rules_map.get(rule[0].replaceAll("<|>","")).add(i);
+		    
 		}
 		
-		for (String s : LL1.keySet()) {
-			HashMap<TokenType, Integer> ttmap = LL1.get(s);
-			for (TokenType tt : ttmap.keySet()) {
-				System.out.println(s + "," + tt.name() + "->" + ttmap.get(tt));
+		for (String s : rules_map.keySet()) {
+			String st = s + ": ";
+			for (Integer arr : rules_map.get(s)) {
+				st += arr +"\n";
 			}
+			System.out.println(st);
 		}
-		
-		
 	}
 	
 	private ArrayList<String[]> readSV(String fname, String delimit) throws IOException {

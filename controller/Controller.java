@@ -6,11 +6,12 @@ import java.util.ArrayList;
 
 import scanner.Scanner;
 import util.*;
+import parser.AwfulParser;
 import parser.Parse;
 public class Controller {
 
 	Scanner sc;
-	Parse pr;
+	AwfulParser pr;
 	
 	ArrayList<Token> tokens;
 	int[] parseTree;
@@ -29,19 +30,20 @@ public class Controller {
 		} while (true);
 	}
 	
-	public void parsify() { //generate parse tree (TODO: Symbol table)
+	public void parsify() throws IOException { //generate parse tree (TODO: Symbol table)
 		if (tokens == null) {
-			System.out.println("No: Tokenize the file first.");
+			System.out.println("No: Tokenize first.");
 			return;
 		}
-		pr = new Parse(tokens);
+		pr = new AwfulParser(tokens);
 		parseTree = pr.make();
 	}
 	
 	public static void main(String[] args) throws IOException {
 		Controller c = new Controller("test.txt");
 		c.tokenize();
-		System.out.println(c.tokens);
+		System.out.println("Token Stream: " + c.tokens);
+		c.parsify();
 	}
 	
 	
