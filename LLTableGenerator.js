@@ -107,7 +107,7 @@ var llTable = Object.keys(table).map(function (a) {
         }
 
         var text = JSON.stringify(table[a][b]);
-        return text.slice(1, text.length - 1).replace(/\,/g, '|');
+        return text.slice(1, text.length - 1).replace(/\,/g, '|') || '.';
     }).join(',');
 });
 
