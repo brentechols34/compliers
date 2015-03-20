@@ -29,7 +29,7 @@ public class Controller {
 		} while (true);
 	}
 	
-	public void parsify() throws IOException { //generate parse tree (TODO: Symbol table)
+	public void parsify() throws IOException, IllegalArgumentException { //generate parse tree (TODO: Symbol table)
 		if (tokens == null) {
 			System.out.println("No: Tokenize first.");
 			return;
@@ -38,7 +38,7 @@ public class Controller {
 		parseTree = pr.make();
 	}
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, IllegalArgumentException {
 		Controller c = new Controller("test.txt");
 		c.tokenize();
 		System.out.println("Token Stream: " + c.tokens);
