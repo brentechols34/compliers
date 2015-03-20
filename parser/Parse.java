@@ -68,61 +68,33 @@ public class Parse {
 	 * @throws IOException 
 	 */
 	public void populate() throws IOException {
-		String LL1_fname = "Resources/LL1.csv";
-		String rules_fname = "Resources/rules.ssv";
-		String names_fname = "Resources/names.txt";
-		String tokens_fname = "Resources/tokens.txt";
-		
-		//first we need the names and tokens, which are the rows and columns of the LL1
-		ArrayList<String> names = readTXT(names_fname);
-		System.out.println("Names: " + names);
-		ArrayList<String> tokens = readTXT(tokens_fname);
-		System.out.println("Tokens: " + tokens);
-		ruleNames = new HashSet<>();
-		ruleNames.addAll(names); //put all the rule names into a hashset for O(1) contains checking
-		
-		for (String name : names) { //init all the sub hashmaps for the LL1
-			LL1.put(name, new HashMap<>());
+		ArrayList<ArrayList<String>> LL = new ArrayList<>();
+		BufferedReader bf = new BufferedReader(new FileReader("compliers\\Resources\\LLTable.csv"));
+		String line;
+		while ((line=bf.readLine())!=null) {
+			LL.add(convLine(line));
 		}
+		bf.close();
 		
-		ArrayList<String[]> LL1_temp = readSV(LL1_fname, ","); //scan in the LL1
-		
-		for (int i = 0; i < LL1_temp.size(); i++) { //populates the LL1, hopefully
-			HashMap<TokenType, Integer> mah_map = LL1.get(names.get(i)); 
-			String[] mah_row = LL1_temp.get(i); //this is the row of the LL1 table for the i-th rule
-			System.out.println(i + ": " + Arrays.toString(mah_row));
-			for (int j = 0; j < mah_row.length; j++) {
-				if (!mah_row[j].equals(".")) {
-					mah_map.put(TokenType.valueOf(tokens.get(j)), Integer.parseInt(mah_row[j])); //wooooooooo
-				}
-			}
+		ArrayList<String> rules = new ArrayList<>();
+		ArrayList<String> tokens = LL.get(0);
+		LL.remove(0);
+		for (ArrayList<String> row : LL) {
+			rules.add(row.get(0));
+			row.remove(0);
+			System.out.println(row);
 		}
-		
-		for (String s : LL1.keySet()) {
-			HashMap<TokenType, Integer> ttmap = LL1.get(s);
-			for (TokenType tt : ttmap.keySet()) {
-				System.out.println(s + "," + tt.name() + "->" + ttmap.get(tt));
-			}
-		}
+		System.out.println(rules);
+		System.out.println(tokens);
 		
 		
 	}
 	
-	private ArrayList<String[]> readSV(String fname, String delimit) throws IOException {
-		BufferedReader bf = new BufferedReader(new FileReader(fname));
-		ArrayList<String[]> lines = new ArrayList<>();
-		String line;
-		while ((line = bf.readLine())!=null) lines.add(line.split(delimit));
-		bf.close();
-		return lines;
+	public ArrayList<String> convLine(String line) {
+		String[] splt = line.split(",");
+		ArrayList<String> arrl = new ArrayList<>(Arrays.asList(splt));
+		return arrl;
 	}
 	
-	private ArrayList<String> readTXT(String fname) throws IOException {
-		BufferedReader bf = new BufferedReader(new FileReader(fname));
-		ArrayList<String> lines = new ArrayList<>();
-		String line;
-		while ((line = bf.readLine())!=null) lines.add(line);
-		bf.close();
-		return lines;
-	}
+
 }

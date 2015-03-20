@@ -6,12 +6,11 @@ import java.util.ArrayList;
 
 import scanner.Scanner;
 import util.*;
-import parser.AwfulParser;
 import parser.Parse;
 public class Controller {
 
 	Scanner sc;
-	AwfulParser pr;
+	Parse pr;
 	
 	ArrayList<Token> tokens;
 	int[] parseTree;
@@ -35,7 +34,7 @@ public class Controller {
 			System.out.println("No: Tokenize first.");
 			return;
 		}
-		pr = new AwfulParser(tokens);
+		pr = new Parse(tokens);
 		parseTree = pr.make();
 	}
 	
