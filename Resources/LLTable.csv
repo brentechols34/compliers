@@ -1,5 +1,5 @@
-,MP_PROGRAM,MP_VAR,MP_PROCEDURE,MP_FUNCTION,MP_BEGIN,MP_IDENTIFIER,MP_INTEGER,MP_FLOAT,MP_STRING,MP_BOOLEAN,MP_LPAREN,MP_SCOLON,MP_READ,MP_WRITELN,MP_WRITE,MP_IF,MP_WHILE,MP_REPEAT,MP_FOR,MP_COMMA,MP_PLUS,MP_MINUS,MP_INTEGER_LIT,MP_FLOAT_LIT,MP_STRING_LIT,MP_TRUE,MP_FALSE,MP_NOT,MP_ELSE,MP_TO,MP_DOWNTO,MP_EQUAL,MP_LTHAN,MP_GTHAN,MP_LEQUAL,MP_GEQUAL,MP_NEQUAL,MP_OR,MP_TIMES,MP_FLOAT_DIVIDE,MP_DIV,MP_MOD,MP_AND
-(index):136 SystemGoal,1,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.
+MP_PROGRAM,MP_VAR,MP_PROCEDURE,MP_FUNCTION,MP_BEGIN,MP_IDENTIFIER,MP_INTEGER,MP_FLOAT,MP_STRING,MP_BOOLEAN,MP_LPAREN,MP_SCOLON,MP_READ,MP_WRITELN,MP_WRITE,MP_IF,MP_WHILE,MP_REPEAT,MP_FOR,MP_COMMA,MP_PLUS,MP_MINUS,MP_INTEGER_LIT,MP_FLOAT_LIT,MP_STRING_LIT,MP_TRUE,MP_FALSE,MP_NOT,MP_ELSE,MP_TO,MP_DOWNTO,MP_EQUAL,MP_LTHAN,MP_GTHAN,MP_LEQUAL,MP_GEQUAL,MP_NEQUAL,MP_OR,MP_TIMES,MP_FLOAT_DIVIDE,MP_DIV,MP_MOD,MP_AND
+SystemGoal,1,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.
 Program,2,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.
 ProgramHeading,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.
 Block,.,4,13,14,28,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.
