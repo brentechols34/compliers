@@ -141,8 +141,22 @@ var makeTable = function (arr) {
     grammar.forEach(function (a) {
         makeTableRecurse(a, lookup, grammar);
     });
-    grammar.forEach(function (a) { generatePreceeding(a, lookup); });
-    grammar.forEach(function (a) { epsilonPostProcess(a, lookup, grammar); });
+//    grammar.forEach(function (a) { generatePreceeding(a, lookup); });
+//    grammar.forEach(function (a) { epsilonPostProcess(a, lookup, grammar); });
+    var tokens = Object.keys(Object.keys(lookup).reduce(function (a, b) {
+        return Object.assign(a, lookup[b]);
+    }, {})).filter(function (a) { return a !== 'lambda'; });
+
+    for (var key in lookup) {
+        var lambda = lookup[key]['lambda'];
+        if (lambda === undefined) {
+            continue;
+        }
+
+        tokens.forEach(function (token) {
+            lookup[key][token] = lookup[key][token] ? union_arrays(lookup[key][token], lambda) : lambda;
+        });
+    }
 
     return lookup;
 };
