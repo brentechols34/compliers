@@ -49,8 +49,8 @@ function union_arrays (x, y) {
 var makeTableRecurse = function (term, dict, grammar) {
     var start = term.rule.split(':')[0];
     var end = term.rule.split(':')[1];
-  	if (end.trim() === 'lambda' || !dict[end.split(' ')[1].trim()]) {
-          dict[start][end.split(' ')[1].trim()] = term.index;
+  	if (end.trim() === 'lambda' || dict[end.split(' ')[1].trim()] === undefined) {
+          dict[start][end.split(' ')[1].trim()] = [term.index];
           return { index: term.index, terminals: [end.split(' ')[1].trim()] };
   	}
     
