@@ -21,71 +21,133 @@ public class Parse {
 	String[][] rules;
 
 	ArrayList<Token> tokens;
-	private int token_index;
 
 	public Parse(ArrayList<Token> tokens) throws IOException{
 		this.tokens = tokens;
-		token_index = 0;
 		populate();
 	}
 
-	Token curToken;
-    /*
-        This function works by specifying a rule name to expand on, and the current branching index.
-            The ruleName is used to lookup which rule should be expanded on, based on the
-            current token. This returns int[] of options, which 'branch' is used to index into.
-            If a given subtree cannot be completed successfully (denoted by returning null), the method
-            is simply called again but with an incremented number on branch, which indicates to use a
-            different LL resolution.
+    // Accepts a set of state parameters, and attempts to expand a child by mutating the path given.
+	public ParseReturn parse(String ruleName, int rule, int token, int child, ArrayList<RuleApplication> path) throws IllegalArgumentException {
+        Token curToken = tokens.get(token);
 
-            FUCK state man, the token index is still gonna be kinda weird because you have to rewind it
-            somehow, and track its delta through recursion. Maybe return out a tuple? Java2Hard
-     */
-	public ArrayList<RuleApplication> parse(String ruleName, int branch) throws IllegalArgumentException {
         // NON-TERMINAL HANDLING
 		if (!isTerminal(ruleName)) {
-            // Get rule indices, returns empty array if it is a bad path
-			int[] index = LLT.getRuleIndex(ruleName, curToken.type);
-            if (index.length == 0 || index.length <= branch) {
-                return null;
+            // Get the string this application is expanding to currently
+            String expand = rules[rule][child];
+
+            // Find what rule that expansion goes to
+			int[] index = LLT.getRuleIndex(expand, curToken.type);
+            if (index.length == 0) {
+                return ParseReturn.ERROR;
             }
 
-            // Construct our list of applications
-            ArrayList<RuleApplication> applications = new ArrayList<RuleApplication>();
-            applications.add(new RuleApplication(index[branch], curToken));
+            // Add this expansion to the path
+            path.add(new RuleApplication(expand, index[0], token, 0, 0));
 
-            // Iterate through the productions
-            //  If we find a null (meaning invalid application), than we know this branching path is bad
-			String[] right_side = rules[index[branch]];
-			for (String r : right_side) {
-                ArrayList<RuleApplication> subTree = parse(r, 0);
-                if (subTree == null) {
-                    return parse(ruleName, branch + 1);
-                }
-
-                applications.addAll(subTree);
-            }
-
-            return applications;
+            return ParseReturn.EXPAND;
 		}
 
         // TERMINAL HANDLING
         if (ruleName.equals(curToken.type.name())) {
             System.out.println("Hung:" + curToken.val);
-            curToken = nextToken();
-        } else if (!ruleName.equals("lambda")) {
-            return null;
+            return ParseReturn.HUNG;
+        } else if (ruleName.equals("lambda")) {
+            return ParseReturn.LAMBDA;
         }
-        return new ArrayList<RuleApplication>();
+
+        return ParseReturn.ERROR;
 	}
 
-	private Token nextToken(){
-		return tokens.get(token_index++);
-	}
+    enum ParseReturn {
+        HUNG,
+        LAMBDA,
+        EXPAND,
+        ERROR
+    }
+
+    public ArrayList<RuleApplication> parseMaster() {
+        int tokenIndex = 0;
+        ArrayList<RuleApplication> path = new ArrayList<RuleApplication>();
+        path.add(new RuleApplication("SystemGoal", 0, 0, 0, 0));
+
+        // Process through and generate paths until:
+        //  - the path size reaches 0, indicating no valid tree exists
+        //  - getNext returns null, indicating all members of the tree are done
+        while(path.size() > 0 && this.getNext(path) != null) {
+            RuleApplication next = this.getNext(path);
+            ParseReturn r = parse(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, path);
+            switch (r) {
+                case HUNG:
+                    next.childIndex++;
+                    tokenIndex++;
+                    break;
+                case LAMBDA:
+                    next.childIndex++;
+                    break;
+                case EXPAND:
+                    next.childIndex++;
+                    break;
+                case ERROR:
+                    tokenIndex = trimTree(path);
+                    break;
+            }
+        }
+
+        if (path.size() == 0) {
+            System.out.println("No valid parse tree found!");
+        }
+        if (tokenIndex != tokens.size()) {
+            System.out.println("Not all tokens processed!");
+        }
+
+        return path;
+    }
+
+    // Prunes out path elements who have exhausted all branching possibilities,
+    //  adjusts the branchIndex, and resets the first candidate found.
+    private int trimTree(ArrayList<RuleApplication> path) {
+        // Prune all maximally branched paths at the end of our path
+        for (int i = path.size() - 1; i >= 0; i--) {
+            RuleApplication app = path.get(i);
+            int[] index = LLT.getRuleIndex(app.ruleName, tokens.get(app.tokenIndex).type);
+
+            // If we have exhausted all branching at this path, remove it
+            if (app.branchIndex >= index.length) {
+                path.remove(i);
+            }
+        }
+
+        // We deleted the whole path
+        if (path.size() == 0) {
+            return 0;
+        }
+
+        // Alter our last member so it will expand to a new branch
+        RuleApplication last = path.get(path.size() - 1);
+        last.branchIndex++;
+        last.childIndex = 0;
+        last.ruleIndex = LLT.getRuleIndex(last.ruleName, tokens.get(last.tokenIndex).type)[last.branchIndex];
+
+        return last.tokenIndex;
+    }
+
+    // Returns the next valid path to expand on in the tree, which is defined as the first
+    //  element found without it's children filled in
+    private RuleApplication getNext(ArrayList<RuleApplication> path) {
+        for (int i = path.size() - 1; i >= 0; i--) {
+            RuleApplication app = path.get(i);
+            String[] children = rules[app.ruleIndex];
+            if (children.length > app.childIndex) {
+                return app;
+            }
+        }
+
+        return null;
+    }
 
 	public RuleApplication[] make() throws IllegalArgumentException {
-		curToken = nextToken();
-		ArrayList<RuleApplication> parseTree = parse("SystemGoal", 0);
+		ArrayList<RuleApplication> parseTree = parseMaster();
         RuleApplication[] tr = new RuleApplication[parseTree.size()];
 		for (int i = 0; i < tr.length; i++) {
 			tr[i] = parseTree.get(i);
