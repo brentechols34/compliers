@@ -20,11 +20,11 @@ public class Scanner {
 	}
 	
 	public Token nextToken() throws IOException {
-		DFAS[] allStates = new DFAS[] {new integer(), new fixed(), new fp(), new identifier(), new unclosedComment(), new comment(), new stringLiteral(), new unclosedString(), new arith(), new equality(), new nequal(), new oparen(), new cparen(), new set(), new scolon()};
-		boolean[] notRejected = new boolean[] {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true};
-		boolean[] wereNotRejected = new boolean[] {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true};
-		boolean[] wereAccepting = new boolean[] {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true};
-		int notRejected_count = 15;
+		DFAS[] allStates = new DFAS[] {new integer(), new fixed(), new fp(), new identifier(), new unclosedComment(), new comment(), new stringLiteral(), new unclosedString(), new arith(), new equality(), new nequal(), new oparen(), new cparen(), new set(), new scolon(), new comma(), new period(), new colon()};
+		boolean[] notRejected = new boolean[] {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true};
+		boolean[] wereNotRejected = new boolean[] {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true};
+		boolean[] wereAccepting = new boolean[] {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true};
+		int notRejected_count = 18;
 		String s = "";
 		int r=0;
 		char c=0;
@@ -36,7 +36,7 @@ public class Scanner {
 				pr.unread(c);
 				break;
 			}
-		}int col = pr.col;
+		} int col = pr.col;
 		int row = pr.row;
 		while (notRejected_count > 0) {
 			for (int i = 0; i < allStates.length; i++) {wereNotRejected[i] = notRejected[i]; if (wereNotRejected[i]) wereAccepting[i] = allStates[i].isAccepting();}

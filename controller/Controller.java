@@ -27,6 +27,7 @@ public class Controller {
 			if (t == null) break;
 			tokens.add(t);
 		} while (true);
+		tokens.add(new Token(TokenType.MP_EOF,"",-1,-1));
 	}
 	
 	public void parsify() throws IOException, IllegalArgumentException { //generate parse tree (TODO: Symbol table)
