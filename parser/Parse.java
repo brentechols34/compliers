@@ -32,38 +32,28 @@ public class Parse {
 	}
 
 	Token curToken;
-	public void parse(int curRule, int curIndex) throws IllegalArgumentException {
-		//If rule is terminal
-		System.out.println("I am at " + rules[curRule][curIndex] + " " + curRule + " " + curIndex + " " + curToken );
-		if (curToken == null) return;
-		if(isTerminal(curRule,curIndex)){
-			if(rules[curRule][curIndex].equals(curToken.type.name())){
-				System.out.println("Hung:"+curToken.val);
-				curToken = getToken();
-			} else {
-				throw new IllegalArgumentException("Token " + curToken.toString() + " can not resolve at rule [" + curRule + "," + curIndex + "]");
-			}
+	public void parse(String ruleName) throws IllegalArgumentException {
+		if (isTerminal(ruleName)) {
+			//hang token
+			curToken = nextToken();
 		} else {
-			int[] potential_rules = LLT.getRuleIndex(rules[curRule][curIndex],curToken.type);
-			System.out.println(Arrays.toString(potential_rules));
-			if (potential_rules.length == 1) {
-				int mahRule = potential_rules[0];
-				parseTree.add(mahRule);
-				parse(mahRule,0);
+			int[] index = LLT.getRuleIndex(ruleName, curToken.type); //get rule indices
+			System.out.println(index[0]);
+			parseTree.add(index[0]);
+			String[] right_side = rules[index[0]];
+			for (String r : right_side) {
+				parse(r);
 			}
-		} 
-		if (curIndex < rules[curRule].length - 1){
-			parse(curRule,1+curIndex);
 		}
 	}
 
-	private Token getToken(){
+	private Token nextToken(){
 		return tokens.get(token_index++);
 	}
 
 	public int[] make() throws IllegalArgumentException {
-		curToken = getToken();
-		parse(0,0);
+		curToken = nextToken();
+		parse("SystemGoal");
 		int[] tr = new int[parseTree.size()];
 		for (int i = 0; i < tr.length; i++) {
 			tr[i] = parseTree.get(i);
@@ -71,8 +61,8 @@ public class Parse {
 		return tr;
 	}
 
-	boolean isTerminal(int curRule, int curIndex){
-		return !ruleNames.contains(rules[curRule][curIndex]);
+	boolean isTerminal(String ruleName){
+		return !ruleNames.contains(ruleName);
 	}
 
 	/**
@@ -97,7 +87,7 @@ public class Parse {
 			row.remove(0);
 		}
 		ruleNames = new HashSet<>(ruleNamesList);
-		
+
 		LLT = new LLTable();
 		for (int i = 0; i < ruleNamesList.size(); i++) {
 			for (int j = 0; j < tokens.size(); j++) {
