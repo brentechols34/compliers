@@ -1,7 +1,7 @@
 package scanner;
  import util.TokenType;
-public class colon implements DFAS { 
-	public colon() {
+public class equals implements DFAS { 
+	public equals() {
 		currentState = "a";
 	}
 	private String currentState;
@@ -16,7 +16,7 @@ public class colon implements DFAS {
 	}
 	public static String a(char c) {
 		switch(c) {
-		case ':': return "b";
+		case '=': return "b";
 		default: return null;
 		}
 	}
@@ -32,6 +32,6 @@ public class colon implements DFAS {
 	}
 	
 	public TokenType getType(String lexeme) {
-		return TokenType.MP_COLON;
+		return TokenType.MP_EQUAL;
 	}
 }

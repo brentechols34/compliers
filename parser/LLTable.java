@@ -12,9 +12,15 @@ public class LLTable {
 	}
 	
 	public void addEntry(String rule, TokenType token, int[] ruleIndex){
-		HashMap<TokenType,int[]> temp = new HashMap<>();
-		temp.put(token,ruleIndex);
-		LL1.put(rule,temp);
+		if (LL1.get(rule)==null) {
+			HashMap<TokenType,int[]> temp = new HashMap<>();
+			temp.put(token,ruleIndex);
+			LL1.put(rule,temp);
+		} else {
+			LL1.get(rule).put(token, ruleIndex);
+		}
+		
+		
 	}
 	
 	

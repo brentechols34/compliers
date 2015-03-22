@@ -33,16 +33,22 @@ public class Parse {
 
 	Token curToken;
 	public void parse(String ruleName) throws IllegalArgumentException {
-		if (isTerminal(ruleName)) {
-			//hang token
-			curToken = nextToken();
-		} else {
+		if (!isTerminal(ruleName)) {
+
 			int[] index = LLT.getRuleIndex(ruleName, curToken.type); //get rule indices
-			System.out.println(index[0]);
-			parseTree.add(index[0]);
+			System.out.println(ruleName + " " + curToken + " " + Arrays.toString(index));
+			parseTree.add(index[0]); //add this rule to parse tree
+			//System.out.println(index[0]);
 			String[] right_side = rules[index[0]];
-			for (String r : right_side) {
-				parse(r);
+			for (String r : right_side) parse(r);
+		} else {
+			if (ruleName.equals(curToken.type.name())) {
+				System.out.println("Hung:" + curToken.val);
+				curToken = nextToken();
+			} else {
+				if (!ruleName.equals("lambda")) {
+					throw new IllegalArgumentException("Expected type " + ruleName + ". Received " + curToken.type.name());
+				}
 			}
 		}
 	}
@@ -93,10 +99,11 @@ public class Parse {
 			for (int j = 0; j < tokens.size(); j++) {
 				if (!LL.get(i).get(j).equals(".")) {
 					LLT.addEntry(ruleNamesList.get(i), TokenType.valueOf(tokens.get(j)), getIndices(LL.get(i).get(j)));
-					System.out.println("Entry added: (" + ruleNamesList.get(i) + "," + TokenType.valueOf(tokens.get(j))+"): " + getIndices(LL.get(i).get(j)));
+					System.out.println("Entry added: (" + ruleNamesList.get(i) + "," + TokenType.valueOf(tokens.get(j))+"): " + Arrays.toString(getIndices(LL.get(i).get(j))));
 				}
 			}
 		}
+
 
 		bf = new BufferedReader(new FileReader("compliers\\Resources\\CleanGrammar2.txt"));
 		int cnt = 0;
@@ -127,6 +134,7 @@ public class Parse {
 			}
 		}
 	}
+
 	public int[] getIndices(String str) {
 		String[] splt = str.split("\\|");
 		int[] splt_int = new int[splt.length];
