@@ -91,7 +91,7 @@ var generatePreceeding = function (term, dict) {
     var start = term.rule.split(':')[0];
     var end = term.rule.split(':')[1].split(' ').slice(1);
     
-    for (var i = end.length; i !== 0; i--) {
+    for (var i = end.length - 1; i !== 0; i--) {
         if (dict[end[i-1]] && dict[end[i-1]]['lambda']) {
             preceding[end[i]] = preceding[end[i]] ? union_arrays(preceding[end[i]], [end[i-1]]) : [end[i-1]];
         }
@@ -127,7 +127,7 @@ var epsilonPostProcess = function (term, dict, grammar) {
     var start = term.rule.split(':')[0];
     var end = term.rule.split(':')[1].split(' ').slice(1);
     
-    for (var i = end.length; i !== 0; i--) {
+    for (var i = end.length - 1; i !== 0; i--) {
         if (dict[end[i-1]] && dict[end[i-1]]['lambda']) {
             applyEpsilon(end[i-1], end[i], dict, grammar);
         }
