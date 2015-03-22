@@ -7,13 +7,14 @@ import java.util.ArrayList;
 import scanner.Scanner;
 import util.*;
 import parser.Parse;
+import parser.RuleApplication;
 public class Controller {
 
 	Scanner sc;
 	Parse pr;
 	
 	ArrayList<Token> tokens;
-	int[] parseTree;
+    RuleApplication[] parseTree;
 	
 	public Controller(String fname) throws FileNotFoundException {
 		sc = new Scanner(fname);

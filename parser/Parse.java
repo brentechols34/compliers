@@ -19,48 +19,74 @@ public class Parse {
 	ArrayList<String> ruleNamesList;
 	HashMap<String, ArrayList<Integer>> byName;
 	String[][] rules;
-	ArrayList<Integer> parseTree;
 
 	ArrayList<Token> tokens;
 	private int token_index;
 
 	public Parse(ArrayList<Token> tokens) throws IOException{
-		parseTree = new ArrayList<>();
 		this.tokens = tokens;
 		token_index = 0;
 		populate();
 	}
 
 	Token curToken;
-	public void parse(String ruleName) throws IllegalArgumentException {
-		if (!isTerminal(ruleName)) {
+    /*
+        This function works by specifying a rule name to expand on, and the current branching index.
+            The ruleName is used to lookup which rule should be expanded on, based on the
+            current token. This returns int[] of options, which 'branch' is used to index into.
+            If a given subtree cannot be completed successfully (denoted by returning null), the method
+            is simply called again but with an incremented number on branch, which indicates to use a
+            different LL resolution.
 
-			int[] index = LLT.getRuleIndex(ruleName, curToken.type); //get rule indices
-			System.out.println(ruleName + " " + curToken + " " + Arrays.toString(index));
-			parseTree.add(index[0]); //add this rule to parse tree
-			//System.out.println(index[0]);
-			String[] right_side = rules[index[0]];
-			for (String r : right_side) parse(r);
-		} else {
-			if (ruleName.equals(curToken.type.name())) {
-				System.out.println("Hung:" + curToken.val);
-				curToken = nextToken();
-			} else {
-				if (!ruleName.equals("lambda")) {
-					throw new IllegalArgumentException("Expected type " + ruleName + ". Received " + curToken.type.name());
-				}
-			}
+            FUCK state man, the token index is still gonna be kinda weird because you have to rewind it
+            somehow, and track its delta through recursion. Maybe return out a tuple? Java2Hard
+     */
+	public ArrayList<RuleApplication> parse(String ruleName, int branch) throws IllegalArgumentException {
+        // NON-TERMINAL HANDLING
+		if (!isTerminal(ruleName)) {
+            // Get rule indices, returns empty array if it is a bad path
+			int[] index = LLT.getRuleIndex(ruleName, curToken.type);
+            if (index.length == 0 || index.length <= branch) {
+                return null;
+            }
+
+            // Construct our list of applications
+            ArrayList<RuleApplication> applications = new ArrayList<RuleApplication>();
+            applications.add(new RuleApplication(index[branch], curToken));
+
+            // Iterate through the productions
+            //  If we find a null (meaning invalid application), than we know this branching path is bad
+			String[] right_side = rules[index[branch]];
+			for (String r : right_side) {
+                ArrayList<RuleApplication> subTree = parse(r, 0);
+                if (subTree == null) {
+                    return parse(ruleName, branch + 1);
+                }
+
+                applications.addAll(subTree);
+            }
+
+            return applications;
 		}
+
+        // TERMINAL HANDLING
+        if (ruleName.equals(curToken.type.name())) {
+            System.out.println("Hung:" + curToken.val);
+            curToken = nextToken();
+        } else if (!ruleName.equals("lambda")) {
+            return null;
+        }
+        return new ArrayList<RuleApplication>();
 	}
 
 	private Token nextToken(){
 		return tokens.get(token_index++);
 	}
 
-	public int[] make() throws IllegalArgumentException {
+	public RuleApplication[] make() throws IllegalArgumentException {
 		curToken = nextToken();
-		parse("SystemGoal");
-		int[] tr = new int[parseTree.size()];
+		ArrayList<RuleApplication> parseTree = parse("SystemGoal", 0);
+        RuleApplication[] tr = new RuleApplication[parseTree.size()];
 		for (int i = 0; i < tr.length; i++) {
 			tr[i] = parseTree.get(i);
 		}

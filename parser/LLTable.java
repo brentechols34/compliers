@@ -26,6 +26,11 @@ public class LLTable {
 	
 	public int[] getRuleIndex(String rule, TokenType type){
 		HashMap<TokenType,int[]> t = LL1.get(rule);
+
+        if (t == null) {
+            return new int[0];
+        }
+
 		return t.get(type);
 	}
 }
