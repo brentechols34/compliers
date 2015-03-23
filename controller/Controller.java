@@ -13,10 +13,10 @@ import parser.RuleApplication;
 public class Controller {
 
 	Scanner sc;
-	Parse2 pr;
+	Parse pr;
 	
 	ArrayList<Token> tokens;
-    int[] parseTree;
+    RuleApplication[] parseTree;
 	
 	public Controller(String fname) throws FileNotFoundException {
 		sc = new Scanner(fname);
@@ -38,13 +38,13 @@ public class Controller {
 			System.out.println("No: Tokenize first.");
 			return;
 		}
-		pr = new Parse2(tokens);
+		pr = new Parse(tokens);
 		parseTree = pr.make();
 		System.out.println(Arrays.toString(parseTree));
 	}
 	
 	public static void main(String[] args) throws IOException, IllegalArgumentException {
-		Controller c = new Controller("test.txt");
+		Controller c = new Controller("Resources/test.txt");
 		c.tokenize();
 		System.out.println("Token Stream: " + c.tokens);
 		c.parsify();
