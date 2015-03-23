@@ -286,6 +286,7 @@ public class identifier implements DFAS {
 	}
 
 	public TokenType getType(String lexeme) {
+		lexeme = lexeme.toLowerCase();
 		switch(lexeme) { // check if it is reserved word
 		case "and": return TokenType.MP_AND;
 		case "begin": return TokenType.MP_BEGIN;

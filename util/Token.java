@@ -13,6 +13,6 @@ public class Token {
 	}
 	
 	public String toString() {
-		return "{" + type + ": " + val + ", (" + col + ", " + row + ")}"; 
+		return "{" + type + ": " + val + ", (" + (1+col) + ", " + (1+row) + ")}"; 
 	}
 }

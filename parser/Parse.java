@@ -30,15 +30,18 @@ public class Parse {
     // Accepts a set of state parameters, and attempts to expand a child by mutating the path given.
 	public ParseReturn parse(String ruleName, int rule, int token, int child, ArrayList<RuleApplication> path) throws IllegalArgumentException {
         Token curToken = tokens.get(token);
-
         // NON-TERMINAL HANDLING
 		if (!isTerminal(ruleName)) {
             // Get the string this application is expanding to currently
             String expand = rules[rule][child];
-
+            if (isTerminal(expand)) {
+            	return ParseReturn.HUNG;
+            }
+            System.out.println(expand + " " + curToken.type);
             // Find what rule that expansion goes to
 			int[] index = LLT.getRuleIndex(expand, curToken.type);
-            if (index.length == 0) {
+            if (index == null) {
+            	//System.out.println("Error @: " + ruleName);
                 return ParseReturn.ERROR;
             }
 
@@ -80,6 +83,7 @@ public class Parse {
             switch (r) {
                 case HUNG:
                     next.childIndex++;
+                    System.out.println("Hung:" + tokens.get(tokenIndex));
                     tokenIndex++;
                     break;
                 case LAMBDA:

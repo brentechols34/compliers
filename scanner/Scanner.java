@@ -51,7 +51,6 @@ public class Scanner {
 					notRejected[i] = false; notRejected_count--;
 				}
 			}
-			System.out.println(s);
 		}
 		if (r!=-1) {s = s.substring(0,s.length()-1);pr.unread(r);}
 		for (int i = 0; i < allStates.length; i++) {

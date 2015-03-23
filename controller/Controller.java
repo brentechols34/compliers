@@ -3,18 +3,20 @@ package controller;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import scanner.Scanner;
 import util.*;
 import parser.Parse;
+import parser.Parse2;
 import parser.RuleApplication;
 public class Controller {
 
 	Scanner sc;
-	Parse pr;
+	Parse2 pr;
 	
 	ArrayList<Token> tokens;
-    RuleApplication[] parseTree;
+    int[] parseTree;
 	
 	public Controller(String fname) throws FileNotFoundException {
 		sc = new Scanner(fname);
@@ -36,8 +38,9 @@ public class Controller {
 			System.out.println("No: Tokenize first.");
 			return;
 		}
-		pr = new Parse(tokens);
+		pr = new Parse2(tokens);
 		parseTree = pr.make();
+		System.out.println(Arrays.toString(parseTree));
 	}
 	
 	public static void main(String[] args) throws IOException, IllegalArgumentException {
