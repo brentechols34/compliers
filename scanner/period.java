@@ -32,6 +32,6 @@ public class period implements DFAS {
 	}
 
 	public TokenType getType(String lexeme) {
-		return TokenType.MP_COMMA;
+		return TokenType.MP_PERIOD;
 	}
 }
