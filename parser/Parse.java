@@ -30,36 +30,31 @@ public class Parse {
     // Accepts a set of state parameters, and attempts to expand a child by mutating the path given.
 	public ParseReturn parse(String ruleName, int rule, int token, int child, ArrayList<RuleApplication> path) throws IllegalArgumentException {
         Token curToken = tokens.get(token);
-        // NON-TERMINAL HANDLING
-		if (!isTerminal(ruleName)) {
-            // Get the string this application is expanding to currently
-            String expand = rules[rule][child];
-            if (isTerminal(expand)) {
-            	return ParseReturn.HUNG;
+        
+        // Get the string this application is expanding to currently
+        String expand = rules[rule][child];
+//        System.out.println(expand + " " + curToken.type);
+        if (isTerminal(expand)) {
+        	if (expand.equals(curToken.type.name())) {
+                System.out.println("Hung:" + curToken.val + " on " + new RuleApplication(ruleName, rule, token, child, 0).toString());
+                return ParseReturn.HUNG;
+            } else if (expand.equals("lambda")) {
+                return ParseReturn.LAMBDA;
             }
-            System.out.println(expand + " " + curToken.type);
-            // Find what rule that expansion goes to
-			int[] index = LLT.getRuleIndex(expand, curToken.type);
-            if (index == null) {
-            	//System.out.println("Error @: " + ruleName);
-                return ParseReturn.ERROR;
-            }
-
-            // Add this expansion to the path
-            path.add(new RuleApplication(expand, index[0], token, 0, 0));
-
-            return ParseReturn.EXPAND;
-		}
-
-        // TERMINAL HANDLING
-        if (ruleName.equals(curToken.type.name())) {
-            System.out.println("Hung:" + curToken.val);
-            return ParseReturn.HUNG;
-        } else if (ruleName.equals("lambda")) {
-            return ParseReturn.LAMBDA;
+        }
+        
+        // Find what rule that expansion goes to
+		int[] index = LLT.getRuleIndex(expand, curToken.type);
+        if (index == null) {
+        	System.out.println(path);
+        	System.out.println("Error @ Rule: " + new RuleApplication(ruleName, rule, token, child, 0).toString() + curToken.toString());
+            return ParseReturn.ERROR;
         }
 
-        return ParseReturn.ERROR;
+        // Add this expansion to the path
+        path.add(new RuleApplication(expand, index[0], token, 0, 0));
+
+        return ParseReturn.EXPAND;
 	}
 
     enum ParseReturn {
@@ -83,7 +78,6 @@ public class Parse {
             switch (r) {
                 case HUNG:
                     next.childIndex++;
-                    System.out.println("Hung:" + tokens.get(tokenIndex));
                     tokenIndex++;
                     break;
                 case LAMBDA:
@@ -112,13 +106,16 @@ public class Parse {
     //  adjusts the branchIndex, and resets the first candidate found.
     private int trimTree(ArrayList<RuleApplication> path) {
         // Prune all maximally branched paths at the end of our path
+    	System.out.println("Pre Trim: " + path.toString());
         for (int i = path.size() - 1; i >= 0; i--) {
             RuleApplication app = path.get(i);
             int[] index = LLT.getRuleIndex(app.ruleName, tokens.get(app.tokenIndex).type);
 
             // If we have exhausted all branching at this path, remove it
-            if (app.branchIndex >= index.length) {
+            if (app.branchIndex + 1 >= index.length) {
                 path.remove(i);
+            } else {
+            	break;
             }
         }
 
@@ -129,6 +126,7 @@ public class Parse {
 
         // Alter our last member so it will expand to a new branch
         RuleApplication last = path.get(path.size() - 1);
+        System.out.println("Branch reset: " + path.toString());
         last.branchIndex++;
         last.childIndex = 0;
         last.ruleIndex = LLT.getRuleIndex(last.ruleName, tokens.get(last.tokenIndex).type)[last.branchIndex];
@@ -169,7 +167,7 @@ public class Parse {
 	 */
 	public void populate() throws IOException {
 		ArrayList<ArrayList<String>> LL = new ArrayList<>();
-		BufferedReader bf = new BufferedReader(new FileReader("compliers\\Resources\\LLTable.csv"));
+		BufferedReader bf = new BufferedReader(new FileReader("Resources/LLTable.csv"));
 		String line;
 		while ((line=bf.readLine())!=null) {
 			LL.add(convLine(line));
@@ -197,7 +195,7 @@ public class Parse {
 		}
 
 
-		bf = new BufferedReader(new FileReader("compliers\\Resources\\CleanGrammar2.txt"));
+		bf = new BufferedReader(new FileReader("Resources/CleanGrammar2.txt"));
 		int cnt = 0;
 		ArrayList<String[]> rules_init = new ArrayList<>();
 		byName = new HashMap<>();
