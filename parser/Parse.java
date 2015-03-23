@@ -33,13 +33,16 @@ public class Parse {
         
         // Get the string this application is expanding to currently
         String expand = rules[rule][child];
-//        System.out.println(expand + " " + curToken.type);
         if (isTerminal(expand)) {
         	if (expand.equals(curToken.type.name())) {
                 System.out.println("Hung:" + curToken.val + " on " + new RuleApplication(ruleName, rule, token, child, 0).toString());
                 return ParseReturn.HUNG;
             } else if (expand.equals("lambda")) {
                 return ParseReturn.LAMBDA;
+            } else {
+            	System.out.println(path);
+            	System.out.println("Error token doesn't match expected @ Rule: " + new RuleApplication(ruleName, rule, token, child, 0).toString() + curToken.toString());
+                return ParseReturn.ERROR;
             }
         }
         
@@ -47,10 +50,10 @@ public class Parse {
 		int[] index = LLT.getRuleIndex(expand, curToken.type);
         if (index == null) {
         	System.out.println(path);
-        	System.out.println("Error @ Rule: " + new RuleApplication(ruleName, rule, token, child, 0).toString() + curToken.toString());
+        	System.out.println("Error LL lookup failed @ Rule: " + new RuleApplication(ruleName, rule, token, child, 0).toString() + curToken.toString());
             return ParseReturn.ERROR;
         }
-
+        
         // Add this expansion to the path
         path.add(new RuleApplication(expand, index[0], token, 0, 0));
 
