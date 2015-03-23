@@ -50,6 +50,7 @@ public class Parse2 {
 	public T parse(String ruleName, int token_index) throws IllegalArgumentException {
 		depth += 1;
 		Token curToken = tokens.get(token_index);
+
 		T t = new T(new ArrayList<>(), 0); //make new T
 		if (isTerminal(ruleName)) {
 			if (ruleName.equals(curToken.type.name())) {
@@ -63,6 +64,7 @@ public class Parse2 {
 			return t;
 		} else {
 			int[] indices = LLT.getRuleIndex(ruleName, curToken.type);
+			
 			if (indices == null) {
 				return null;
 			} else {
