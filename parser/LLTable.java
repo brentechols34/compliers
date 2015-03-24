@@ -13,7 +13,6 @@ public class LLTable {
 		LL1.put(rule,temp);
 	}
 	
-	
 	public int[] getRuleIndex(String rule, TokenType type){
 		return LL1.get(rule).get(type);
 	}
