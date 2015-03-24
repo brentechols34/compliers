@@ -90,13 +90,14 @@ public class stringLiteral implements DFAS {
 		case 'x': return "b";
 		case 'y': return "b";
 		case 'z': return "b";
+		case '=': return "b";
+		case ':': return "b";
 		default: return null;
 		}
 	}
 
 	public static String c(char c) {
 		switch(c) {
-		case '\'': return "b";
 		default: return null;
 		}
 	}

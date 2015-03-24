@@ -5,15 +5,31 @@ import util.*;
 
 public class LLTable {
 	
-	HashMap<String,HashMap<TokenType,int[]>> LL1 = new HashMap<>();
+	HashMap<String,HashMap<TokenType,int[]>> LL1;
+
+	public LLTable() { 
+		LL1 = new HashMap<>();
+	}
 	
 	public void addEntry(String rule, TokenType token, int[] ruleIndex){
-		HashMap<TokenType,int[]> temp = new HashMap<>();
-		temp.put(token,ruleIndex);
-		LL1.put(rule,temp);
+		if (LL1.get(rule)==null) {
+			HashMap<TokenType,int[]> temp = new HashMap<>();
+			temp.put(token,ruleIndex);
+			LL1.put(rule,temp);
+		} else {
+			LL1.get(rule).put(token, ruleIndex);
+		}
+		
+		
 	}
 	
 	public int[] getRuleIndex(String rule, TokenType type){
-		return LL1.get(rule).get(type);
+		HashMap<TokenType,int[]> t = LL1.get(rule);
+
+        if (t == null) {
+            return new int[0];
+        }
+
+		return t.get(type);
 	}
 }

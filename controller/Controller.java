@@ -3,18 +3,20 @@ package controller;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import scanner.Scanner;
 import util.*;
-import parser.AwfulParser;
 import parser.Parse;
+import parser.Parse2;
+import parser.RuleApplication;
 public class Controller {
 
 	Scanner sc;
-	AwfulParser pr;
+	Parse pr;
 	
 	ArrayList<Token> tokens;
-	int[] parseTree;
+    RuleApplication[] parseTree;
 	
 	public Controller(String fname) throws FileNotFoundException {
 		sc = new Scanner(fname);
@@ -28,6 +30,7 @@ public class Controller {
 			if (t == null) break;
 			tokens.add(t);
 		} while (true);
+		tokens.add(new Token(TokenType.MP_EOF,"",-1,-1));
 	}
 	
 	public void parsify() throws IOException, IllegalArgumentException { //generate parse tree (TODO: Symbol table)
@@ -35,13 +38,13 @@ public class Controller {
 			System.out.println("No: Tokenize first.");
 			return;
 		}
-		
-		pr = new AwfulParser(tokens);
+		pr = new Parse(tokens);
 		parseTree = pr.make();
+		System.out.println(Arrays.toString(parseTree));
 	}
 	
 	public static void main(String[] args) throws IOException, IllegalArgumentException {
-		Controller c = new Controller("test.txt");
+		Controller c = new Controller("Resources/test.txt");
 		c.tokenize();
 		System.out.println("Token Stream: " + c.tokens);
 		c.parsify();
