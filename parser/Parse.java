@@ -239,5 +239,18 @@ public class Parse {
 		return arrl;
 	}
 
-
+	//PopulateSymbolTable
+	public SymbolTable popSymTab(ArrayList<Token> tokens){
+		//Loop tokens array. Find "program","procedure","function". Create new Symbol table
+		//Set variable "name"(next token)
+		//Separate loop to loop through rest of the tokens
+			//Populate table with Variables/procedures/functions
+			//if "procedure" or "function",remember its name (next token)
+			//and ignore all until you see end --(procName)
+			//continue adding to symbol table
+		for (int i = 0; i < tokens.size(); i++){
+			
+		}
+		return null;
+	}
 }
