@@ -240,7 +240,7 @@ public class Parse {
 	}
 
 	//PopulateSymbolTable
-	public SymbolTable popSymTab(ArrayList<Token> tokens){
+	public SymbolTable popSymTab(Token[] tokens, String[] keyWords){
 		//Loop tokens array. Find "program","procedure","function". Create new Symbol table
 		//Set variable "name"(next token)
 		//Separate loop to loop through rest of the tokens
@@ -248,9 +248,19 @@ public class Parse {
 			//if "procedure" or "function",remember its name (next token)
 			//and ignore all until you see end --(procName)
 			//continue adding to symbol table
-		for (int i = 0; i < tokens.size(); i++){
+		String name;
+		for (int i = 0; i < tokens.length; i++){
 			
 		}
 		return null;
+	}
+
+	public boolean isIn(String toFind, String[] arr){
+		for(int i = 0; i < arr.length; i++){
+			if(toFind.equals(arr[i])){
+				return true;
+			}
+		}
+		return false;
 	}
 }
