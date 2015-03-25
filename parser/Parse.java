@@ -240,6 +240,7 @@ public class Parse {
 	}
 
 	//PopulateSymbolTable
+	//I don't know if you can do this generically. functions and procedures require different rules.
 	public SymbolTable popSymTab(Token[] tokens, String[] keyWords){
 		//Loop tokens array. Find "program","procedure","function". Create new Symbol table
 		//Set variable "name"(next token)
@@ -250,7 +251,13 @@ public class Parse {
 			//continue adding to symbol table
 		String name;
 		for (int i = 0; i < tokens.length; i++){
-			
+			if(isIn(tokens[i],keyWords)){
+				//missing code to find nesting level
+				name = tokens[i + 1];
+				for(int j = i + 1; j < tokens.length; j++){
+					//missing code to populate symbol table
+				}
+			}
 		}
 		return null;
 	}
