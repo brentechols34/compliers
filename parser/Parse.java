@@ -241,7 +241,7 @@ public class Parse {
 
 	//PopulateSymbolTable
 	//I don't know if you can do this generically. functions and procedures require different rules.
-	public SymbolTable popSymTab(Token[] tokens, String[] keyWords){
+	public SymbolTable popSymTab(Token[] tokens){
 		//Loop tokens array. Find "program","procedure","function". Create new Symbol table
 		//Set variable "name"(next token)
 		//Separate loop to loop through rest of the tokens
@@ -249,25 +249,22 @@ public class Parse {
 			//if "procedure" or "function",remember its name (next token)
 			//and ignore all until you see end --(procName)
 			//continue adding to symbol table
-		String name;
+		Token name;
+                int labelCount = 0;
 		for (int i = 0; i < tokens.length; i++){
-			if(isIn(tokens[i],keyWords)){
-				//missing code to find nesting level
-				name = tokens[i + 1];
-				for(int j = i + 1; j < tokens.length; j++){
-					//missing code to populate symbol table
-				}
-			}
+                    
+                    if(tokens[i].val.equals("program") ||
+                            tokens[i].val.equals("procedure") ||
+                            tokens[i].val.equals("function")){
+                        
+                        name = tokens[i + 1];
+                        //Missing NestingLevel Code
+                        SymbolTable st = new SymbolTable(name.val,("L" + labelCount),0);
+                        for (int j = i + 1; j < tokens.length; j++){
+                            //populate table
+                        }
+                    }
 		}
 		return null;
-	}
-
-	public boolean isIn(String toFind, String[] arr){
-		for(int i = 0; i < arr.length; i++){
-			if(toFind.equals(arr[i])){
-				return true;
-			}
-		}
-		return false;
 	}
 }
