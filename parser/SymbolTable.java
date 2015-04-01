@@ -1,5 +1,6 @@
 package parser;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import util.TokenType;
@@ -20,7 +21,7 @@ public class SymbolTable {
 	}
 	
 	//Encompasses All
-	public void addEntry(String lexeme, TokenType type, String kind, String mode, int size, String[] parameters){
+	public void addEntry(String lexeme, TokenType type, String kind, String mode, int size, ArrayList<String> parameters){
 		TableEntry entry = new TableEntry(type,kind,mode,size,parameters);
 		entries.put(lexeme, entry);
 	}
@@ -38,7 +39,7 @@ public class SymbolTable {
 	}
 	
 	//Procedures/functions
-	public void addProcFunc(String lexeme, String kind, String[] parameters){
+	public void addProcFunc(String lexeme, String kind, ArrayList<String> parameters){
 		TableEntry entry = new TableEntry(kind,parameters);
 		entries.put(lexeme, entry);
 	}

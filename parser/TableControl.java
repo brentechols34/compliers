@@ -56,10 +56,10 @@ public class TableControl {
 			//If token is an identifier, add new TableEntry to the SymbolTable on top of the stack. 
 			if(tokens[i].type == TokenType.MP_IDENTIFIER){
 				if(lastNotId.type == TokenType.MP_PROCEDURE || lastNotId.type == TokenType.MP_FUNCTION){
-					tableStack.peek().addProcFunc(tokens[i].val,"Procedure", null); //Parameters??
-				}else if(isParam){
+					tableStack.peek().addProcFunc(tokens[i].val,"Procedure", new ArrayList<String>()); //Parameters??
+				}else if(isParam){                                                                                    
 					//If it is a parameter
-					tableStack.peek().addParameter(tokens[i].val,lastNotId.type, "parameter", "", tableStack.peek().size()); //mode??
+					tableStack.peek().addParameter(tokens[i].val,lastNotId.type, "parameter", tokens[i - 1].val, tableStack.peek().size());//parameters?
 				}else {
 					//If it is a variable
 					tableStack.peek().addVariable(tokens[i].val, lastNotId.type, "variable", tableStack.peek().size());

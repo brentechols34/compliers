@@ -1,5 +1,7 @@
 package parser;
 
+import java.util.ArrayList;
+
 import util.*;
 
 public class TableEntry {
@@ -10,12 +12,12 @@ public class TableEntry {
 	
 	int size;
 	
-	String[] parameters;
+	ArrayList<String> parameters;
 	
 	
 	
 	//Encompasses All
-	public TableEntry(TokenType type, String kind, String mode, int size, String[] parameters){
+	public TableEntry(TokenType type, String kind, String mode, int size, ArrayList<String> parameters){
 		this.type = type;
 		this.kind = kind;
 		this.mode = mode;
@@ -39,7 +41,7 @@ public class TableEntry {
 	}
 	
 	//Procedures/functions
-	public TableEntry(String kind, String[] parameters){
+	public TableEntry(String kind, ArrayList<String> parameters){
 		this.parameters = parameters;
 		this.kind = kind;
 	}
@@ -48,7 +50,7 @@ public class TableEntry {
 	public String getKind() { return kind; }
 	public String getMode() { return mode; }
 	public int size() { return size; }
-	public String[] getParameters() { return parameters; }
+	public ArrayList<String> getParameters() { return parameters; }
 }
 
 
