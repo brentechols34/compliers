@@ -20,9 +20,9 @@ public class TableControl {
 		int labelCount = 0;
 		int offset = 0;
 		
-		Token lastNotId;											//To find types associated with Id's
+		Token lastNotId = null;											//To find types associated with Id's
 		
-		boolean isParam;											//flag to differentiate between param and var
+		boolean isParam = false;											//flag to differentiate between param and var
 		
 		for(int i = 0; i < tokens.length; i++){
 			
