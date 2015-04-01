@@ -1,17 +1,20 @@
 package parser;
 
+import util.*;
+
 public class TableEntry {
 	
-	String type,
-		kind,
+	String kind,
 		mode;
+	
+	TokenType type;
 	
 	int size;
 	
 	String[] parameters;
 	
 	//Encompasses All
-	public TableEntry(String type, String kind, String mode, int size, String[] parameters){
+	public TableEntry(TokenType type, String kind, String mode, int size, String[] parameters){
 		this.type = type;
 		this.kind = kind;
 		this.mode = mode;
@@ -20,14 +23,14 @@ public class TableEntry {
 	}
 	
 	//Variables
-	public TableEntry(String type, String kind, int size){
+	public TableEntry(TokenType type, String kind, int size){
 		this.type = type;
 		this.kind = kind;
 		this.size = size;
 	}
 	
 	//Parameters
-	public TableEntry(String type, String kind, String mode, int size){
+	public TableEntry(TokenType type, String kind, String mode, int size){
 		this.type = type;
 		this.kind = kind;
 		this.mode = mode;
@@ -40,7 +43,7 @@ public class TableEntry {
 		this.kind = kind;
 	}
 	//Getters
-	public String getType() { return type; }
+	public TokenType getType() { return type; }
 	public String getKind() { return kind; }
 	public String getMode() { return mode; }
 	public int size() { return size; }
