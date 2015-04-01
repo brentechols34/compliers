@@ -4,14 +4,15 @@ import util.*;
 
 public class TableEntry {
 	
-	String kind,
-		mode;
+	String kind, mode;
 	
 	TokenType type;
 	
 	int size;
 	
 	String[] parameters;
+	
+	
 	
 	//Encompasses All
 	public TableEntry(TokenType type, String kind, String mode, int size, String[] parameters){
