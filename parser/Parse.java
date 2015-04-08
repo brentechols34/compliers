@@ -241,6 +241,4 @@ public class Parse {
 		ArrayList<String> arrl = new ArrayList<>(Arrays.asList(splt));
 		return arrl;
 	}
-
-
 }
