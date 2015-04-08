@@ -20,10 +20,13 @@ public class Parse {
 	HashMap<String, ArrayList<Integer>> byName;
 	String[][] rules;
 
+    SymbolTableController symbolTable;
+
 	ArrayList<Token> tokens;
 
 	public Parse(ArrayList<Token> tokens) throws IOException{
 		this.tokens = tokens;
+        symbolTable = new SymbolTableController(tokens);
 		populate();
 	}
 
@@ -56,6 +59,7 @@ public class Parse {
         
         // Add this expansion to the path
         path.add(new RuleApplication(expand, index[0], token, 0, 0));
+        symbolTable.Apply(path.get(path.size() - 1));
 
         return ParseReturn.EXPAND;
 	}
@@ -71,6 +75,7 @@ public class Parse {
         int tokenIndex = 0;
         ArrayList<RuleApplication> path = new ArrayList<RuleApplication>();
         path.add(new RuleApplication("SystemGoal", 0, 0, 0, 0));
+        symbolTable.Apply(path.get(path.size() - 1));
 
         // Process through and generate paths until:
         //  - the path size reaches 0, indicating no valid tree exists
@@ -116,6 +121,7 @@ public class Parse {
 
             // If we have exhausted all branching at this path, remove it
             if (app.branchIndex + 1 >= index.length) {
+                symbolTable.Undo(path.get(i));
                 path.remove(i);
             } else {
             	break;
