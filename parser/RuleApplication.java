@@ -22,7 +22,7 @@ public class RuleApplication {
 
     @Override
     public String toString() {
-        return "RuleApplication{" +
+        return "{" +
                 "ruleName='" + ruleName + '\'' +
                 ", ruleIndex=" + ruleIndex +
                 ", tokenIndex=" + tokenIndex +

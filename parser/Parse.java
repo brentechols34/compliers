@@ -20,10 +20,13 @@ public class Parse {
 	HashMap<String, ArrayList<Integer>> byName;
 	String[][] rules;
 
+    SymbolTableController symbolTable;
+
 	ArrayList<Token> tokens;
 
 	public Parse(ArrayList<Token> tokens) throws IOException{
 		this.tokens = tokens;
+        symbolTable = new SymbolTableController(tokens);
 		populate();
 	}
 
@@ -33,13 +36,16 @@ public class Parse {
         
         // Get the string this application is expanding to currently
         String expand = rules[rule][child];
-//        System.out.println(expand + " " + curToken.type);
         if (isTerminal(expand)) {
         	if (expand.equals(curToken.type.name())) {
                 System.out.println("Hung:" + curToken.val + " on " + new RuleApplication(ruleName, rule, token, child, 0).toString());
                 return ParseReturn.HUNG;
             } else if (expand.equals("lambda")) {
                 return ParseReturn.LAMBDA;
+            } else {
+            	System.out.println(path);
+            	System.out.println("Error token doesn't match expected @ Rule: " + new RuleApplication(ruleName, rule, token, child, 0).toString() + curToken.toString());
+                return ParseReturn.ERROR;
             }
         }
         
@@ -47,12 +53,13 @@ public class Parse {
 		int[] index = LLT.getRuleIndex(expand, curToken.type);
         if (index == null) {
         	System.out.println(path);
-        	System.out.println("Error @ Rule: " + new RuleApplication(ruleName, rule, token, child, 0).toString() + curToken.toString());
+        	System.out.println("Error LL lookup failed @ Rule: " + new RuleApplication(ruleName, rule, token, child, 0).toString() + curToken.toString());
             return ParseReturn.ERROR;
         }
-
+        
         // Add this expansion to the path
         path.add(new RuleApplication(expand, index[0], token, 0, 0));
+        symbolTable.Apply(path.get(path.size() - 1));
 
         return ParseReturn.EXPAND;
 	}
@@ -68,6 +75,7 @@ public class Parse {
         int tokenIndex = 0;
         ArrayList<RuleApplication> path = new ArrayList<RuleApplication>();
         path.add(new RuleApplication("SystemGoal", 0, 0, 0, 0));
+        symbolTable.Apply(path.get(path.size() - 1));
 
         // Process through and generate paths until:
         //  - the path size reaches 0, indicating no valid tree exists
@@ -113,6 +121,7 @@ public class Parse {
 
             // If we have exhausted all branching at this path, remove it
             if (app.branchIndex + 1 >= index.length) {
+                symbolTable.Undo(path.get(i));
                 path.remove(i);
             } else {
             	break;
@@ -237,23 +246,5 @@ public class Parse {
 		String[] splt = line.split(",");
 		ArrayList<String> arrl = new ArrayList<>(Arrays.asList(splt));
 		return arrl;
-	}
-
-	//PopulateSymbolTable
-	//I don't know if you can do this generically. functions and procedures require different rules.
-	public ArrayList<SymbolTable> popSymTab(Token[] tokens){
-                int labelCount = 0;
-                int nestingLevel = 0;
-                ArrayList<SymbolTable> SymbolTables = new ArrayList<>();
-		for (int i = 0; i < tokens.length; i++){
-                    //If token equals any of these keyWords
-                    if(tokens[i].val.equals("program") ||
-                            tokens[i].val.equals("procedure") ||
-                            tokens[i].val.equals("function")){
-                        //Create a new SymbolTable,add it to the ArrayList
-                        SymbolTables.add(new SymbolTable(tokens[i++].val,"L"+labelCount,nestingLevel));
-                    }
-		}
-		return null;
 	}
 }
