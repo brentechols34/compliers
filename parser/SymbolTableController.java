@@ -35,12 +35,11 @@ public class SymbolTableController {
         nesting_level = 0;
         label_num = 0;
     }
-
-
+    
     public void ExitRule(RuleApplication application) {
         switch(application.ruleIndex) {
             case BLOCK:
-                tables.pop();
+                System.out.println(tables.pop());
                 nesting_level--;
                 break;
         }

@@ -51,6 +51,10 @@ public class TableEntry {
 	public String getMode() { return mode; }
 	public int size() { return size; }
 	public ArrayList<String> getParameters() { return parameters; }
+	
+	public String toString(){
+		return type.name() + " " + kind + " " + size + parameters.toString();
+	}
 }
 
 
