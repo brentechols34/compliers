@@ -6,11 +6,12 @@ import util.*;
 
 public class TableEntry {
 	
-	String kind, mode;
+	String kind="";
+	String mode="";
 	
-	TokenType type;
+	TokenType type=null;
 	
-	int size;
+	int size=0;
 	
 	ArrayList<String> parameters;
 	
@@ -53,7 +54,7 @@ public class TableEntry {
 	public ArrayList<String> getParameters() { return parameters; }
 	
 	public String toString(){
-		return type.name() + " " + kind + " " + size + parameters.toString();
+		return type.name() + " " + kind + " " + size + ((parameters!=null)?parameters.toString():"");
 	}
 }
 

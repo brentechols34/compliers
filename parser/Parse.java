@@ -175,7 +175,7 @@ public class Parse {
 	 */
 	public void populate() throws IOException {
 		ArrayList<ArrayList<String>> LL = new ArrayList<>();
-		BufferedReader bf = new BufferedReader(new FileReader("Resources/LLTable.csv"));
+		BufferedReader bf = new BufferedReader(new FileReader("compliers/Resources/LLTable.csv"));
 		String line;
 		while ((line=bf.readLine())!=null) {
 			LL.add(convLine(line));
@@ -201,7 +201,7 @@ public class Parse {
 			}
 		}
 
-		bf = new BufferedReader(new FileReader("Resources/CleanGrammar2.txt"));
+		bf = new BufferedReader(new FileReader("compliers/Resources/CleanGrammar2.txt"));
 		int cnt = 0;
 		ArrayList<String[]> rules_init = new ArrayList<>();
 		byName = new HashMap<>();
