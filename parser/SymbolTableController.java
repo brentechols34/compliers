@@ -21,8 +21,10 @@ public class SymbolTableController {
     final int FUNCTION_HEADING = 17;
     final int VARIABLE_PARAMETER_SECTION = 27;
     final int VALUE_PARAMETER_SECTION = 26;
+    final int COMPOUND_STATEMENT = 29;
     final int IDENTIFIER_LIST = 112;
     final int IDENTIFIER_TAIL = 113;
+
 
     public SymbolTableController(ArrayList<Token> tokens) throws IOException {
         this.tokens = tokens;
@@ -41,11 +43,29 @@ public class SymbolTableController {
                 break;
             case VALUE_PARAMETER_SECTION:
                 break;
+            case COMPOUND_STATEMENT:
+                switch (application.childIndex) {
+                    case 2:
+                        tables.pop();
+                        break;
+                }
+                break;
             case VARIABLE_PARAMETER_SECTION:
                 break;
             case IDENTIFIER_LIST:
+                switch (application.childIndex) {
+                    case 0:
+                        entries.add(tokens.get(application.tokenIndex).val);
+                        break;
+                }
                 break;
             case IDENTIFIER_TAIL:
+                switch (application.childIndex) {
+                    case 1:
+                        entries.add(tokens.get(application.tokenIndex).val);
+                        break;
+                }
+                entries.add(tokens.get(application.tokenIndex + 1).val);
                 break;
         }
     }

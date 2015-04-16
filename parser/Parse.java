@@ -59,7 +59,6 @@ public class Parse {
         
         // Add this expansion to the path
         path.add(new RuleApplication(expand, index[0], token, 0, 0));
-        symbolTable.Apply(path.get(path.size() - 1));
 
         return ParseReturn.EXPAND;
 	}
@@ -85,6 +84,7 @@ public class Parse {
             ParseReturn r = parse(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, path);
             switch (r) {
                 case HUNG:
+                    symbolTable.Apply(next);
                     next.childIndex++;
                     tokenIndex++;
                     break;
@@ -92,6 +92,7 @@ public class Parse {
                     next.childIndex++;
                     break;
                 case EXPAND:
+                    symbolTable.Apply(path.get(path.size() - 1));
                     next.childIndex++;
                     break;
                 case ERROR:
