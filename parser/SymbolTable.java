@@ -47,6 +47,14 @@ public class SymbolTable {
 	}
 	
 	public int size(){
-		return entries.size()
-;	}
+		return entries.size();
+	}
+	
+	public String toString(){
+		String str = "";
+		for(TableEntry e:entries.values()){
+			str+= e.toString() + "\n";
+		}
+		return str;
+	}
 }
