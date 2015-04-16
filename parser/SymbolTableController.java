@@ -14,6 +14,8 @@ public class SymbolTableController {
     ArrayList<Token> tokens;
     ArrayList<String> entries;
     Stack<SymbolTable> tables;
+    int nesting_level;
+    int label_num = 0;
 
     final int PROGRAM_HEADING = 2;
     final int VARIABLE_DECLARATION = 8;
@@ -29,15 +31,20 @@ public class SymbolTableController {
     public SymbolTableController(ArrayList<Token> tokens) throws IOException {
         this.tokens = tokens;
         entries = new ArrayList<String>();
+        tables = new Stack<>();
+        nesting_level = 0;
+        label_num = 0;
     }
 
     public void Apply(RuleApplication application) {
         switch(application.ruleIndex) {
             case PROGRAM_HEADING:
+            	tables.push(new SymbolTable(tokens.get(application.tokenIndex).val, "L"+(label_num++), nesting_level++));
                 break;
             case VARIABLE_DECLARATION:
                 break;
             case PROCEDURE_HEADING:
+            	tables.push(new SymbolTable(tokens.get(application.tokenIndex).val, "L"+(label_num++), nesting_level++));
                 break;
             case FUNCTION_HEADING:
                 break;

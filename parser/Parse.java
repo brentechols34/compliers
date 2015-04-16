@@ -29,7 +29,6 @@ public class Parse {
         symbolTable = new SymbolTableController(tokens);
 		populate();
 	}
-
     // Accepts a set of state parameters, and attempts to expand a child by mutating the path given.
 	public ParseReturn parse(String ruleName, int rule, int token, int child, ArrayList<RuleApplication> path) throws IllegalArgumentException {
         Token curToken = tokens.get(token);
@@ -62,14 +61,12 @@ public class Parse {
 
         return ParseReturn.EXPAND;
 	}
-
     enum ParseReturn {
         HUNG,
         LAMBDA,
         EXPAND,
         ERROR
     }
-
     public ArrayList<RuleApplication> parseMaster() {
         int tokenIndex = 0;
         ArrayList<RuleApplication> path = new ArrayList<RuleApplication>();
@@ -110,7 +107,6 @@ public class Parse {
 
         return path;
     }
-
     // Prunes out path elements who have exhausted all branching possibilities,
     //  adjusts the branchIndex, and resets the first candidate found.
     private int trimTree(ArrayList<RuleApplication> path) {
@@ -143,7 +139,6 @@ public class Parse {
 
         return last.tokenIndex;
     }
-
     // Returns the next valid path to expand on in the tree, which is defined as the first
     //  element found without it's children filled in
     private RuleApplication getNext(ArrayList<RuleApplication> path) {
@@ -157,7 +152,6 @@ public class Parse {
 
         return null;
     }
-
 	public RuleApplication[] make() throws IllegalArgumentException {
 		ArrayList<RuleApplication> parseTree = parseMaster();
         RuleApplication[] tr = new RuleApplication[parseTree.size()];
@@ -166,18 +160,16 @@ public class Parse {
 		}
 		return tr;
 	}
-
 	boolean isTerminal(String ruleName){
 		return !ruleNames.contains(ruleName);
 	}
-
 	/**
 	 * Let's have this function fill the rule_names hashset, the LL1 hashmap, and the rules array
 	 * @throws IOException 
 	 */
 	public void populate() throws IOException {
 		ArrayList<ArrayList<String>> LL = new ArrayList<>();
-		BufferedReader bf = new BufferedReader(new FileReader("Resources/LLTable.csv"));
+		BufferedReader bf = new BufferedReader(new FileReader("compliers/Resources/LLTable.csv"));
 		String line;
 		while ((line=bf.readLine())!=null) {
 			LL.add(convLine(line));
@@ -199,13 +191,11 @@ public class Parse {
 			for (int j = 0; j < tokens.size(); j++) {
 				if (!LL.get(i).get(j).equals(".")) {
 					LLT.addEntry(ruleNamesList.get(i), TokenType.valueOf(tokens.get(j)), getIndices(LL.get(i).get(j)));
-					System.out.println("Entry added: (" + ruleNamesList.get(i) + "," + TokenType.valueOf(tokens.get(j))+"): " + Arrays.toString(getIndices(LL.get(i).get(j))));
 				}
 			}
 		}
 
-
-		bf = new BufferedReader(new FileReader("Resources/CleanGrammar2.txt"));
+		bf = new BufferedReader(new FileReader("compliers/Resources/CleanGrammar2.txt"));
 		int cnt = 0;
 		ArrayList<String[]> rules_init = new ArrayList<>();
 		byName = new HashMap<>();
@@ -234,7 +224,6 @@ public class Parse {
 			}
 		}
 	}
-
 	public int[] getIndices(String str) {
 		String[] splt = str.split("\\|");
 		int[] splt_int = new int[splt.length];
