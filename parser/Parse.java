@@ -79,12 +79,10 @@ public class Parse {
         int lastDepth = 0;
         while(path.size() > 0 && this.getNext(path) != null) {
             RuleApplication next = this.getNext(path);
-            next.tokenIndex = tokenIndex;
-
             ParseReturn r = parse(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, path);
             switch (r) {
                 case HUNG:
-                    symbolTable.Apply(next);
+                    symbolTable.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
                     next.childIndex++;
                     tokenIndex++;
                     break;
@@ -92,7 +90,7 @@ public class Parse {
                     next.childIndex++;
                     break;
                 case EXPAND:
-                    symbolTable.Apply(next);
+                    symbolTable.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
                     next.childIndex++;
                     break;
                 case ERROR:
