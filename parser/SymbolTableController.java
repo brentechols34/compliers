@@ -36,6 +36,30 @@ public class SymbolTableController {
         label_num = 0;
     }
 
+
+    public void ExitRule(RuleApplication application) {
+        switch(application.ruleIndex) {
+            case PROGRAM_HEADING:
+                break;
+            case VARIABLE_DECLARATION:
+                break;
+            case PROCEDURE_HEADING:
+                break;
+            case FUNCTION_HEADING:
+                break;
+            case VALUE_PARAMETER_SECTION:
+                break;
+            case COMPOUND_STATEMENT:
+                break;
+            case VARIABLE_PARAMETER_SECTION:
+                break;
+            case IDENTIFIER_LIST:
+                break;
+            case IDENTIFIER_TAIL:
+                break;
+        }
+    }
+
     public void Apply(RuleApplication application) {
         switch(application.ruleIndex) {
             case PROGRAM_HEADING:
@@ -51,11 +75,6 @@ public class SymbolTableController {
             case VALUE_PARAMETER_SECTION:
                 break;
             case COMPOUND_STATEMENT:
-                switch (application.childIndex) {
-                    case 2:
-                        tables.pop();
-                        break;
-                }
                 break;
             case VARIABLE_PARAMETER_SECTION:
                 break;
@@ -72,28 +91,6 @@ public class SymbolTableController {
                         entries.add(tokens.get(application.tokenIndex).val);
                         break;
                 }
-                entries.add(tokens.get(application.tokenIndex + 1).val);
-                break;
-        }
-    }
-
-    public void Undo(RuleApplication application) {
-        switch(application.ruleIndex) {
-            case PROGRAM_HEADING:
-                break;
-            case VARIABLE_DECLARATION:
-                break;
-            case PROCEDURE_HEADING:
-                break;
-            case FUNCTION_HEADING:
-                break;
-            case VALUE_PARAMETER_SECTION:
-                break;
-            case VARIABLE_PARAMETER_SECTION:
-                break;
-            case IDENTIFIER_LIST:
-                break;
-            case IDENTIFIER_TAIL:
                 break;
         }
     }

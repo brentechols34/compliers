@@ -76,6 +76,7 @@ public class Parse {
         // Process through and generate paths until:
         //  - the path size reaches 0, indicating no valid tree exists
         //  - getNext returns null, indicating all members of the tree are done
+        int lastDepth = 0;
         while(path.size() > 0 && this.getNext(path) != null) {
             RuleApplication next = this.getNext(path);
             ParseReturn r = parse(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, path);
@@ -89,7 +90,7 @@ public class Parse {
                     next.childIndex++;
                     break;
                 case EXPAND:
-                    symbolTable.Apply(path.get(path.size() - 1));
+                    symbolTable.Apply(next);
                     next.childIndex++;
                     break;
                 case ERROR:
@@ -118,7 +119,6 @@ public class Parse {
 
             // If we have exhausted all branching at this path, remove it
             if (app.branchIndex + 1 >= index.length) {
-                symbolTable.Undo(path.get(i));
                 path.remove(i);
             } else {
             	break;
@@ -147,6 +147,10 @@ public class Parse {
             String[] children = rules[app.ruleIndex];
             if (children.length > app.childIndex) {
                 return app;
+            } else if (!app.isCompleted) {
+                // Signal to the symbol table we finished a rule
+                app.isCompleted = true;
+                symbolTable.ExitRule(app);
             }
         }
 
@@ -190,7 +194,7 @@ public class Parse {
 		for (int i = 0; i < ruleNamesList.size(); i++) {
 			for (int j = 0; j < tokens.size(); j++) {
 				if (!LL.get(i).get(j).equals(".")) {
-					LLT.addEntry(ruleNamesList.get(i), TokenType.valueOf(tokens.get(j)), getIndices(LL.get(i).get(j)));
+                    LLT.addEntry(ruleNamesList.get(i), TokenType.valueOf(tokens.get(j)), getIndices(LL.get(i).get(j)));
 				}
 			}
 		}
