@@ -20,10 +20,13 @@ public class Parse {
 	HashMap<String, ArrayList<Integer>> byName;
 	String[][] rules;
 
+    SymbolTableController symbolTable;
+
 	ArrayList<Token> tokens;
 
 	public Parse(ArrayList<Token> tokens) throws IOException{
 		this.tokens = tokens;
+        symbolTable = new SymbolTableController(tokens);
 		populate();
 	}
     // Accepts a set of state parameters, and attempts to expand a child by mutating the path given.
@@ -38,6 +41,10 @@ public class Parse {
                 return ParseReturn.HUNG;
             } else if (expand.equals("lambda")) {
                 return ParseReturn.LAMBDA;
+            } else {
+            	System.out.println(path);
+            	System.out.println("Error token doesn't match expected @ Rule: " + new RuleApplication(ruleName, rule, token, child, 0).toString() + curToken.toString());
+                return ParseReturn.ERROR;
             }
         }
         
@@ -45,12 +52,13 @@ public class Parse {
 		int[] index = LLT.getRuleIndex(expand, curToken.type);
         if (index == null) {
         	System.out.println(path);
-        	System.out.println("Error @ Rule: " + new RuleApplication(ruleName, rule, token, child, 0).toString() + curToken.toString());
+        	System.out.println("Error LL lookup failed @ Rule: " + new RuleApplication(ruleName, rule, token, child, 0).toString() + curToken.toString());
             return ParseReturn.ERROR;
         }
-
+        
         // Add this expansion to the path
         path.add(new RuleApplication(expand, index[0], token, 0, 0));
+        symbolTable.Apply(path.get(path.size() - 1));
 
         return ParseReturn.EXPAND;
 	}
@@ -64,6 +72,7 @@ public class Parse {
         int tokenIndex = 0;
         ArrayList<RuleApplication> path = new ArrayList<RuleApplication>();
         path.add(new RuleApplication("SystemGoal", 0, 0, 0, 0));
+        symbolTable.Apply(path.get(path.size() - 1));
 
         // Process through and generate paths until:
         //  - the path size reaches 0, indicating no valid tree exists
@@ -108,6 +117,7 @@ public class Parse {
 
             // If we have exhausted all branching at this path, remove it
             if (app.branchIndex + 1 >= index.length) {
+                symbolTable.Undo(path.get(i));
                 path.remove(i);
             } else {
             	break;
@@ -225,37 +235,5 @@ public class Parse {
 		String[] splt = line.split(",");
 		ArrayList<String> arrl = new ArrayList<>(Arrays.asList(splt));
 		return arrl;
-	}
-
-	//PopulateSymbolTable
-	//I don't know if you can do this generically. functions and procedures require different rules.
-	public SymbolTable popSymTab(Token[] tokens, String[] keyWords){
-		//Loop tokens array. Find "program","procedure","function". Create new Symbol table
-		//Set variable "name"(next token)
-		//Separate loop to loop through rest of the tokens
-			//Populate table with Variables/procedures/functions
-			//if "procedure" or "function",remember its name (next token)
-			//and ignore all until you see end --(procName)
-			//continue adding to symbol table
-		String name;
-		for (int i = 0; i < tokens.length; i++){
-			if(isIn(tokens[i],keyWords)){
-				//missing code to find nesting level
-				name = tokens[i + 1];
-				for(int j = i + 1; j < tokens.length; j++){
-					//missing code to populate symbol table
-				}
-			}
-		}
-		return null;
-	}
-
-	public boolean isIn(String toFind, String[] arr){
-		for(int i = 0; i < arr.length; i++){
-			if(toFind.equals(arr[i])){
-				return true;
-			}
-		}
-		return false;
 	}
 }
