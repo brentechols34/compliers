@@ -1,7 +1,6 @@
 package parser;
 
 import util.Token;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
@@ -34,6 +33,7 @@ public class SymbolTableController {
             case PROGRAM_HEADING:
                 break;
             case VARIABLE_DECLARATION:
+            	tables.peek().addVariable(tokens.get(application.tokenIndex).val,tokens.get(application.tokenIndex+2).type,"variable");
                 break;
             case PROCEDURE_HEADING:
                 break;
