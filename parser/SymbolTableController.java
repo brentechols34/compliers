@@ -4,6 +4,7 @@ import util.Token;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * Created by brentechols on 4/8/15.
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 public class SymbolTableController {
     ArrayList<Token> tokens;
     ArrayList<String> entries;
+    Stack<SymbolTable> tables;
 
     final int PROGRAM_HEADING = 2;
     final int VARIABLE_DECLARATION = 8;
