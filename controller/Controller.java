@@ -8,15 +8,14 @@ import java.util.Arrays;
 import scanner.Scanner;
 import util.*;
 import parser.Parse;
-import parser.Parse2;
 import parser.RuleApplication;
 public class Controller {
 
 	Scanner sc;
-	Parse2 pr;
+	Parse pr;
 	
 	ArrayList<Token> tokens;
-    int[] parseTree;
+    RuleApplication[] parseTree;
 	
 	public Controller(String fname) throws FileNotFoundException {
 		sc = new Scanner(fname);
@@ -38,7 +37,7 @@ public class Controller {
 			System.out.println("No: Tokenize first.");
 			return;
 		}
-		pr = new Parse2(tokens);
+		pr = new Parse(tokens);
 		parseTree = pr.make();
 		System.out.println(Arrays.toString(parseTree));
 	}
