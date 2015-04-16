@@ -13,6 +13,8 @@ public class SymbolTableController {
     ArrayList<Token> tokens;
     ArrayList<String> entries;
     Stack<SymbolTable> tables;
+    int nesting_level;
+    int label_num = 0;
 
     final int PROGRAM_HEADING = 2;
     final int VARIABLE_DECLARATION = 8;
@@ -20,15 +22,21 @@ public class SymbolTableController {
     final int FUNCTION_HEADING = 17;
     final int VARIABLE_PARAMETER_SECTION = 27;
     final int VALUE_PARAMETER_SECTION = 26;
+    final int COMPOUND_STATEMENT = 29;
     final int IDENTIFIER_LIST = 112;
     final int IDENTIFIER_TAIL = 113;
+
 
     public SymbolTableController(ArrayList<Token> tokens) throws IOException {
         this.tokens = tokens;
         entries = new ArrayList<String>();
+        tables = new Stack<>();
+        nesting_level = 0;
+        label_num = 0;
     }
 
-    public void Apply(RuleApplication application) {
+
+    public void ExitRule(RuleApplication application) {
         switch(application.ruleIndex) {
             case PROGRAM_HEADING:
                 break;
@@ -41,6 +49,8 @@ public class SymbolTableController {
                 break;
             case VALUE_PARAMETER_SECTION:
                 break;
+            case COMPOUND_STATEMENT:
+                break;
             case VARIABLE_PARAMETER_SECTION:
                 break;
             case IDENTIFIER_LIST:
@@ -50,23 +60,37 @@ public class SymbolTableController {
         }
     }
 
-    public void Undo(RuleApplication application) {
+    public void Apply(RuleApplication application) {
         switch(application.ruleIndex) {
             case PROGRAM_HEADING:
+            	tables.push(new SymbolTable(tokens.get(application.tokenIndex).val, "L"+(label_num++), nesting_level++));
                 break;
             case VARIABLE_DECLARATION:
                 break;
             case PROCEDURE_HEADING:
+            	tables.push(new SymbolTable(tokens.get(application.tokenIndex).val, "L"+(label_num++), nesting_level++));
                 break;
             case FUNCTION_HEADING:
                 break;
             case VALUE_PARAMETER_SECTION:
                 break;
+            case COMPOUND_STATEMENT:
+                break;
             case VARIABLE_PARAMETER_SECTION:
                 break;
             case IDENTIFIER_LIST:
+                switch (application.childIndex) {
+                    case 0:
+                        entries.add(tokens.get(application.tokenIndex).val);
+                        break;
+                }
                 break;
             case IDENTIFIER_TAIL:
+                switch (application.childIndex) {
+                    case 1:
+                        entries.add(tokens.get(application.tokenIndex).val);
+                        break;
+                }
                 break;
         }
     }

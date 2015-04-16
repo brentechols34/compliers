@@ -11,6 +11,7 @@ public class RuleApplication {
     int tokenIndex;
     int childIndex;
     int branchIndex;
+    boolean isCompleted;
 
     public RuleApplication(String ruleName, int ruleIndex, int tokenIndex, int childIndex, int branchIndex) {
         this.ruleName = ruleName;
