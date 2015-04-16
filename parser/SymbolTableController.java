@@ -63,14 +63,15 @@ public class SymbolTableController {
     public void Apply(RuleApplication application) {
         switch(application.ruleIndex) {
             case PROGRAM_HEADING:
-            	tables.push(new SymbolTable(tokens.get(application.tokenIndex).val, "L"+(label_num++), nesting_level++));
+            	if (application.childIndex == 1) tables.push(new SymbolTable(tokens.get(application.tokenIndex).val, "L"+(label_num++), nesting_level++));
                 break;
             case VARIABLE_DECLARATION:
                 break;
             case PROCEDURE_HEADING:
-            	tables.push(new SymbolTable(tokens.get(application.tokenIndex).val, "L"+(label_num++), nesting_level++));
+            	if (application.childIndex == 1) tables.push(new SymbolTable(tokens.get(application.tokenIndex).val, "L"+(label_num++), nesting_level++));
                 break;
             case FUNCTION_HEADING:
+            	if (application.childIndex == 1) tables.push(new SymbolTable(tokens.get(application.tokenIndex).val, "L"+(label_num++), nesting_level++));
                 break;
             case VALUE_PARAMETER_SECTION:
                 break;
