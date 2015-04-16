@@ -19,7 +19,7 @@ public class Scanner {
 		pr = new DoubleReader(fname);
 	}
 	
-	public Token nextToken() throws IOException {
+	public Token nextToken() throws IOException, ScannerException {
 		DFAS[] allStates = new DFAS[] {new integer(), new fixed(), new fp(), new identifier(), new unclosedComment(), new comment(), new stringLiteral(), new unclosedString(), new arith(), new equality(), new nequal(), new oparen(), new cparen(), new set(), new scolon(), new comma(), new period(), new colon(), new equals()};
 		boolean[] notRejected = new boolean[] {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true};
 		boolean[] wereNotRejected = new boolean[] {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true};
@@ -57,7 +57,7 @@ public class Scanner {
 			if (wereNotRejected[i] && wereAccepting[i]) return new Token(allStates[i].getType(s), s, col, row);
 		}
 		if (r==-1) return null;
-		return new Token(TokenType.MP_ERROR, s, col, row);
+		throw new ScannerException(s,r,c);
 	}
 
 }

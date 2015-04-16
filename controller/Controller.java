@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import scanner.Scanner;
+import scanner.ScannerException;
 import util.*;
 import parser.Parse;
 import parser.RuleApplication;
@@ -21,7 +22,7 @@ public class Controller {
 		sc = new Scanner(fname);
 	}
 	
-	public void tokenize() throws IOException { //generate tokens
+	public void tokenize() throws IOException, ScannerException { //generate tokens
 		tokens = new ArrayList<>();
 		Token t;
 		do {
@@ -42,8 +43,8 @@ public class Controller {
 		System.out.println(Arrays.toString(parseTree));
 	}
 	
-	public static void main(String[] args) throws IOException, IllegalArgumentException {
-		Controller c = new Controller("compliers/Resources/test.txt");
+	public static void main(String[] args) throws IOException, IllegalArgumentException, ScannerException {
+		Controller c = new Controller("compliers/Resources/test1.mp");
 		c.tokenize();
 		System.out.println("Token Stream: " + c.tokens);
 		c.parsify();
