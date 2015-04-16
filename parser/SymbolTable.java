@@ -9,6 +9,7 @@ public class SymbolTable {
 	
 	String name, label;
 	int nestingLevel;
+	int offset;
 	
 	HashMap<String,TableEntry> entries;
 	
@@ -16,25 +17,26 @@ public class SymbolTable {
 		this.name = name;
 		this.label = label;
 		this.nestingLevel = nestingLevel;
+		offset = 0;
 		
 		entries = new HashMap<String,TableEntry>();
 	}
 	
 	//Encompasses All
-	public void addEntry(String lexeme, TokenType type, String kind, String mode, int size, ArrayList<String> parameters){
-		TableEntry entry = new TableEntry(type,kind,mode,size,parameters);
+	public void addEntry(String lexeme, TokenType type, String kind, String mode, ArrayList<String> parameters){
+		TableEntry entry = new TableEntry(type,kind,mode,offset++,parameters);
 		entries.put(lexeme, entry);
 	}
 	
 	//Variables
-	public void addVariable(String lexeme, TokenType type, String kind, int size){
-		TableEntry entry = new TableEntry(type,kind,size);
+	public void addVariable(String lexeme, TokenType type, String kind){
+		TableEntry entry = new TableEntry(type,kind,offset++);
 		entries.put(lexeme, entry);
 	}
 
 	//Parameters
-	public void addParameter(String lexeme, TokenType type, String kind, String mode, int size){
-		TableEntry entry = new TableEntry(type,kind,mode,size);
+	public void addParameter(String lexeme, TokenType type, String kind, String mode){
+		TableEntry entry = new TableEntry(type,kind,mode,offset++);
 		entries.put(lexeme, entry);
 	}
 	
