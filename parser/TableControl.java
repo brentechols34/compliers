@@ -1,7 +1,8 @@
 package parser;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
+import java.util.ArrayList;
 import util.*;
 
 public class TableControl {
@@ -14,9 +15,9 @@ public class TableControl {
 	
 	
 	//Token Stream is array
-	public ArrayList<SymbolTable> popSymTab(){
+	public HashMap<String,SymbolTable> popSymTab(){
 		
-		ArrayList<SymbolTable> SymbolTables = new ArrayList<>();	//What we return
+		HashMap<String,SymbolTable> SymbolTables = new HashMap<>();	//What we return
 		Stack<SymbolTable> tableStack = new Stack<>();
 		String name;
 		int nestingLevel = 0;
@@ -52,7 +53,7 @@ public class TableControl {
 			
 			//If Token is an end, pop into ArrayList, decrement nestingLevel
 			if(tokens[i].type == TokenType.MP_END){
-				SymbolTables.add(tableStack.pop());
+				SymbolTables.put(tableStack.peek().name,tableStack.pop());
 				nestingLevel--;
 			}
 			
@@ -73,4 +74,6 @@ public class TableControl {
 		}
 		return SymbolTables;
 	}
+	
+	
 }
