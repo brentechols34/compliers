@@ -58,7 +58,7 @@ public class SemanticAnalyzer {
 	// }
 	// }
 
-	public CodeChunk convert(RuleApplication rule) {
+	public CodeChunk convert(RuleApplication rule,SymbolTable table) {
 		CodeChunk cc = new CodeChunk();
 		switch (rule.getRuleIndex()) {
 		case 0:
@@ -156,7 +156,10 @@ public class SemanticAnalyzer {
 		case 46:
 			break;
 		case 47:
-			break;
+			Token token = tokens.get(rule.tokenIndex);
+			TableEntry entry = table.getEntry(token.val);
+			cc = new CodeChunk("RD" + entry.getSize() + "(D" + table.getNestingLevel() + ")");
+			return cc;
 		case 48:
 			break;
 		case 49:
