@@ -50,6 +50,14 @@ public class SymbolTable {
 		return entries.size();
 	}
 	
+        public TableEntry getEntry(String lexeme){
+            return entries.get(lexeme);
+        }
+        
+        public int getNestingLevel(){
+            return nestingLevel;
+        }
+                
 	public String toString(){
 		String str = "";
 		for(String e:entries.keySet()){

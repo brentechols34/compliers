@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.util.Stack;
 import java.util.ArrayList;
 import parser.RuleApplication;
+import parser.SymbolTable;
+import parser.TableEntry;
 import util.*;
 
 
@@ -21,14 +23,27 @@ public class SemanticAnalyzer {
 		this.rules = rules;
 	}
         
-	public CodeChunk convert(ArrayList<Token> tokens){
+	public CodeChunk convert(ArrayList<Token> tokens,SymbolTable table){
             Token curToken = tokens.get(0);
+            CodeChunk cc;
             switch(curToken.type){
-                case MP_INTEGER:
-                    CodeChunk cc = new CodeChunk();
-                    
+                case MP_INTEGER_LIT:
+                    cc = new CodeChunk("PUSH #" + curToken.val);
+                    cc.type = TokenType.MP_INTEGER;
+                    return cc;
+                case MP_PLUS:
+                    cc = new CodeChunk(convert(tokens,table),convert(tokens,table),new CodeChunk("ADDS"));
+                    return cc;
+                case MP_MINUS:
+                    cc = new CodeChunk(convert(tokens,table),convert(tokens,table),new CodeChunk("SUBS"));
+                    return cc;
+                case MP_IDENTIFIER:
+                    TableEntry entry = table.getEntry(curToken.val);
+                    cc = new CodeChunk("PUSH " + entry.getSize() + "(D" + table.getNestingLevel());
+                    return cc;
+                default:
+                    return null;
             }
-            return null;
 	}	
 	
 	public void printToFile(){
@@ -48,6 +63,7 @@ public class SemanticAnalyzer {
 	
 	private class CodeChunk{
 		ArrayList <String> uCode;
+                TokenType type;
 		int ruleNum;
 		
 		public CodeChunk(){

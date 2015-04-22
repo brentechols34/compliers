@@ -50,7 +50,7 @@ public class TableEntry {
 	public TokenType getType() { return type; }
 	public String getKind() { return kind; }
 	public String getMode() { return mode; }
-	public int size() { return size; }
+	public int getSize() { return size; }
 	public ArrayList<String> getParameters() { return parameters; }
 	
 	public String toString(){
