@@ -116,7 +116,6 @@ public class Parse {
         for (int i = path.size() - 1; i >= 0; i--) {
             RuleApplication app = path.get(i);
             int[] index = LLT.getRuleIndex(app.ruleName, tokens.get(app.tokenIndex).type);
-
             // If we have exhausted all branching at this path, remove it
             if (app.branchIndex + 1 >= index.length) {
                 path.remove(i);
@@ -221,12 +220,6 @@ public class Parse {
 		bf.close();
 
 		rules = rules_init.toArray(new String[0][0]);
-		for (String s : ruleNames) {
-			System.out.println(s);
-			for (Integer d : byName.get(s)) {
-				System.out.println("\t"+d);
-			}
-		}
 	}
 	public int[] getIndices(String str) {
 		String[] splt = str.split("\\|");
