@@ -5,18 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Stack;
 import java.util.ArrayList;
-
 import parser.RuleApplication;
-<<<<<<< HEAD
-import util.Token;
-
-import java.util.Stack;
-=======
 import parser.SymbolTable;
 import parser.TableEntry;
 import util.*;
-
->>>>>>> 0ada38fbd425dfb73ab2df66e265f15c027b64e9
 
 public class SemanticAnalyzer {
 	
@@ -29,14 +21,6 @@ public class SemanticAnalyzer {
 		code = new Stack<>();
 		this.rules = rules;
 	}
-<<<<<<< HEAD
-	
-	public void convert(Stack<Token> tokens){
-		Token next = tokens.pop();
-		switch(next.val){
-			
-		}
-=======
         
 	public CodeChunk convert(ArrayList<Token> tokens,SymbolTable table){
             Token curToken = tokens.get(0);
@@ -59,19 +43,7 @@ public class SemanticAnalyzer {
                 default:
                     return null;
             }
->>>>>>> 0ada38fbd425dfb73ab2df66e265f15c027b64e9
 	}	
-	
-	public CodeChunk ArithExp(){
-		
-		return null;
-	}
-	
-	public CodeChunk AssignStatement(){
-		
-		return null;
-	}
-	
 	
 	public void printToFile(){
 		Stack<CodeChunk> reversed = new Stack<>();
