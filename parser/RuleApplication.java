@@ -7,7 +7,7 @@ import util.Token;
  */
 public class RuleApplication {
     String ruleName;
-    int ruleIndex;
+    private int ruleIndex;
     int tokenIndex;
     int childIndex;
     int branchIndex;
@@ -15,7 +15,7 @@ public class RuleApplication {
 
     public RuleApplication(String ruleName, int ruleIndex, int tokenIndex, int childIndex, int branchIndex) {
         this.ruleName = ruleName;
-        this.ruleIndex = ruleIndex;
+        this.setRuleIndex(ruleIndex);
         this.tokenIndex = tokenIndex;
         this.childIndex = childIndex;
         this.branchIndex = branchIndex;
@@ -25,10 +25,18 @@ public class RuleApplication {
     public String toString() {
         return "{" +
                 "ruleName='" + ruleName + '\'' +
-                ", ruleIndex=" + ruleIndex +
+                ", ruleIndex=" + getRuleIndex() +
                 ", tokenIndex=" + tokenIndex +
                 ", childIndex=" + childIndex +
                 ", branchIndex=" + branchIndex +
                 '}';
     }
+
+	public int getRuleIndex() {
+		return ruleIndex;
+	}
+
+	public void setRuleIndex(int ruleIndex) {
+		this.ruleIndex = ruleIndex;
+	}
 }

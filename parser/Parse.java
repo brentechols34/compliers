@@ -79,10 +79,10 @@ public class Parse {
         int lastDepth = 0;
         while(path.size() > 0 && this.getNext(path) != null) {
             RuleApplication next = this.getNext(path);
-            ParseReturn r = parse(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, path);
+            ParseReturn r = parse(next.ruleName, next.getRuleIndex(), tokenIndex, next.childIndex, path);
             switch (r) {
                 case HUNG:
-                    symbolTable.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
+                    symbolTable.Apply(new RuleApplication(next.ruleName, next.getRuleIndex(), tokenIndex, next.childIndex, next.branchIndex));
                     next.childIndex++;
                     tokenIndex++;
                     break;
@@ -90,7 +90,7 @@ public class Parse {
                     next.childIndex++;
                     break;
                 case EXPAND:
-                    symbolTable.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
+                    symbolTable.Apply(new RuleApplication(next.ruleName, next.getRuleIndex(), tokenIndex, next.childIndex, next.branchIndex));
                     next.childIndex++;
                     break;
                 case ERROR:
@@ -134,7 +134,7 @@ public class Parse {
         System.out.println("Branch reset: " + path.toString());
         last.branchIndex++;
         last.childIndex = 0;
-        last.ruleIndex = LLT.getRuleIndex(last.ruleName, tokens.get(last.tokenIndex).type)[last.branchIndex];
+        last.setRuleIndex(LLT.getRuleIndex(last.ruleName, tokens.get(last.tokenIndex).type)[last.branchIndex]);
 
         return last.tokenIndex;
     }
@@ -143,7 +143,7 @@ public class Parse {
     private RuleApplication getNext(ArrayList<RuleApplication> path) {
         for (int i = path.size() - 1; i >= 0; i--) {
             RuleApplication app = path.get(i);
-            String[] children = rules[app.ruleIndex];
+            String[] children = rules[app.getRuleIndex()];
             if (children.length > app.childIndex) {
                 return app;
             } else if (!app.isCompleted) {

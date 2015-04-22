@@ -37,7 +37,7 @@ public class SymbolTableController {
     }
     
     public void ExitRule(RuleApplication application) {
-        switch(application.ruleIndex) {
+        switch(application.getRuleIndex()) {
             case BLOCK:
                 System.out.println(tables.pop());
                 nesting_level--;
@@ -46,7 +46,7 @@ public class SymbolTableController {
     }
 
     public void Apply(RuleApplication application) {
-        switch(application.ruleIndex) {
+        switch(application.getRuleIndex()) {
             case PROGRAM_HEADING:
             case FUNCTION_HEADING:
             case PROCEDURE_HEADING:
