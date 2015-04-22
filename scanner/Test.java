@@ -7,7 +7,7 @@ import util.Token;
 
 public class Test {
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ScannerException {
 		String fname = "test.txt";
 		Scanner sc = new Scanner(fname);
 		
