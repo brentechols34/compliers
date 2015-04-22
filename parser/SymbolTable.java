@@ -52,8 +52,8 @@ public class SymbolTable {
 	
 	public String toString(){
 		String str = "";
-		for(TableEntry e:entries.values()){
-			str+= e.toString() + "\n";
+		for(String e:entries.keySet()){
+			str+= e + ":" + entries.get(e).toString() + "\n";
 		}
 		return str;
 	}

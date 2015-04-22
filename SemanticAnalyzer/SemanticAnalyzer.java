@@ -53,5 +53,21 @@ public class SemanticAnalyzer {
 		public CodeChunk(){
 			uCode = new ArrayList<>();
 		}
+		public CodeChunk(String s) {
+			uCode = new ArrayList<>();
+			uCode.add(s);
+		}
+		public CodeChunk(CodeChunk... cc) {
+			uCode = new ArrayList<>();
+			for (CodeChunk c : cc) {
+				uCode.addAll(c.uCode);
+			}
+		}
+		public void append(String s) {
+			uCode.add(s);
+		}
+		public void append(CodeChunk c) {
+			uCode.addAll(c.uCode);
+		}
 	}
 }
