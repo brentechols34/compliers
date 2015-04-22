@@ -15,12 +15,14 @@ public class SemanticAnalyzer {
 	PrintWriter pw;
 	Stack<CodeChunk> code;
 	ArrayList<RuleApplication> rules;
+    ArrayList<Token> tokens;
 
-	public SemanticAnalyzer(String fname, ArrayList<RuleApplication> rules)
+	public SemanticAnalyzer(String fname, ArrayList<RuleApplication> rules, ArrayList<Token> tokens)
 			throws FileNotFoundException {
 		pw = new PrintWriter(new File(fname));
 		code = new Stack<>();
 		this.rules = rules;
+        this.tokens = tokens;
 	}
 
 	// public CodeChunk convert(ArrayList<Token> tokens,SymbolTable table){
