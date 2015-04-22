@@ -7,15 +7,15 @@ import util.Token;
  */
 public class RuleApplication {
     String ruleName;
-    private int ruleIndex;
-    int tokenIndex;
-    int childIndex;
-    int branchIndex;
-    boolean isCompleted;
+    public int ruleIndex;
+    public int tokenIndex;
+    public int childIndex;
+    public int branchIndex;
+    public boolean isCompleted;
 
     public RuleApplication(String ruleName, int ruleIndex, int tokenIndex, int childIndex, int branchIndex) {
         this.ruleName = ruleName;
-        this.setRuleIndex(ruleIndex);
+        this.ruleIndex = ruleIndex;
         this.tokenIndex = tokenIndex;
         this.childIndex = childIndex;
         this.branchIndex = branchIndex;
@@ -25,18 +25,10 @@ public class RuleApplication {
     public String toString() {
         return "{" +
                 "ruleName='" + ruleName + '\'' +
-                ", ruleIndex=" + getRuleIndex() +
+                ", ruleIndex=" + ruleIndex +
                 ", tokenIndex=" + tokenIndex +
                 ", childIndex=" + childIndex +
                 ", branchIndex=" + branchIndex +
                 '}';
     }
-
-	public int getRuleIndex() {
-		return ruleIndex;
-	}
-
-	public void setRuleIndex(int ruleIndex) {
-		this.ruleIndex = ruleIndex;
-	}
 }
