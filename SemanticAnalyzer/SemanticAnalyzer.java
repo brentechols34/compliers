@@ -5,7 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Stack;
 import java.util.ArrayList;
+
 import parser.RuleApplication;
+import util.Token;
+
+import java.util.Stack;
 
 public class SemanticAnalyzer {
 	
@@ -19,9 +23,23 @@ public class SemanticAnalyzer {
 		this.rules = rules;
 	}
 	
-	public void convert(File semAnalyze){
-		
+	public void convert(Stack<Token> tokens){
+		Token next = tokens.pop();
+		switch(next.val){
+			
+		}
 	}	
+	
+	public CodeChunk ArithExp(){
+		
+		return null;
+	}
+	
+	public CodeChunk AssignStatement(){
+		
+		return null;
+	}
+	
 	
 	public void printToFile(){
 		Stack<CodeChunk> reversed = new Stack<>();
