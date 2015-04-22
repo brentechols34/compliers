@@ -21,7 +21,7 @@ public class SemanticAnalyzer {
 	
 	public void convert(File semAnalyze){
 		
-	}
+	}	
 	
 	public void printToFile(){
 		Stack<CodeChunk> reversed = new Stack<>();

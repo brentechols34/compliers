@@ -20,8 +20,8 @@ public class SymbolTableController {
     final int PROGRAM_HEADING = 2;
     final int BLOCK = 3;
     final int VARIABLE_DECLARATION = 8;
-    final int PROCEDURE_HEADING = 16;
-    final int FUNCTION_HEADING = 17;
+    final int PROCEDURE_HEADING = 18;
+    final int FUNCTION_HEADING = 19;
     final int VARIABLE_PARAMETER_SECTION = 27;
     final int VALUE_PARAMETER_SECTION = 26;
     final int IDENTIFIER_LIST = 112;
