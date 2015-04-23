@@ -114,3 +114,15 @@ IdentifierList: MP_IDENTIFIER IdentifierTail
 IdentifierTail: MP_COMMA MP_IDENTIFIER IdentifierTail
 IdentifierTail: lambda
 Factor: VariableIdentifier
+
+a = a + b * c
+
+PUSH a
+PUSH b
+PUSH c
+MULS
+ADDS
+
+// Assignment Statement
+POP a
+

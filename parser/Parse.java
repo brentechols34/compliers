@@ -69,9 +69,12 @@ public class Parse {
         EXPAND,
         ERROR
     }
-    public ArrayList<RuleApplication> parseMaster() {
+    public ArrayList<RuleApplication> parseMaster() throws IOException {
         int tokenIndex = 0;
         ArrayList<RuleApplication> path = new ArrayList<RuleApplication>();
+        semanticAnalyzer = new SemanticAnalyzer("results.txt", path, tokens, symbolTable);
+
+
         path.add(new RuleApplication("SystemGoal", 0, 0, 0, 0));
         symbolTable.Apply(path.get(path.size() - 1));
 
@@ -84,12 +87,8 @@ public class Parse {
             ParseReturn r = parse(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, path);
             switch (r) {
                 case HUNG:
-<<<<<<< HEAD
                     symbolTable.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
-=======
-                    symbolTable.Apply(new RuleApplication(next.ruleName, next.getRuleIndex(), tokenIndex, next.childIndex, next.branchIndex));
                     semanticAnalyzer.Apply(app);
->>>>>>> fe2631ae1f8e863735783992c29b68de98e99a94
                     next.childIndex++;
                     tokenIndex++;
                     break;
@@ -97,12 +96,8 @@ public class Parse {
                     next.childIndex++;
                     break;
                 case EXPAND:
-<<<<<<< HEAD
                     symbolTable.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
-=======
-                    symbolTable.Apply(new RuleApplication(next.ruleName, next.getRuleIndex(), tokenIndex, next.childIndex, next.branchIndex));
                     semanticAnalyzer.Apply(app);
->>>>>>> fe2631ae1f8e863735783992c29b68de98e99a94
                     next.childIndex++;
                     break;
                 case ERROR:
@@ -169,7 +164,7 @@ public class Parse {
 
         return null;
     }
-	public RuleApplication[] make() throws IllegalArgumentException {
+	public RuleApplication[] make() throws IllegalArgumentException, IOException {
 		ArrayList<RuleApplication> parseTree = parseMaster();
         RuleApplication[] tr = new RuleApplication[parseTree.size()];
 		for (int i = 0; i < tr.length; i++) {

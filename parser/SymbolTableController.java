@@ -90,4 +90,8 @@ public class SymbolTableController {
                 break;
         }
     }
+
+    public TableEntry getEntry(String name) {
+        return null;
+    }
 }

@@ -8,21 +8,24 @@ import java.util.ArrayList;
 import parser.RuleApplication;
 import parser.SymbolTable;
 import parser.TableEntry;
+import parser.SymbolTableController;
 import util.*;
 
 public class SemanticAnalyzer {
 
 	PrintWriter pw;
 	Stack<CodeChunk> code;
+    SymbolTableController symbolTable;
 	ArrayList<RuleApplication> rules;
     ArrayList<Token> tokens;
 
-	public SemanticAnalyzer(String fname, ArrayList<RuleApplication> rules, ArrayList<Token> tokens)
+	public SemanticAnalyzer(String fname, ArrayList<RuleApplication> rules, ArrayList<Token> tokens, SymbolTableController symbolTable)
 			throws FileNotFoundException {
 		pw = new PrintWriter(new File(fname));
 		code = new Stack<>();
 		this.rules = rules;
         this.tokens = tokens;
+        this.symbolTable = symbolTable;
 	}
 
 	// public CodeChunk convert(ArrayList<Token> tokens,SymbolTable table){
