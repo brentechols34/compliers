@@ -2,8 +2,11 @@ package parser;
 
 import util.Token;
 import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Stack;
+
 
 /**
  * Created by brentechols on 4/8/15.
@@ -12,7 +15,7 @@ import java.util.Stack;
 public class SymbolTableController {
     ArrayList<Token> tokens;
     ArrayList<String> entries;
-    Stack<SymbolTable> tables;
+    ArrayDeque<SymbolTable> tables;
     String mode;
     int nesting_level;
     int label_num = 0;
@@ -31,33 +34,33 @@ public class SymbolTableController {
     public SymbolTableController(ArrayList<Token> tokens) throws IOException {
         this.tokens = tokens;
         entries = new ArrayList<String>();
-        tables = new Stack<>();
+        tables = new ArrayDeque<>();
         nesting_level = 0;
         label_num = 0;
     }
     
     public void ExitRule(RuleApplication application) {
-        switch(application.getRuleIndex()) {
+        switch(application.ruleIndex) {
             case BLOCK:
-                System.out.println(tables.pop());
+                System.out.println(tables.removeFirst());
                 nesting_level--;
                 break;
         }
     }
 
     public void Apply(RuleApplication application) {
-        switch(application.getRuleIndex()) {
+        switch(application.ruleIndex) {
             case PROGRAM_HEADING:
             case FUNCTION_HEADING:
             case PROCEDURE_HEADING:
                 if (application.childIndex == 1) {
-                    tables.push(new SymbolTable(tokens.get(application.tokenIndex).val, "L"+(label_num++), nesting_level++));
+                    tables.addFirst(new SymbolTable(tokens.get(application.tokenIndex).val, "L" + (label_num++), nesting_level++));
                 }
                 break;
             case VARIABLE_DECLARATION:
                 if (application.childIndex == 2) {
                     for (String name: entries) {
-                        tables.peek().addVariable(name, tokens.get(application.tokenIndex).type, "variable");
+                        tables.peekFirst().addVariable(name, tokens.get(application.tokenIndex).type, "variable");
                     }
                     entries.clear();
                 }
@@ -65,7 +68,7 @@ public class SymbolTableController {
             case VALUE_PARAMETER_SECTION:
                 if (application.childIndex == 2) {
                     for (String name: entries) {
-                        tables.peek().addParameter(name, tokens.get(application.tokenIndex).type, "parameter", "value");
+                        tables.peekFirst().addParameter(name, tokens.get(application.tokenIndex).type, "parameter", "value");
                     }
                     entries.clear();
                 }
@@ -73,7 +76,7 @@ public class SymbolTableController {
             case VARIABLE_PARAMETER_SECTION:
                 if (application.childIndex == 3) {
                     for (String name: entries) {
-                        tables.peek().addParameter(name, tokens.get(application.tokenIndex).type, "parameter", "reference");
+                        tables.peekFirst().addParameter(name, tokens.get(application.tokenIndex).type, "parameter", "reference");
                     }
                     entries.clear();
                 }
@@ -91,7 +94,7 @@ public class SymbolTableController {
         }
     }
 
-    public TableEntry getEntry(String name) {
+    public SymbolTable getTable(String name) {
         return null;
     }
 }
