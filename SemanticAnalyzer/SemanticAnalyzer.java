@@ -61,10 +61,10 @@ public class SemanticAnalyzer {
 	// }
 	// }
 
-	public CodeChunk convert(RuleApplication rule,SymbolTable table) {
+	public CodeChunk convert(RuleApplication rule) {
 		CodeChunk cc = new CodeChunk();
 		Token token = tokens.get(rule.tokenIndex);
-		TableEntry entry = table.getEntry(token.val);
+		TableEntry entry = this.symbolTable.getTable(token.val).getEntry(token.val);
 		switch (rule.ruleIndex) {
 		case 0:
 			break;
@@ -243,11 +243,14 @@ public class SemanticAnalyzer {
 		case 86:
 			break;
 		case 87:
-			break;
+			cc = new CodeChunk("ADDS");
+			return cc;
 		case 88:
-			break;
+			cc = new CodeChunk("SUBS");
+			return cc;
 		case 89:
-			break;
+			cc = new CodeChunk("ORS");
+			return cc;
 		case 90:
 			break;
 		case 91:
@@ -313,9 +316,10 @@ public class SemanticAnalyzer {
 		return cc;
 	}
 
-    public CodeChunk ExitRule(RuleApplication rule,SymbolTable table) {
+    public CodeChunk ExitRule(RuleApplication rule) {
         CodeChunk cc = new CodeChunk();
 		Token token = tokens.get(rule.tokenIndex);
+		SymbolTable table = this.symbolTable.getTable(token.val);
 		TableEntry entry = table.getEntry(token.val);
         switch (rule.ruleIndex) {
             case 0:
@@ -425,7 +429,8 @@ public class SemanticAnalyzer {
             case 52:
                 break;
             case 53:
-            	
+            	cc = new CodeChunk("POP " + entry.getSize() + "(D" + table.getNestingLevel() + ")");
+            	return cc;
                 break;
             case 54:
                 break;
