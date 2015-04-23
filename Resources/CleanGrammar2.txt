@@ -42,7 +42,7 @@ Statement: RepeatStatement
 Statement: ForStatement
 Statement: ProcedureStatement
 EmptyStatement: lambda
-ReadStatement: MP_READ MP_LPAREN ReadParameter ReadParameterTail MP_RPAREN Read(foo, bar, baz)
+ReadStatement: MP_READ MP_LPAREN ReadParameter ReadParameterTail MP_RPAREN
 ReadParameterTail: MP_COMMA ReadParameter ReadParameterTail
 ReadParameterTail: lambda
 ReadParameter: VariableIdentifier

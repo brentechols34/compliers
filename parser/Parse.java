@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import SemanticAnalyzer.SemanticAnalyzer;
 import util.Token;
 import util.TokenType;
 
@@ -21,6 +22,7 @@ public class Parse {
 	String[][] rules;
 
     SymbolTableController symbolTable;
+    SemanticAnalyzer semanticAnalyzer;
 
 	ArrayList<Token> tokens;
 
@@ -82,7 +84,12 @@ public class Parse {
             ParseReturn r = parse(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, path);
             switch (r) {
                 case HUNG:
+<<<<<<< HEAD
                     symbolTable.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
+=======
+                    symbolTable.Apply(new RuleApplication(next.ruleName, next.getRuleIndex(), tokenIndex, next.childIndex, next.branchIndex));
+                    semanticAnalyzer.Apply(app);
+>>>>>>> fe2631ae1f8e863735783992c29b68de98e99a94
                     next.childIndex++;
                     tokenIndex++;
                     break;
@@ -90,7 +97,12 @@ public class Parse {
                     next.childIndex++;
                     break;
                 case EXPAND:
+<<<<<<< HEAD
                     symbolTable.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
+=======
+                    symbolTable.Apply(new RuleApplication(next.ruleName, next.getRuleIndex(), tokenIndex, next.childIndex, next.branchIndex));
+                    semanticAnalyzer.Apply(app);
+>>>>>>> fe2631ae1f8e863735783992c29b68de98e99a94
                     next.childIndex++;
                     break;
                 case ERROR:
@@ -119,6 +131,7 @@ public class Parse {
             // If we have exhausted all branching at this path, remove it
             if (app.branchIndex + 1 >= index.length) {
                 path.remove(i);
+                SemanticAnalyzer.Undo(app);
             } else {
             	break;
             }
@@ -150,6 +163,7 @@ public class Parse {
                 // Signal to the symbol table we finished a rule
                 app.isCompleted = true;
                 symbolTable.ExitRule(app);
+                semanticAnalyzer.ExitRule(app);
             }
         }
 
