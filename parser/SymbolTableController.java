@@ -95,6 +95,12 @@ public class SymbolTableController {
     }
 
     public SymbolTable getTable(String name) {
+        for (SymbolTable s : tables) {
+            if (s.getEntry(name) != null) {
+                return s;
+            }
+        }
+
         return null;
     }
 }
