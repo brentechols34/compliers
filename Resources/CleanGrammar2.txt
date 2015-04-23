@@ -42,7 +42,7 @@ Statement: RepeatStatement
 Statement: ForStatement
 Statement: ProcedureStatement
 EmptyStatement: lambda
-ReadStatement: MP_READ MP_LPAREN ReadParameter ReadParameterTail MP_RPAREN
+ReadStatement: MP_READ MP_LPAREN ReadParameter ReadParameterTail MP_RPAREN Read(foo, bar, baz)
 ReadParameterTail: MP_COMMA ReadParameter ReadParameterTail
 ReadParameterTail: lambda
 ReadParameter: VariableIdentifier
@@ -114,3 +114,15 @@ IdentifierList: MP_IDENTIFIER IdentifierTail
 IdentifierTail: MP_COMMA MP_IDENTIFIER IdentifierTail
 IdentifierTail: lambda
 Factor: VariableIdentifier
+
+a = a + b * c
+
+PUSH a
+PUSH b
+PUSH c
+MULS
+ADDS
+
+// Assignment Statement
+POP a
+
