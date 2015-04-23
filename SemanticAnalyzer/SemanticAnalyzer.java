@@ -243,14 +243,11 @@ public class SemanticAnalyzer {
 		case 86:
 			break;
 		case 87:
-			cc = new CodeChunk("ADDS");
-			return cc;
+			break;
 		case 88:
-			cc = new CodeChunk("SUBS");
-			return cc;
+			break;
 		case 89:
-			cc = new CodeChunk("ORS");
-			return cc;
+			break;
 		case 90:
 			break;
 		case 91:
