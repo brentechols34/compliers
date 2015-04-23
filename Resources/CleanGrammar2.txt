@@ -89,7 +89,7 @@ AddingOperator: MP_PLUS
 AddingOperator: MP_MINUS
 AddingOperator: MP_OR
 Term: Factor FactorTail
-FactorTail: MultiplyingOperator Factor FactorTail
+: MultiplyingOperator Factor FactorTail
 FactorTail: lambda
 MultiplyingOperator: MP_TIMES
 MultiplyingOperator: MP_FLOAT_DIVIDE

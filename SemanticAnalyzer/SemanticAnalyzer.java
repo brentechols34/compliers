@@ -60,7 +60,7 @@ public class SemanticAnalyzer {
 
 	public CodeChunk convert(RuleApplication rule,SymbolTable table) {
 		CodeChunk cc = new CodeChunk();
-		switch (rule.getRuleIndex()) {
+		switch (rule.ruleIndex) {
 		case 0:
 			break;
 		case 1:
@@ -261,15 +261,20 @@ public class SemanticAnalyzer {
 		case 97:
 			break;
 		case 98:
-			break;
+			cc = new CodeChunk("PUSH #" + tokens.get(rule.tokenIndex).val);
+			return cc;
 		case 99:
-			break;
+			cc = new CodeChunk("PUSH #" + tokens.get(rule.tokenIndex).val);
+			return cc;
 		case 100:
-			break;
+			cc = new CodeChunk("PUSH #" + tokens.get(rule.tokenIndex).val);
+			return cc;
 		case 101:
-			break;
+			cc = new CodeChunk("PUSH #1");
+			return cc;
 		case 102:
-			break;
+			cc = new CodeChunk("PUSH #0");
+			return cc;
 		case 103:
 			break;
 		case 104:
