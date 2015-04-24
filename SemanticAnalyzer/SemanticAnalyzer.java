@@ -64,6 +64,7 @@ public class SemanticAnalyzer {
 	public CodeChunk convert(RuleApplication rule) {
 		CodeChunk cc = new CodeChunk();
 		Token token = tokens.get(rule.tokenIndex);
+		SymbolTable table = this.symbolTable.getTable(token.val);
 		TableEntry entry = this.symbolTable.getTable(token.val).getEntry(token.val);
 		switch (rule.ruleIndex) {
 		case 0:
@@ -428,7 +429,6 @@ public class SemanticAnalyzer {
             case 53:
             	cc = new CodeChunk("POP " + entry.getSize() + "(D" + table.getNestingLevel() + ")");
             	return cc;
-                break;
             case 54:
                 break;
             case 55:
