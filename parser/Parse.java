@@ -88,7 +88,7 @@ public class Parse {
             switch (r) {
                 case HUNG:
                     symbolTable.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
-                    semanticAnalyzer.Apply(app);
+                    semanticAnalyzer.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
                     next.childIndex++;
                     tokenIndex++;
                     break;
@@ -97,7 +97,7 @@ public class Parse {
                     break;
                 case EXPAND:
                     symbolTable.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
-                    semanticAnalyzer.Apply(app);
+                    semanticAnalyzer.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
                     next.childIndex++;
                     break;
                 case ERROR:
