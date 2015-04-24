@@ -266,7 +266,13 @@ public class SemanticAnalyzer {
 		case 97:
 			break;
 		case 98:
-			cc = new CodeChunk("PUSH #" + tokens.get(rule.tokenIndex).val);
+			String val = tokens.get(rule.tokenIndex).val;
+			int v = Integer.parseInt(val);
+			
+			cc = new CodeChunk("PUSH #" + Math.abs(v));
+			if (v < 0) {
+				cc.append("NEGS");
+			}
 			return cc;
 		case 99:
 			cc = new CodeChunk("PUSH #" + tokens.get(rule.tokenIndex).val);
