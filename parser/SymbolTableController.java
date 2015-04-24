@@ -103,4 +103,8 @@ public class SymbolTableController {
 
         return null;
     }
+
+    public SymbolTable getTable() {
+        return tables.peekFirst();
+    }
 }

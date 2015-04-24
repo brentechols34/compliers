@@ -45,7 +45,20 @@ public class SymbolTable {
 		TableEntry entry = new TableEntry(kind,parameters);
 		entries.put(lexeme, entry);
 	}
-	
+
+    // Get the size of the local variables and function declarations
+    public int localSize() {
+        int size = 0;
+        for (TableEntry entry : this.entries.values()) {
+            String kind = entry.getKind();
+            if (kind == "variable" || kind == "function" || kind == "procedure") {
+                size++;
+            }
+        }
+
+        return size;
+    }
+
 	public int size(){
 		return entries.size();
 	}
