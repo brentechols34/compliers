@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0ce15ff-700f-4f6f-a13c-f45090b0c876" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/util/CodeChunk.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java" afterPath="$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser/SymbolTable.java" afterPath="$PROJECT_DIR$/parser/SymbolTable.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser/SymbolTableController.java" afterPath="$PROJECT_DIR$/parser/SymbolTableController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -83,8 +83,8 @@
       <file leaf-file-name="SemanticAnalyzer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.13068731" vertical-offset="1200" max-vertical-offset="6510">
-              <caret line="89" column="73" selection-start-line="89" selection-start-column="73" selection-end-line="89" selection-end-column="73" />
+            <state vertical-scroll-proportion="0.20329139" vertical-offset="870" max-vertical-offset="6510">
+              <caret line="72" column="33" selection-start-line="72" selection-start-column="33" selection-end-line="72" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#10964#10965#0" expanded="true" />
@@ -115,12 +115,12 @@
       <file leaf-file-name="SymbolTableController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parser/SymbolTableController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="632" max-vertical-offset="1740">
-              <caret line="62" column="111" selection-start-line="62" selection-start-column="103" selection-end-line="62" selection-end-column="111" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="662" max-vertical-offset="1755">
+              <caret line="64" column="21" selection-start-line="63" selection-start-column="103" selection-end-line="63" selection-end-column="111" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3437#3438#0" expanded="true" />
-                <element signature="e#3478#3479#0" expanded="true" />
+                <element signature="e#3545#3546#0" expanded="true" />
+                <element signature="e#3586#3587#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -955,12 +955,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/parser/SymbolTableController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="452" max-vertical-offset="1740">
-          <caret line="62" column="111" selection-start-line="62" selection-start-column="103" selection-end-line="62" selection-end-column="111" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="662" max-vertical-offset="1755">
+          <caret line="64" column="21" selection-start-line="63" selection-start-column="103" selection-end-line="63" selection-end-column="111" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3437#3438#0" expanded="true" />
-            <element signature="e#3478#3479#0" expanded="true" />
+            <element signature="e#3545#3546#0" expanded="true" />
+            <element signature="e#3586#3587#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -983,8 +983,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13068731" vertical-offset="1200" max-vertical-offset="6510">
-          <caret line="89" column="73" selection-start-line="89" selection-start-column="73" selection-end-line="89" selection-end-column="73" />
+        <state vertical-scroll-proportion="0.20329139" vertical-offset="870" max-vertical-offset="6510">
+          <caret line="72" column="33" selection-start-line="72" selection-start-column="33" selection-end-line="72" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#10964#10965#0" expanded="true" />
