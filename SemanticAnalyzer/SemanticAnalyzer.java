@@ -27,7 +27,7 @@ public class SemanticAnalyzer {
 		this.rules = rules;
         this.tokens = tokens;
         this.symbolTable = symbolTable;
-        savedChunk = new ArrayList<>();
+        this.savedChunk = new ArrayList<>();
         this.typeStack = new TypeStack();
         this.optionalSignLookup = new HashMap<RuleApplication, Boolean>();
 	}
