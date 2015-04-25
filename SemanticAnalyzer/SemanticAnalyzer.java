@@ -18,7 +18,8 @@ public class SemanticAnalyzer {
     SymbolTableController symbolTable;
 	ArrayList<RuleApplication> rules;
     ArrayList<Token> tokens;
-
+    ArrayList<CodeChunk> savedChunk;
+    
 	public SemanticAnalyzer(String fname, ArrayList<RuleApplication> rules, ArrayList<Token> tokens, SymbolTableController symbolTable)
 			throws FileNotFoundException {
 		pw = new PrintWriter(new File(fname));
@@ -26,6 +27,7 @@ public class SemanticAnalyzer {
 		this.rules = rules;
         this.tokens = tokens;
         this.symbolTable = symbolTable;
+        savedChunk = new ArrayList<>();
 	}
 
 	// public CodeChunk convert(ArrayList<Token> tokens,SymbolTable table){
