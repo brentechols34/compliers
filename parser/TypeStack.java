@@ -1,60 +1,79 @@
 package parser;
 
+import java.util.ArrayDeque;
 import java.util.Stack;
 
+import util.CodeChunk;
 import util.TokenType;
 
 public class TypeStack {
-	
-	private Stack<TokenType> stack;
-	
+
+	private ArrayDeque<TokenType> stack;
+
 	public TypeStack() {
-		stack = new Stack<>();
+		stack = new ArrayDeque<>();
 	}
-	
+
 	public void push(TokenType tt) {
 		stack.push(tt);
 	}
-	
+
 	public TokenType pop() {
 		return stack.pop();
 	}
-	
-	
-	public String resolve(TokenType tt) {
+
+
+	public CodeChunk resolve(TokenType tt) {
 		TokenType top = pop();
 		TokenType next = pop();
+		CodeChunk cc = castStuff(top,next);
 		switch (tt) {
 		case MP_PLUS: 
 			if (top == TokenType.MP_INTEGER_LIT && next == TokenType.MP_INTEGER_LIT) {
-				return "ADDS";
+				cc.append("ADDS");
 			} else {
-				return "ADDSF";
+				cc.append("ADDSF");
 			}
+			break;
 		case MP_MINUS:
 			if (top == TokenType.MP_INTEGER_LIT && next == TokenType.MP_INTEGER_LIT) {
-				return "SUBS";
+				cc.append("SUBS");
 			} else {
-				return "SUBSF";
+				cc.append("SUBSF");
 			}
+			break;
 		case MP_TIMES:
 			if (top == TokenType.MP_INTEGER_LIT && next == TokenType.MP_INTEGER_LIT) {
-				return "MULS";
+				cc.append("MULS");
 			} else {
-				return "MULSF";
+				cc.append("MULSF");
 			}
+			break;
 		case MP_DIV:
 			if (top == TokenType.MP_INTEGER_LIT && next == TokenType.MP_INTEGER_LIT) {
-				return "DIVS";
+				cc.append("DIVS");
 			} else {
-				return "DIVSF";
+				cc.append("DIVSF");
 			}
-			
-		
+			break;
 		default: return null;
-			
 		}
+		return cc;
 	}
-	
+
+	public CodeChunk castStuff(TokenType top, TokenType next) {
+		CodeChunk cc = new CodeChunk();
+		if (next == top) {
+			return cc;
+		} else {
+			cc.append("CASTF");
+			cc.append("SUB SP #1 SP");
+			cc.append("CASTF");
+			cc.append("ADD SP #1 SP");
+			return cc;
+		}
+
+	}
+
 
 }

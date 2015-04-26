@@ -36,5 +36,6 @@ public class CodeChunk {
 
 	public void setType(TokenType type) {
 		this.type = type;
+		int a = -5 + -5;
 	}
 }
