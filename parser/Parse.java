@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import SemanticAnalyzer.SemanticAnalyzer;
+import util.CodeChunk;
 import util.Token;
 import util.TokenType;
 
@@ -25,10 +26,13 @@ public class Parse {
     SemanticAnalyzer semanticAnalyzer;
 
 	ArrayList<Token> tokens;
+	public ArrayList<CodeChunk> ccs;
+	
 
 	public Parse(ArrayList<Token> tokens) throws IOException{
 		this.tokens = tokens;
         symbolTable = new SymbolTableController(tokens);
+        ccs = new ArrayList<>();
 		populate();
 	}
     // Accepts a set of state parameters, and attempts to expand a child by mutating the path given.
@@ -88,7 +92,7 @@ public class Parse {
             switch (r) {
                 case HUNG:
                     symbolTable.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
-                    semanticAnalyzer.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
+                    ccs.add(semanticAnalyzer.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex)));
                     next.childIndex++;
                     tokenIndex++;
                     break;
@@ -97,7 +101,7 @@ public class Parse {
                     break;
                 case EXPAND:
                     symbolTable.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
-                    semanticAnalyzer.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
+                    ccs.add(semanticAnalyzer.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex)));
                     next.childIndex++;
                     break;
                 case ERROR:
@@ -126,7 +130,7 @@ public class Parse {
             // If we have exhausted all branching at this path, remove it
             if (app.branchIndex + 1 >= index.length) {
                 path.remove(i);
-                SemanticAnalyzer.Undo(app);
+                semanticAnalyzer.Undo(app); //TODO
             } else {
             	break;
             }

@@ -3,7 +3,7 @@ package util;
 import java.util.ArrayList;
 
 public class CodeChunk {
-	ArrayList<String> uCode;
+	public ArrayList<String> uCode;
 	private TokenType type;
 
 	public CodeChunk() {
@@ -36,6 +36,5 @@ public class CodeChunk {
 
 	public void setType(TokenType type) {
 		this.type = type;
-		int a = -5 + -5;
 	}
 }
