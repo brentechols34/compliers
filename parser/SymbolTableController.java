@@ -50,11 +50,13 @@ public class SymbolTableController {
 
     public void Apply(RuleApplication application) {
         switch(application.ruleIndex) {
-            case PROGRAM_HEADING:
             case FUNCTION_HEADING:
             case PROCEDURE_HEADING:
                 if (application.childIndex == 1) {
                 	tables.peekFirst().addProcFunc(tokens.get(application.tokenIndex).val, "procedure", null);
+                }
+            case PROGRAM_HEADING:
+                if (application.childIndex == 1) {
                     tables.addFirst(new SymbolTable(tokens.get(application.tokenIndex).val, "L" + (label_num++), nesting_level++));
                 }
                 break;
