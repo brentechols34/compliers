@@ -43,8 +43,7 @@ public class SemanticAnalyzer {
                 int size = topTable.localSize();
 
                 ArrayList<CodeChunk> chunks = new ArrayList<>();
-                chunks.add(new CodeChunk("MOV SP D" + topTable.getNestingLevel()));
-                chunks.add(new CodeChunk("ADD SP #" + size + " SP"));
+                chunks.add(new CodeChunk("MOV SP D" + topTable.getNestingLevel() + "ADD SP #" + size + " SP"));
 
                 return chunks.get(0);
             case 81: {
