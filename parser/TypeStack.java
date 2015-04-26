@@ -15,7 +15,12 @@ public class TypeStack {
 	}
 
 	public void push(TokenType tt) {
-		stack.push(tt);
+		if (tt == TokenType.MP_INTEGER) {
+			stack.push(TokenType.MP_INTEGER_LIT);
+		} else {
+			System.out.println(tt);
+			stack.push(tt);
+		}
 	}
 
 	public TokenType pop() {
@@ -57,6 +62,11 @@ public class TypeStack {
 			}
 			break;
 		default: return null;
+		}
+		if (top != TokenType.MP_INTEGER_LIT || next != TokenType.MP_INTEGER_LIT) {
+			push(TokenType.MP_FLOAT_LIT);
+		} else {
+			push(TokenType.MP_INTEGER_LIT);
 		}
 		return cc;
 	}

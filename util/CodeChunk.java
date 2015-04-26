@@ -37,4 +37,8 @@ public class CodeChunk {
 	public void setType(TokenType type) {
 		this.type = type;
 	}
+	
+	public String toString() {
+		return uCode.toString();
+	}
 }

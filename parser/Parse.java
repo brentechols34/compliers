@@ -86,14 +86,15 @@ public class Parse {
         //  - the path size reaches 0, indicating no valid tree exists
         //  - getNext returns null, indicating all members of the tree are done
         int lastDepth = 0;
+        CodeChunk cc;
         while(path.size() > 0 && this.getNext(path) != null) {
             RuleApplication next = this.getNext(path);
             ParseReturn r = parse(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, path);
             switch (r) {
                 case HUNG:
                     symbolTable.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
-                    ccs.add(semanticAnalyzer.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex)));
-                    next.childIndex++;
+                    cc = semanticAnalyzer.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
+                    if (cc!= null) ccs.add(cc);next.childIndex++;
                     tokenIndex++;
                     break;
                 case LAMBDA:
@@ -101,7 +102,8 @@ public class Parse {
                     break;
                 case EXPAND:
                     symbolTable.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
-                    ccs.add(semanticAnalyzer.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex)));
+                    cc = semanticAnalyzer.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
+                    if (cc!= null) ccs.add(cc);
                     next.childIndex++;
                     break;
                 case ERROR:
@@ -162,7 +164,8 @@ public class Parse {
                 // Signal to the symbol table we finished a rule
                 app.isCompleted = true;
                 symbolTable.ExitRule(app);
-                semanticAnalyzer.ExitRule(app);
+                CodeChunk cc = semanticAnalyzer.ExitRule(app);
+                if (cc!= null) ccs.add(cc);
             }
         }
 

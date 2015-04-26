@@ -41,7 +41,9 @@ public class Controller {
 		pr = new Parse(tokens);
 		parseTree = pr.make();
 		System.out.println(Arrays.toString(parseTree));
-		System.out.println(pr.ccs);
+		for (CodeChunk cc : pr.ccs) {
+			System.out.println(cc);
+		}
 	}
 	
 	public static void main(String[] args) throws IOException, IllegalArgumentException, ScannerException {

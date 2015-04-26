@@ -70,7 +70,7 @@ public class SemanticAnalyzer {
                 }
             }
             default:
-                return cc;
+                return null;
 		}
 	}
 
@@ -78,7 +78,11 @@ public class SemanticAnalyzer {
         CodeChunk cc = new CodeChunk();
 		Token token = tokens.get(rule.tokenIndex);
 		SymbolTable table = this.symbolTable.getTable(token.val);
-		TableEntry entry = table.getEntry(token.val);
+		TableEntry entry = null;
+		if (table != null) {
+			entry = table.getEntry(token.val);
+		}
+		System.out.println(rule.ruleIndex);
         switch (rule.ruleIndex) {
             case 0:
                 break;
@@ -287,12 +291,15 @@ public class SemanticAnalyzer {
                 break;
             case 98:
                 cc = new CodeChunk("PUSH #" + tokens.get(rule.tokenIndex).val);
+                typeStack.push(tokens.get(rule.tokenIndex).type);
                 return cc;
             case 99:
                 cc = new CodeChunk("PUSH #" + tokens.get(rule.tokenIndex).val);
+                typeStack.push(tokens.get(rule.tokenIndex).type);
                 return cc;
             case 100:
                 cc = new CodeChunk("PUSH #" + tokens.get(rule.tokenIndex).val);
+                typeStack.push(tokens.get(rule.tokenIndex).type);
                 return cc;
             case 101:
                 cc = new CodeChunk("PUSH #1");
@@ -315,6 +322,7 @@ public class SemanticAnalyzer {
                     return null;
                 }
                 cc = new CodeChunk("PUSH " + entry.getSize() + "(D" + table.getNestingLevel() + ")");
+                typeStack.push(entry.getType());
                 return cc;
             case 108:
                 break;
@@ -331,9 +339,9 @@ public class SemanticAnalyzer {
             case 114:
                 break;
             default:
-                return cc;
+                return null;
         }
-        return cc;
+        return null;
     }
 
     public void Undo(RuleApplication rule) {
