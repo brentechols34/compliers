@@ -17,10 +17,9 @@ public class SemanticAnalyzer {
     SymbolTableController symbolTable;
 	ArrayList<RuleApplication> rules;
     ArrayList<Token> tokens;
+    ArrayList<CodeChunk> savedChunk;
     TypeStack typeStack;
-
     HashMap<RuleApplication, Boolean> optionalSignLookup;
-
 	public SemanticAnalyzer(String fname, ArrayList<RuleApplication> rules, ArrayList<Token> tokens, SymbolTableController symbolTable)
 			throws FileNotFoundException {
 		pw = new PrintWriter(new File(fname));
@@ -28,42 +27,10 @@ public class SemanticAnalyzer {
 		this.rules = rules;
         this.tokens = tokens;
         this.symbolTable = symbolTable;
+        this.savedChunk = new ArrayList<>();
         this.typeStack = new TypeStack();
         this.optionalSignLookup = new HashMap<RuleApplication, Boolean>();
 	}
-
-	// public CodeChunk convert(ArrayList<Token> tokens,SymbolTable table){
-	// Token curToken = tokens.get(0);
-	// CodeChunk cc;
-	// switch(curToken.type){
-	// case MP_INTEGER_LIT:
-	// cc = new CodeChunk("PUSH #" + curToken.val);
-	// cc.setType(TokenType.MP_INTEGER);
-	// return cc;
-	// case MP_PLUS:
-	// cc = new CodeChunk(convert(tokens,table),convert(tokens,table),new
-	// CodeChunk("ADDS"));
-	// return cc;
-	// case MP_MINUS:
-	// cc = new CodeChunk(convert(tokens,table),convert(tokens,table),new
-	// CodeChunk("SUBS"));
-	// return cc;
-	// case MP_IDENTIFIER:
-	// TableEntry entry = table.getEntry(curToken.val);
-	// cc = new CodeChunk("PUSH " + entry.getSize() + "(D" +
-	// table.getNestingLevel() + ")");
-	// return cc;
-	// case MP_ASSIGN:
-	// TableEntry idEntry = table.getEntry(tokens.get(1).val);
-	// CodeChunk ccid = new CodeChunk("POP " + idEntry.getSize() + "(D" +
-	// table.getNestingLevel() + ")");
-	// tokens.remove(1);
-	// cc = new CodeChunk(convert(tokens,table),ccid);
-	// return cc;
-	// default:
-	// return null;
-	// }
-	// }
 
 	public CodeChunk Apply(RuleApplication rule) {
 		CodeChunk cc = new CodeChunk();
@@ -423,7 +390,3 @@ public class SemanticAnalyzer {
 		}
 	}
 }
-
-
-
-a = +(-5);
