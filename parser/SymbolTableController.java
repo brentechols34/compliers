@@ -18,7 +18,7 @@ public class SymbolTableController {
     ArrayDeque<SymbolTable> tables;
     String mode;
     int nesting_level;
-    int label_num = 0;
+    LabelProvider lp = new LabelProvider();
 
     final int PROGRAM_HEADING = 2;
     final int BLOCK = 3;
@@ -31,12 +31,12 @@ public class SymbolTableController {
     final int IDENTIFIER_TAIL = 113;
 
 
-    public SymbolTableController(ArrayList<Token> tokens) throws IOException {
+    public SymbolTableController(ArrayList<Token> tokens,LabelProvider lp) throws IOException {
         this.tokens = tokens;
         entries = new ArrayList<String>();
         tables = new ArrayDeque<>();
         nesting_level = 0;
-        label_num = 0;
+        this.lp = lp;
     }
     
     public void ExitRule(RuleApplication application) {
@@ -57,7 +57,7 @@ public class SymbolTableController {
                 }
             case PROGRAM_HEADING:
                 if (application.childIndex == 1) {
-                    tables.addFirst(new SymbolTable(tokens.get(application.tokenIndex).val, "L" + (label_num++), nesting_level++));
+                    tables.addFirst(new SymbolTable(tokens.get(application.tokenIndex).val,(lp.nextLabel()), nesting_level++));
                 }
                 break;
             case VARIABLE_DECLARATION:

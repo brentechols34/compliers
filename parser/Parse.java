@@ -24,6 +24,7 @@ public class Parse {
 
     SymbolTableController symbolTable;
     SemanticAnalyzer semanticAnalyzer;
+    LabelProvider lp;
 
 	ArrayList<Token> tokens;
 	public ArrayList<CodeChunk> ccs;
@@ -31,7 +32,8 @@ public class Parse {
 
 	public Parse(ArrayList<Token> tokens) throws IOException{
 		this.tokens = tokens;
-        symbolTable = new SymbolTableController(tokens);
+                lp = new LabelProvider();
+        symbolTable = new SymbolTableController(tokens,lp);
         ccs = new ArrayList<>();
 		populate();
 	}
@@ -76,7 +78,7 @@ public class Parse {
     public ArrayList<RuleApplication> parseMaster() throws IOException {
         int tokenIndex = 0;
         ArrayList<RuleApplication> path = new ArrayList<RuleApplication>();
-        semanticAnalyzer = new SemanticAnalyzer("results.txt", path, tokens, symbolTable);
+        semanticAnalyzer = new SemanticAnalyzer("results.txt", path, tokens, symbolTable,lp);
 
 
         path.add(new RuleApplication("SystemGoal", 0, 0, 0, 0, null));
@@ -132,6 +134,7 @@ public class Parse {
             // If we have exhausted all branching at this path, remove it
             if (app.branchIndex + 1 >= index.length) {
                 path.remove(i);
+                semanticAnalyzer.Undo(app); //TODO
 
                 RuleApplication parent = app.parent;
                 while(parent != null && parent.isCompleted) {
@@ -141,8 +144,6 @@ public class Parse {
                     parent.childIndex--;
                     parent = parent.parent;
                 }
-
-                semanticAnalyzer.Undo(app); //TODO
             } else {
             	break;
             }

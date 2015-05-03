@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0ce15ff-700f-4f6f-a13c-f45090b0c876" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/parser/LabelProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controller/Controller.java" afterPath="$PROJECT_DIR$/controller/Controller.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser/Parse.java" afterPath="$PROJECT_DIR$/parser/Parse.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser/RuleApplication.java" afterPath="$PROJECT_DIR$/parser/RuleApplication.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java" afterPath="$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser/SymbolTableController.java" afterPath="$PROJECT_DIR$/parser/SymbolTableController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="compliers.iws" />
@@ -70,21 +72,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Parse.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Parse.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parser/Parse.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2303969" vertical-offset="1442" max-vertical-offset="3810">
-              <caret line="125" column="26" selection-start-line="125" selection-start-column="26" selection-end-line="125" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1457" max-vertical-offset="3825">
+              <caret line="125" column="34" selection-start-line="125" selection-start-column="34" selection-end-line="125" selection-end-column="34" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SemanticAnalyzer.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SemanticAnalyzer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="4532" max-vertical-offset="5640">
-              <caret line="323" column="37" selection-start-line="323" selection-start-column="37" selection-end-line="323" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.85672796" vertical-offset="4695" max-vertical-offset="5895">
+              <caret line="372" column="31" selection-start-line="372" selection-start-column="31" selection-end-line="372" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -203,8 +205,8 @@
         <option value="$PROJECT_DIR$/Resources/CleanGrammar2.txt" />
         <option value="$PROJECT_DIR$/parser/TypeStack.java" />
         <option value="$PROJECT_DIR$/parser/RuleApplication.java" />
-        <option value="$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java" />
         <option value="$PROJECT_DIR$/parser/Parse.java" />
+        <option value="$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java" />
       </list>
     </option>
   </component>
@@ -941,21 +943,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java">
+    <entry file="file://$PROJECT_DIR$/parser/Parse.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4532" max-vertical-offset="5640">
-          <caret line="323" column="37" selection-start-line="323" selection-start-column="37" selection-end-line="323" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="1457" max-vertical-offset="3825">
+          <caret line="125" column="34" selection-start-line="125" selection-start-column="34" selection-end-line="125" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/parser/Parse.java">
+    <entry file="file://$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2303969" vertical-offset="1442" max-vertical-offset="3810">
-          <caret line="125" column="26" selection-start-line="125" selection-start-column="26" selection-end-line="125" selection-end-column="26" />
-          <folding />
+        <state vertical-scroll-proportion="0.85672796" vertical-offset="4695" max-vertical-offset="5895">
+          <caret line="372" column="31" selection-start-line="372" selection-start-column="31" selection-end-line="372" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

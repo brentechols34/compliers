@@ -13,31 +13,38 @@ import util.CodeChunk;
 
 public class SemanticAnalyzer {
 
-	PrintWriter pw;
-	Stack<CodeChunk> code;
+    PrintWriter pw;
+    Stack<CodeChunk> code;
     SymbolTableController symbolTable;
-	ArrayList<RuleApplication> rules;
+    ArrayList<RuleApplication> rules;
     ArrayList<Token> tokens;
     ArrayList<CodeChunk> savedChunk;
     TypeStack typeStack;
     HashMap<RuleApplication, Boolean> optionalSignLookup;
-	public SemanticAnalyzer(String fname, ArrayList<RuleApplication> rules, ArrayList<Token> tokens, SymbolTableController symbolTable)
-			throws FileNotFoundException {
-		pw = new PrintWriter(new File(fname));
-		code = new Stack<>();
-		this.rules = rules;
+    LabelProvider lp = new LabelProvider();
+    Stack<String> labelStack; 
+    
+    
+    public SemanticAnalyzer(String fname, ArrayList<RuleApplication> rules, ArrayList<Token> tokens, SymbolTableController symbolTable,
+            LabelProvider lp)
+            throws FileNotFoundException {
+        pw = new PrintWriter(new File(fname));
+        code = new Stack<>();
+        this.rules = rules;
         this.tokens = tokens;
         this.symbolTable = symbolTable;
         this.savedChunk = new ArrayList<>();
         this.typeStack = new TypeStack();
         this.optionalSignLookup = new HashMap<RuleApplication, Boolean>();
-	}
+        this.lp = lp;
+        labelStack = new Stack<>();
+    }
 
-	public CodeChunk Apply(RuleApplication rule) {
-		CodeChunk cc = new CodeChunk();
-		Token token = tokens.get(rule.tokenIndex);
-		SymbolTable table = this.symbolTable.getTable(token.val);
-		switch (rule.ruleIndex) {
+    public CodeChunk Apply(RuleApplication rule) {
+        CodeChunk cc = new CodeChunk();
+        Token token = tokens.get(rule.tokenIndex);
+        SymbolTable table = this.symbolTable.getTable(token.val);
+        switch (rule.ruleIndex) {
             case 28:
                 SymbolTable topTable = this.symbolTable.getTable();
                 int size = topTable.localSize();
@@ -47,9 +54,9 @@ public class SemanticAnalyzer {
 
                 return chunks.get(0);
             case 81: {
-            	
+
                 if (rule.childIndex == 0) {
-                    switch(rule.ruleIndex) {
+                    switch (rule.ruleIndex) {
                         case 84:
                             optionalSignLookup.put(rule, new Boolean(true));
                             break;
@@ -68,19 +75,30 @@ public class SemanticAnalyzer {
                     }
                 }
             }
+            case 55: //If Statement
+                if (rule.childIndex == 1){
+                   cc.append("BRFS " + lp.nextLabel());
+                   labelStack.push(lp.peekLabel(0));
+                }
+                if (rule.childIndex == 2){
+                   String label = labelStack.pop();
+                   cc.append("BR " + lp.nextLabel());
+                   labelStack.push(lp.peekLabel(0));
+                   cc.append(label);
+                }
             default:
                 return null;
-		}
-	}
+        }
+    }
 
     public CodeChunk ExitRule(RuleApplication rule) {
         CodeChunk cc = new CodeChunk();
-		Token token = tokens.get(rule.tokenIndex);
-		SymbolTable table = this.symbolTable.getTable(token.val);
-		TableEntry entry = null;
-		if (table != null) {
-			entry = table.getEntry(token.val);
-		}
+        Token token = tokens.get(rule.tokenIndex);
+        SymbolTable table = this.symbolTable.getTable(token.val);
+        TableEntry entry = null;
+        if (table != null) {
+            entry = table.getEntry(token.val);
+        }
         switch (rule.ruleIndex) {
             case 0:
                 break;
@@ -177,7 +195,7 @@ public class SemanticAnalyzer {
             case 46:
                 break;
             case 47:
-                switch(entry.getType()) {
+                switch (entry.getType()) {
                     case MP_BOOLEAN:
                     case MP_INTEGER:
                         return new CodeChunk("RD " + entry.getSize() + "(D" + table.getNestingLevel() + ")");
@@ -197,11 +215,12 @@ public class SemanticAnalyzer {
             case 52:
                 return new CodeChunk("WRTS");
             case 53:
-            	cc = new CodeChunk("POP " + entry.getSize() + "(D" + table.getNestingLevel() + ")");
-            	return cc;
+                cc = new CodeChunk("POP " + entry.getSize() + "(D" + table.getNestingLevel() + ")");
+                return cc;
             case 54:
                 break;
             case 55:
+                cc.append(labelStack.pop());
                 break;
             case 56:
                 break;
@@ -318,7 +337,7 @@ public class SemanticAnalyzer {
                 break;
             case 107:
                 int previousRule = this.rules.get(this.rules.size() - 2).ruleIndex;
-                if(previousRule == 53 || previousRule == 47){
+                if (previousRule == 53 || previousRule == 47) {
                     return null;
                 }
                 cc = new CodeChunk("PUSH " + entry.getSize() + "(D" + table.getNestingLevel() + ")");
@@ -351,20 +370,18 @@ public class SemanticAnalyzer {
 
     }
 
-	public void printToFile() {
-		Stack<CodeChunk> reversed = new Stack<>();
-		// reverse code stack
-		while (!code.isEmpty()) {
-			reversed.push(code.pop());
-		}
-		// print to file
-		while (!reversed.isEmpty()) {
-			ArrayList<String> toPrint = reversed.pop().uCode;
-			for (String s : toPrint) {
-				pw.write(s);
-			}
-		}
-	}
+    public void printToFile() {
+        Stack<CodeChunk> reversed = new Stack<>();
+        // reverse code stack
+        while (!code.isEmpty()) {
+            reversed.push(code.pop());
+        }
+        // print to file
+        while (!reversed.isEmpty()) {
+            ArrayList<String> toPrint = reversed.pop().uCode;
+            for (String s : toPrint) {
+                pw.write(s);
+            }
+        }
+    }
 }
-
-
