@@ -50,9 +50,10 @@ public class SemanticAnalyzer {
                 int size = topTable.localSize();
 
                 ArrayList<CodeChunk> chunks = new ArrayList<>();
-                chunks.add(new CodeChunk("MOV SP D" + topTable.getNestingLevel() + "ADD SP #" + size + " SP"));
+                cc.append("MOV SP D" + topTable.getNestingLevel());
+                cc.append("ADD SP #" + size + " SP");
 
-                return chunks.get(0);
+                return cc;
             case 81: {
 
                 if (rule.childIndex == 0) {
@@ -74,17 +75,21 @@ public class SemanticAnalyzer {
                         return new CodeChunk("NEGS");
                     }
                 }
+                return null;
             }
             case 55: //If Statement
-                if (rule.childIndex == 1){
-                   cc.append("BRFS " + lp.nextLabel());
-                   labelStack.push(lp.peekLabel(0));
-                }
                 if (rule.childIndex == 2){
+                   cc.append("BRFS " + lp.peekLabel(0));
+                   labelStack.push(lp.nextLabel());
+                   System.out.println("PUSHED:" + labelStack.peek() + " " + cc);
+                   return cc;
+                }
+                if (rule.childIndex == 4){
                    String label = labelStack.pop();
-                   cc.append("BR " + lp.nextLabel());
-                   labelStack.push(lp.peekLabel(0));
+                   cc.append("BR " + lp.peekLabel(0));
+                   labelStack.push(lp.nextLabel());
                    cc.append(label);
+                   return cc;
                 }
             default:
                 return null;
@@ -221,7 +226,8 @@ public class SemanticAnalyzer {
                 break;
             case 55:
                 cc.append(labelStack.pop());
-                break;
+                
+                return cc;
             case 56:
                 break;
             case 57:
@@ -320,9 +326,11 @@ public class SemanticAnalyzer {
                 return cc;
             case 101:
                 cc = new CodeChunk("PUSH #1");
+                typeStack.push(tokens.get(rule.tokenIndex).type);
                 return cc;
             case 102:
                 cc = new CodeChunk("PUSH #0");
+                typeStack.push(tokens.get(rule.tokenIndex).type);
                 return cc;
             case 103:
                 return new CodeChunk("NOTS");
@@ -361,7 +369,45 @@ public class SemanticAnalyzer {
         return null;
     }
 
-    public void Undo(RuleApplication rule) {
+    public boolean Undo(RuleApplication rule) {
+        switch (rule.ruleIndex) {
+            case 28:
+            case 81:
+            case 55:
+                return true;
+        }
+
+        return false;
+    }
+
+    public boolean UndoExit(RuleApplication rule) {
+        CodeChunk cc = new CodeChunk();
+        Token token = tokens.get(rule.tokenIndex);
+        SymbolTable table = this.symbolTable.getTable(token.val);
+        TableEntry entry = null;
+        if (table != null) {
+            entry = table.getEntry(token.val);
+        }
+        switch (rule.ruleIndex) {
+            case 47:
+            case 49:
+            case 52:
+            case 53:
+            case 55:
+            case 73:
+            case 82:
+            case 91:
+            case 98:
+            case 99:
+            case 100:
+            case 101:
+            case 102:
+            case 103:
+            case 107:
+                return true;
+        }
+
+        return false;
     }
 
     public void printToFile() {
