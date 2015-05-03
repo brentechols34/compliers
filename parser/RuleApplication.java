@@ -12,13 +12,15 @@ public class RuleApplication {
     public int childIndex;
     public int branchIndex;
     public boolean isCompleted;
+    public RuleApplication parent;
 
-    public RuleApplication(String ruleName, int ruleIndex, int tokenIndex, int childIndex, int branchIndex) {
+    public RuleApplication(String ruleName, int ruleIndex, int tokenIndex, int childIndex, int branchIndex, RuleApplication parent) {
         this.ruleName = ruleName;
         this.ruleIndex = ruleIndex;
         this.tokenIndex = tokenIndex;
         this.childIndex = childIndex;
         this.branchIndex = branchIndex;
+        this.parent = parent;
     }
 
     @Override
