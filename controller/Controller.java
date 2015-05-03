@@ -22,14 +22,20 @@ public class Controller {
 		sc = new Scanner(fname);
 	}
 	
-	public void tokenize() throws IOException, ScannerException { //generate tokens
+	public void tokenize() throws IOException { //generate tokens
 		tokens = new ArrayList<>();
 		Token t;
+		try {
 		do {
+			
 			t = sc.nextToken();
 			if (t == null) break;
 			tokens.add(t);
+			
 		} while (true);
+		} catch (ScannerException e) {
+			System.out.println(e);
+		}
 		tokens.add(new Token(TokenType.MP_EOF,"",-1,-1));
 	}
 	
@@ -47,7 +53,7 @@ public class Controller {
 	}
 	
 	public static void main(String[] args) throws IOException, IllegalArgumentException, ScannerException {
-		Controller c = new Controller("src/Resources/test1.mp");
+		Controller c = new Controller("Compliers/Resources/test1.mp");
 		c.tokenize();
 		System.out.println("Token Stream: " + c.tokens);
 		c.parsify();

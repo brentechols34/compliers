@@ -50,9 +50,10 @@ public class SemanticAnalyzer {
                 int size = topTable.localSize();
 
                 ArrayList<CodeChunk> chunks = new ArrayList<>();
-                chunks.add(new CodeChunk("MOV SP D" + topTable.getNestingLevel() + "ADD SP #" + size + " SP"));
+                cc.append("MOV SP D" + topTable.getNestingLevel());
+                cc.append("ADD SP #" + size + " SP");
 
-                return chunks.get(0);
+                return cc;
             case 81: {
 
                 if (rule.childIndex == 0) {
@@ -74,17 +75,21 @@ public class SemanticAnalyzer {
                         return new CodeChunk("NEGS");
                     }
                 }
+                return null;
             }
             case 55: //If Statement
-                if (rule.childIndex == 1){
-                   cc.append("BRFS " + lp.nextLabel());
-                   labelStack.push(lp.peekLabel(0));
-                }
                 if (rule.childIndex == 2){
+                   cc.append("BRFS " + lp.peekLabel(0));
+                   labelStack.push(lp.nextLabel());
+                   System.out.println("PUSHED:" + labelStack.peek() + " " + cc);
+                   return cc;
+                }
+                if (rule.childIndex == 4){
                    String label = labelStack.pop();
-                   cc.append("BR " + lp.nextLabel());
-                   labelStack.push(lp.peekLabel(0));
+                   cc.append("BR " + lp.peekLabel(0));
+                   labelStack.push(lp.nextLabel());
                    cc.append(label);
+                   return cc;
                 }
             default:
                 return null;
@@ -221,7 +226,8 @@ public class SemanticAnalyzer {
                 break;
             case 55:
                 cc.append(labelStack.pop());
-                break;
+                
+                return cc;
             case 56:
                 break;
             case 57:
