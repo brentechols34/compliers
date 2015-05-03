@@ -16,10 +16,10 @@ public class LabelProvider {
     }
     
     public String nextLabel(){
-        return "L" + labelNumber++ + ":";
+        return "L" + labelNumber++;
     }
      
     public String peekLabel(int offset){
-        return "L" + (labelNumber + offset) + ":";
+        return "L" + (labelNumber + offset);
     }
 }
