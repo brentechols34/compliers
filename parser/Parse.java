@@ -36,20 +36,20 @@ public class Parse {
 		populate();
 	}
     // Accepts a set of state parameters, and attempts to expand a child by mutating the path given.
-	public ParseReturn parse(String ruleName, int rule, int token, int child, ArrayList<RuleApplication> path) throws IllegalArgumentException {
+	public ParseReturn parse(String ruleName, int rule, int token, int child, ArrayList<RuleApplication> path, RuleApplication parent) throws IllegalArgumentException {
         Token curToken = tokens.get(token);
         
         // Get the string this application is expanding to currently
         String expand = rules[rule][child];
         if (isTerminal(expand)) {
         	if (expand.equals(curToken.type.name())) {
-                System.out.println("Hung:" + curToken.val + " on " + new RuleApplication(ruleName, rule, token, child, 0).toString());
+                System.out.println("Hung:" + curToken.val + " on " + new RuleApplication(ruleName, rule, token, child, 0, null).toString());
                 return ParseReturn.HUNG;
             } else if (expand.equals("lambda")) {
                 return ParseReturn.LAMBDA;
             } else {
             	System.out.println(path);
-            	System.out.println("Error token doesn't match expected @ Rule: " + new RuleApplication(ruleName, rule, token, child, 0).toString() + curToken.toString());
+            	System.out.println("Error token doesn't match expected @ Rule: " + new RuleApplication(ruleName, rule, token, child, 0, null).toString() + curToken.toString());
                 return ParseReturn.ERROR;
             }
         }
@@ -58,12 +58,12 @@ public class Parse {
 		int[] index = LLT.getRuleIndex(expand, curToken.type);
         if (index == null) {
         	System.out.println(path);
-        	System.out.println("Error LL lookup failed @ Rule: " + new RuleApplication(ruleName, rule, token, child, 0).toString() + curToken.toString());
+        	System.out.println("Error LL lookup failed @ Rule: " + new RuleApplication(ruleName, rule, token, child, 0, null).toString() + curToken.toString());
             return ParseReturn.ERROR;
         }
         
         // Add this expansion to the path
-        path.add(new RuleApplication(expand, index[0], token, 0, 0));
+        path.add(new RuleApplication(expand, index[0], token, 0, 0, parent));
 
         return ParseReturn.EXPAND;
 	}
@@ -79,7 +79,7 @@ public class Parse {
         semanticAnalyzer = new SemanticAnalyzer("results.txt", path, tokens, symbolTable);
 
 
-        path.add(new RuleApplication("SystemGoal", 0, 0, 0, 0));
+        path.add(new RuleApplication("SystemGoal", 0, 0, 0, 0, null));
         symbolTable.Apply(path.get(path.size() - 1));
 
         // Process through and generate paths until:
@@ -89,11 +89,11 @@ public class Parse {
         CodeChunk cc;
         while(path.size() > 0 && this.getNext(path) != null) {
             RuleApplication next = this.getNext(path);
-            ParseReturn r = parse(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, path);
+            ParseReturn r = parse(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, path, next);
             switch (r) {
                 case HUNG:
-                    symbolTable.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
-                    cc = semanticAnalyzer.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
+                    symbolTable.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex, null));
+                    cc = semanticAnalyzer.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex, null));
                     if (cc!= null) ccs.add(cc);next.childIndex++;
                     tokenIndex++;
                     break;
@@ -101,8 +101,8 @@ public class Parse {
                     next.childIndex++;
                     break;
                 case EXPAND:
-                    symbolTable.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
-                    cc = semanticAnalyzer.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex));
+                    symbolTable.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex, null));
+                    cc = semanticAnalyzer.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex, null));
                     if (cc!= null) ccs.add(cc);
                     next.childIndex++;
                     break;
@@ -132,11 +132,17 @@ public class Parse {
             // If we have exhausted all branching at this path, remove it
             if (app.branchIndex + 1 >= index.length) {
                 path.remove(i);
-<<<<<<< HEAD
+
+                RuleApplication parent = app.parent;
+                while(parent != null && parent.isCompleted) {
+                    semanticAnalyzer.UndoExit(parent);
+
+                    parent.isCompleted = false;
+                    parent.childIndex--;
+                    parent = parent.parent;
+                }
+
                 semanticAnalyzer.Undo(app); //TODO
-=======
-                semanticAnalyzer.Undo(app);
->>>>>>> 24d747cecc060c82bc0509a7b0100e4ef4a34619
             } else {
             	break;
             }

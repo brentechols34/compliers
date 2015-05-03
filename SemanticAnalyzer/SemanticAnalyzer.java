@@ -301,9 +301,11 @@ public class SemanticAnalyzer {
                 return cc;
             case 101:
                 cc = new CodeChunk("PUSH #1");
+                typeStack.push(tokens.get(rule.tokenIndex).type);
                 return cc;
             case 102:
                 cc = new CodeChunk("PUSH #0");
+                typeStack.push(tokens.get(rule.tokenIndex).type);
                 return cc;
             case 103:
                 return new CodeChunk("NOTS");
@@ -343,6 +345,10 @@ public class SemanticAnalyzer {
     }
 
     public void Undo(RuleApplication rule) {
+    }
+
+    public void UndoExit(RuleApplication rule) {
+
     }
 
 	public void printToFile() {
