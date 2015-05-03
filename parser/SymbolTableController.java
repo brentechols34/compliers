@@ -57,7 +57,7 @@ public class SymbolTableController {
                 }
             case PROGRAM_HEADING:
                 if (application.childIndex == 1) {
-                    tables.addFirst(new SymbolTable(tokens.get(application.tokenIndex).val, "L" + (lp.nextLabel()), nesting_level++));
+                    tables.addFirst(new SymbolTable(tokens.get(application.tokenIndex).val,(lp.nextLabel()), nesting_level++));
                 }
                 break;
             case VARIABLE_DECLARATION:

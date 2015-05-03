@@ -22,6 +22,7 @@ public class SemanticAnalyzer {
     TypeStack typeStack;
     HashMap<RuleApplication, Boolean> optionalSignLookup;
     LabelProvider lp = new LabelProvider();
+    Stack<String> labelStack; 
     
     
     public SemanticAnalyzer(String fname, ArrayList<RuleApplication> rules, ArrayList<Token> tokens, SymbolTableController symbolTable,
@@ -36,6 +37,7 @@ public class SemanticAnalyzer {
         this.typeStack = new TypeStack();
         this.optionalSignLookup = new HashMap<RuleApplication, Boolean>();
         this.lp = lp;
+        labelStack = new Stack<>();
     }
 
     public CodeChunk Apply(RuleApplication rule) {
@@ -73,6 +75,17 @@ public class SemanticAnalyzer {
                     }
                 }
             }
+            case 55: //If Statement
+                if (rule.childIndex == 1){
+                   cc.append("BRFS " + lp.nextLabel());
+                   labelStack.push(lp.peekLabel(0));
+                }
+                if (rule.childIndex == 2){
+                   String label = labelStack.pop();
+                   cc.append("BR " + lp.nextLabel());
+                   labelStack.push(lp.peekLabel(0));
+                   cc.append(label);
+                }
             default:
                 return null;
         }
@@ -207,6 +220,7 @@ public class SemanticAnalyzer {
             case 54:
                 break;
             case 55:
+                cc.append(labelStack.pop());
                 break;
             case 56:
                 break;
