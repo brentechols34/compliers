@@ -81,7 +81,6 @@ public class SemanticAnalyzer {
 		if (table != null) {
 			entry = table.getEntry(token.val);
 		}
-		System.out.println(rule.ruleIndex);
         switch (rule.ruleIndex) {
             case 0:
                 break;
