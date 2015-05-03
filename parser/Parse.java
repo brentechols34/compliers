@@ -134,11 +134,15 @@ public class Parse {
             // If we have exhausted all branching at this path, remove it
             if (app.branchIndex + 1 >= index.length) {
                 path.remove(i);
-                semanticAnalyzer.Undo(app); //TODO
+                if (semanticAnalyzer.Undo(app)) {
+                    ccs.remove(ccs.size() - 1);
+                }
 
                 RuleApplication parent = app.parent;
                 while(parent != null && parent.isCompleted) {
-                    semanticAnalyzer.UndoExit(parent);
+                    if (semanticAnalyzer.UndoExit(parent)) {
+                        ccs.remove(ccs.size() - 1);
+                    }
 
                     parent.isCompleted = false;
                     parent.childIndex--;

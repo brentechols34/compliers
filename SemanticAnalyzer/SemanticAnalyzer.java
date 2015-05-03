@@ -363,11 +363,45 @@ public class SemanticAnalyzer {
         return null;
     }
 
-    public void Undo(RuleApplication rule) {
+    public boolean Undo(RuleApplication rule) {
+        switch (rule.ruleIndex) {
+            case 28:
+            case 81:
+            case 55:
+                return true;
+        }
+
+        return false;
     }
 
-    public void UndoExit(RuleApplication rule) {
+    public boolean UndoExit(RuleApplication rule) {
+        CodeChunk cc = new CodeChunk();
+        Token token = tokens.get(rule.tokenIndex);
+        SymbolTable table = this.symbolTable.getTable(token.val);
+        TableEntry entry = null;
+        if (table != null) {
+            entry = table.getEntry(token.val);
+        }
+        switch (rule.ruleIndex) {
+            case 47:
+            case 49:
+            case 52:
+            case 53:
+            case 55:
+            case 73:
+            case 82:
+            case 91:
+            case 98:
+            case 99:
+            case 100:
+            case 101:
+            case 102:
+            case 103:
+            case 107:
+                return true;
+        }
 
+        return false;
     }
 
     public void printToFile() {
