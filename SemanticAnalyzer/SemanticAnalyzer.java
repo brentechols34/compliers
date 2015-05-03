@@ -234,7 +234,7 @@ public class SemanticAnalyzer {
             case 72:
                 break;
             case 73:
-                break;
+                return new CodeChunk(typeStack.resolve(token.type));
             case 74:
                 break;
             case 75:
