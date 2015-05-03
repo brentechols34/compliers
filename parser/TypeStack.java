@@ -1,6 +1,10 @@
 package parser;
 
+<<<<<<< HEAD
 import java.util.ArrayDeque;
+=======
+import java.util.HashMap;
+>>>>>>> 24d747cecc060c82bc0509a7b0100e4ef4a34619
 import java.util.Stack;
 
 import util.CodeChunk;
@@ -11,7 +15,23 @@ public class TypeStack {
 	private ArrayDeque<TokenType> stack;
 
 	public TypeStack() {
+<<<<<<< HEAD
 		stack = new ArrayDeque<>();
+=======
+		stack = new Stack<>();
+
+        lookup = new HashMap<TokenType, String>();
+        lookup.put(TokenType.MP_PLUS,   "ADDS");
+        lookup.put(TokenType.MP_MINUS,  "SUBS");
+        lookup.put(TokenType.MP_TIMES,  "MULS");
+        lookup.put(TokenType.MP_DIV,    "DIVS");
+        lookup.put(TokenType.MP_EQUAL,  "CMPEQS");
+        lookup.put(TokenType.MP_LTHAN,  "CMPLTS");
+        lookup.put(TokenType.MP_GTHAN,  "CMPGTS");
+        lookup.put(TokenType.MP_LEQUAL, "CMPLES");
+        lookup.put(TokenType.MP_GEQUAL, "CMPGES");
+        lookup.put(TokenType.MP_NEQUAL, "CMPNES");
+>>>>>>> 24d747cecc060c82bc0509a7b0100e4ef4a34619
 	}
 
 	public void push(TokenType tt) {
@@ -27,6 +47,7 @@ public class TypeStack {
 		return stack.pop();
 	}
 
+<<<<<<< HEAD
 
 	public CodeChunk resolve(TokenType tt) {
 		TokenType top = pop();
@@ -83,6 +104,16 @@ public class TypeStack {
 			return cc;
 		}
 
+=======
+    HashMap<TokenType, String> lookup;
+	
+	public String resolve(TokenType tt) {
+		TokenType top = pop();
+		TokenType next = pop();
+
+        boolean useInt = top == TokenType.MP_INTEGER_LIT && next == TokenType.MP_INTEGER_LIT;
+        return lookup.get(tt) + (useInt? "" : "F");
+>>>>>>> 24d747cecc060c82bc0509a7b0100e4ef4a34619
 	}
 
 

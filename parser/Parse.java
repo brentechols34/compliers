@@ -132,7 +132,11 @@ public class Parse {
             // If we have exhausted all branching at this path, remove it
             if (app.branchIndex + 1 >= index.length) {
                 path.remove(i);
+<<<<<<< HEAD
                 semanticAnalyzer.Undo(app); //TODO
+=======
+                semanticAnalyzer.Undo(app);
+>>>>>>> 24d747cecc060c82bc0509a7b0100e4ef4a34619
             } else {
             	break;
             }
