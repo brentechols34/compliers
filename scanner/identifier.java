@@ -297,7 +297,7 @@ public class identifier implements DFAS {
 		case "else": return TokenType.MP_ELSE;
 		case "end": return TokenType.MP_END;
 		case "false": return TokenType.MP_FALSE;
-		case "fixed": return TokenType.MP_FIXED;
+		case "fixed": return TokenType.MP_FLOAT;
 		case "float": return TokenType.MP_FLOAT;
 		case "for": return TokenType.MP_FOR;
 		case "function": return TokenType.MP_FUNCTION;

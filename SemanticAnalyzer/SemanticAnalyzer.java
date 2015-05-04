@@ -99,10 +99,11 @@ public class SemanticAnalyzer {
             }
             case 58: {//Repeat
             	if (rule.childIndex == 1) {
-            		cc.append(lp.peekLabel(0));
+            		cc.append(lp.peekLabel(0)+":");
             		labelStack.push(lp.nextLabel());
+            		return cc;
             	}
-            	
+            	return null;
             }
             case 59:
                 if (rule.childIndex == 2) {
@@ -166,7 +167,7 @@ public class SemanticAnalyzer {
         }
         switch (rule.ruleIndex) {
             case 0:
-                break;
+            	return new CodeChunk("HLT");
             case 1:
                 break;
             case 2:
@@ -281,7 +282,19 @@ public class SemanticAnalyzer {
                 return new CodeChunk("WRTS");
             case 53:
                 //System.out.println(entry.getSize() + table.getNestingLevel());
-                cc = new CodeChunk("POP " + entry.getSize() + "(D" + table.getNestingLevel() + ")");
+            	cc = new CodeChunk();
+            	if ((entry.getType() == TokenType.MP_INTEGER) != (typeStack.pop() == TokenType.MP_INTEGER_LIT)) {
+            		if (entry.getType() == TokenType.MP_STRING) {
+            			System.out.println("CAN'T CAST STRINGS");
+            		}
+            		if (entry.getType() == TokenType.MP_INTEGER) {
+            			cc.append("CASTSI");
+            		}
+            		else {
+            			cc.append("CASTSF");
+            		}
+            	}
+                cc.append("POP " + entry.getSize() + "(D" + table.getNestingLevel() + ")");
                 return cc;
             case 54:
                 break;
@@ -296,7 +309,7 @@ public class SemanticAnalyzer {
             case 58: {//Repeat
             	//When we are done, we need to add a branch to the beginning if the top of the stack is 1
             	cc = new CodeChunk("BRTS " + labelStack.pop());
-                break;
+            	return cc;
             }
             case 59:
                 //System.out.println(labelStack.peek());

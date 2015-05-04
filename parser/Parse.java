@@ -21,15 +21,11 @@ public class Parse {
 	ArrayList<String> ruleNamesList;
 	HashMap<String, ArrayList<Integer>> byName;
 	String[][] rules;
-
     SymbolTableController symbolTable;
     SemanticAnalyzer semanticAnalyzer;
     LabelProvider lp;
-
 	ArrayList<Token> tokens;
 	public ArrayList<CodeChunk> ccs;
-	
-
 	public Parse(ArrayList<Token> tokens) throws IOException{
 		this.tokens = tokens;
                 lp = new LabelProvider();
@@ -37,7 +33,9 @@ public class Parse {
         ccs = new ArrayList<>();
 		populate();
 	}
-    // Accepts a set of state parameters, and attempts to expand a child by mutating the path given.
+    /**
+ 	* Accepts a set of state parameters, and attempts to expand a child by mutating the path given.
+	**/
 	public ParseReturn parse(String ruleName, int rule, int token, int child, ArrayList<RuleApplication> path, RuleApplication parent) throws IllegalArgumentException {
         Token curToken = tokens.get(token);
         
@@ -45,7 +43,7 @@ public class Parse {
         String expand = rules[rule][child];
         if (isTerminal(expand)) {
         	if (expand.equals(curToken.type.name())) {
-                System.out.println("Hung:" + curToken.val + " on " + new RuleApplication(ruleName, rule, token, child, 0, null).toString());
+                System.out.println("Hung: '" + curToken.val + "' " + new RuleApplication(ruleName, rule, token, child, 0, null).toString());
                 return ParseReturn.HUNG;
             } else if (expand.equals("lambda")) {
                 return ParseReturn.LAMBDA;
@@ -123,8 +121,9 @@ public class Parse {
 
         return path;
     }
-    // Prunes out path elements who have exhausted all branching possibilities,
-    //  adjusts the branchIndex, and resets the first candidate found.
+    /** Prunes out path elements who have exhausted all branching possibilities,
+     * adjusts the branchIndex, and resets the first candidate found.
+     **/
     private int trimTree(ArrayList<RuleApplication> path) {
         // Prune all maximally branched paths at the end of our path
     	System.out.println("Pre Trim: " + path.toString());
@@ -134,11 +133,11 @@ public class Parse {
             // If we have exhausted all branching at this path, remove it
             if (app.branchIndex + 1 >= index.length) {
                 path.remove(i);
-                ccs = (ArrayList)ccs.subList(0, ccs.size() - semanticAnalyzer.Undo(app));
+                ccs = new ArrayList(ccs.subList(0, ccs.size() - semanticAnalyzer.Undo(app)));
 
                 RuleApplication parent = app.parent;
                 while(parent != null && parent.isCompleted) {
-                    ccs = (ArrayList)ccs.subList(0, ccs.size() - semanticAnalyzer.UndoExit(app));
+                    ccs = new ArrayList(ccs.subList(0, ccs.size() - semanticAnalyzer.UndoExit(app)));
 
                     parent.isCompleted = false;
                     parent.childIndex--;
@@ -163,8 +162,9 @@ public class Parse {
 
         return last.tokenIndex;
     }
-    // Returns the next valid path to expand on in the tree, which is defined as the first
-    //  element found without it's children filled in
+    /** Returns the next valid path to expand on in the tree, which is defined as the first
+     *  element found without it's children filled in
+     */
     private RuleApplication getNext(ArrayList<RuleApplication> path) {
         for (int i = path.size() - 1; i >= 0; i--) {
             RuleApplication app = path.get(i);
@@ -224,7 +224,6 @@ public class Parse {
 				}
 			}
 		}
-
 		bf = new BufferedReader(new FileReader("Compliers/Resources/CleanGrammar2.txt"));
 		int cnt = 0;
 		ArrayList<String[]> rules_init = new ArrayList<>();

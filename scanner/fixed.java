@@ -82,7 +82,7 @@ public class fixed implements DFAS {
 	}
 	
 	public TokenType getType(String lexeme) {
-		return TokenType.MP_FIXED_LIT;
+		return TokenType.MP_FLOAT_LIT;
 	}
 
 	public boolean isAccepting() {

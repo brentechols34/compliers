@@ -14,31 +14,31 @@ public class Controller {
 
 	Scanner sc;
 	Parse pr;
-	
+
 	ArrayList<Token> tokens;
-    RuleApplication[] parseTree;
-	
+	RuleApplication[] parseTree;
+
 	public Controller(String fname) throws FileNotFoundException {
 		sc = new Scanner(fname);
 	}
-	
+
 	public void tokenize() throws IOException { //generate tokens
 		tokens = new ArrayList<>();
 		Token t;
 		try {
-		do {
-			
-			t = sc.nextToken();
-			if (t == null) break;
-			tokens.add(t);
-			
-		} while (true);
+			do {
+
+				t = sc.nextToken();
+				if (t == null) break;
+				tokens.add(t);
+
+			} while (true);
 		} catch (ScannerException e) {
 			System.out.println(e);
 		}
 		tokens.add(new Token(TokenType.MP_EOF,"",-1,-1));
 	}
-	
+
 	public void parsify() throws IOException, IllegalArgumentException { //generate parse tree (TODO: Symbol table)
 		if (tokens == null) {
 			System.out.println("No: Tokenize first.");
@@ -51,13 +51,13 @@ public class Controller {
 			System.out.println(cc);
 		}
 	}
-	
+
 	public static void main(String[] args) throws IOException, IllegalArgumentException, ScannerException {
 		Controller c = new Controller("Compliers/Resources/test1.mp");
 		c.tokenize();
 		System.out.println("Token Stream: " + c.tokens);
 		c.parsify();
 	}
-	
-	
+
+
 }
