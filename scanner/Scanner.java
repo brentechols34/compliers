@@ -52,6 +52,7 @@ public class Scanner {
 				}
 			}
 		}
+		s = s.replace("'", "\"");
 		if (r!=-1) {s = s.substring(0,s.length()-1);pr.unread(r);}
 		for (int i = 0; i < allStates.length; i++) {
 			if (wereNotRejected[i] && wereAccepting[i]) return new Token(allStates[i].getType(s), s, col, row);
