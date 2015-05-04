@@ -174,8 +174,8 @@ public class Parse {
             } else if (!app.isCompleted) {
                 // Signal to the symbol table we finished a rule
                 app.isCompleted = true;
-                symbolTable.ExitRule(app, app.tokenIndex);
-                CodeChunk cc = semanticAnalyzer.ExitRule(app);
+                symbolTable.ExitRule(app);
+                CodeChunk cc = semanticAnalyzer.ExitRule(app, app.tokenIndex);
                 if (cc!= null) ccs.add(cc);
             }
         }
