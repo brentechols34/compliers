@@ -42,6 +42,7 @@ public class SemanticAnalyzer {
         labelStack = new Stack<>();
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public CodeChunk Apply(RuleApplication rule, int tokenIndex) {
         CodeChunk cc = new CodeChunk();
         Token token = tokens.get(tokenIndex);
@@ -120,7 +121,7 @@ public class SemanticAnalyzer {
                 if (!ruleLookup.containsKey(rule)) {
                     ruleLookup.put(rule, new ArrayList<Object>());
                 }
-
+                
                 ArrayList args = ruleLookup.get(rule);
                 if (rule.childIndex == 1) {
                     args.add(token.val); // Control Variable
