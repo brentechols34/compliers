@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0ce15ff-700f-4f6f-a13c-f45090b0c876" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Resources/LLTable.csv" afterPath="$PROJECT_DIR$/Resources/LLTable.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser/TypeStack.java" afterPath="$PROJECT_DIR$/parser/TypeStack.java" />
     </list>
     <ignored path="compliers.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -83,8 +83,8 @@
       <file leaf-file-name="SemanticAnalyzer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-29.444445" vertical-offset="780" max-vertical-offset="7995">
-              <caret line="105" column="13" selection-start-line="105" selection-start-column="13" selection-end-line="105" selection-end-column="13" />
+            <state vertical-scroll-proportion="-33.333332" vertical-offset="0" max-vertical-offset="7995">
+              <caret line="60" column="26" selection-start-line="60" selection-start-column="26" selection-end-line="60" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#604#640#0" expanded="true" />
@@ -105,13 +105,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TypeStack.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TypeStack.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/parser/TypeStack.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="77" max-vertical-offset="1155">
-              <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.767667" vertical-offset="212" max-vertical-offset="1275">
+              <caret line="67" column="16" selection-start-line="67" selection-start-column="16" selection-end-line="67" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1175#1176#0" expanded="true" />
+                <element signature="e#1200#1201#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -144,17 +146,17 @@
         <entry file="file://$PROJECT_DIR$/Resources/CleanGrammar2.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1815">
-              <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="15" />
+              <caret line="7" column="31" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LLTable.csv" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LLTable.csv" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Resources/LLTable.csv">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9411765" vertical-offset="0" max-vertical-offset="1050">
-              <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1035">
+              <caret line="30" column="22" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -209,13 +211,13 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/parser/SymbolTable.java" />
         <option value="$PROJECT_DIR$/parser/SymbolTableController.java" />
-        <option value="$PROJECT_DIR$/parser/TypeStack.java" />
         <option value="$PROJECT_DIR$/parser/RuleApplication.java" />
         <option value="$PROJECT_DIR$/controller/Controller.java" />
         <option value="$PROJECT_DIR$/parser/Parse.java" />
         <option value="$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java" />
         <option value="$PROJECT_DIR$/Resources/CleanGrammar2.txt" />
         <option value="$PROJECT_DIR$/Resources/LLTable.csv" />
+        <option value="$PROJECT_DIR$/parser/TypeStack.java" />
       </list>
     </option>
   </component>
@@ -960,16 +962,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/parser/TypeStack.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="77" max-vertical-offset="1155">
-          <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/parser/Parse.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="913" max-vertical-offset="3840">
@@ -981,10 +973,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Resources/CleanGrammar2.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1815">
+          <caret line="7" column="31" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resources/LLTable.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1035">
+          <caret line="30" column="22" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-29.444445" vertical-offset="780" max-vertical-offset="7995">
-          <caret line="105" column="13" selection-start-line="105" selection-start-column="13" selection-end-line="105" selection-end-column="13" />
+        <state vertical-scroll-proportion="-33.333332" vertical-offset="0" max-vertical-offset="7995">
+          <caret line="60" column="26" selection-start-line="60" selection-start-column="26" selection-end-line="60" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#604#640#0" expanded="true" />
@@ -994,19 +1002,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Resources/CleanGrammar2.txt">
+    <entry file="file://$PROJECT_DIR$/parser/TypeStack.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1815">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resources/LLTable.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9411765" vertical-offset="0" max-vertical-offset="1050">
-          <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.767667" vertical-offset="212" max-vertical-offset="1275">
+          <caret line="67" column="16" selection-start-line="67" selection-start-column="16" selection-end-line="67" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1175#1176#0" expanded="true" />
+            <element signature="e#1200#1201#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
