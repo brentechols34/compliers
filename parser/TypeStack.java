@@ -62,7 +62,7 @@ public class TypeStack {
         CodeChunk cc = castStuff(top,next);
 
 
-        if (lookup.get(tt) == "ORS" || lookup.get(tt) == "ANDS" || lookup.get("MODS")) {
+        if (lookup.get(tt).equals("ORS") || lookup.get(tt).equals("ANDS") || lookup.get(tt).equals("MODS")) {
             cc.append(lookup.get(tt));
             push(TokenType.MP_INTEGER);
         } else {
