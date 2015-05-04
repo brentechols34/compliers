@@ -3,10 +3,8 @@ program Program3;
       B : float;
       C : integer;
    begin
-   	 if 0 = 0 then         
-     	A := 4
-     else
-     	A := 5;
+     while a = 0 do
+        a := 0;
      Write('Enter an integer for A: ');
      Read(A);
      Writeln ('A = ', A);

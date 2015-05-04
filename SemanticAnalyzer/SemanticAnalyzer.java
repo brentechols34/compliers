@@ -79,18 +79,28 @@ public class SemanticAnalyzer {
             }
             case 55: //If Statement
                 if (rule.childIndex == 2){
-                   cc.append("BRFS " + lp.peekLabel(0));
+                   cc.append("BRFS " + lp.peekLabel(0) + ":");
                    labelStack.push(lp.nextLabel());
                    System.out.println("PUSHED:" + labelStack.peek() + " " + cc);
                    return cc;
                 }
                 if (rule.childIndex == 4){
                    String label = labelStack.pop();
-                   cc.append("BR " + lp.peekLabel(0));
+                   cc.append("BR " + lp.peekLabel(0) + ":");
                    labelStack.push(lp.nextLabel());
                    cc.append(label);
                    return cc;
                 }
+            case 59:
+                if (rule.childIndex == 2){
+                    String endLabel = lp.nextLabel();
+                    labelStack.push(endLabel);
+                    cc.append(lp.nextLabel() + ":");
+                    labelStack.push(lp.peekLabel(0));
+                    cc.append("BRFS " + endLabel);
+                    return cc;
+                }
+                
             default:
                 return null;
         }
@@ -235,7 +245,9 @@ public class SemanticAnalyzer {
             case 58:
                 break;
             case 59:
-                break;
+                cc.append("BR " + labelStack.pop());
+                cc.append(labelStack.pop() + ":");
+                return cc;
             case 60:
                 break;
             case 61:

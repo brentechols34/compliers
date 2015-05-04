@@ -53,7 +53,7 @@ public class Controller {
 	}
 	
 	public static void main(String[] args) throws IOException, IllegalArgumentException, ScannerException {
-		Controller c = new Controller("Compliers/Resources/test1.mp");
+		Controller c = new Controller("src/Resources/test1.mp");
 		c.tokenize();
 		System.out.println("Token Stream: " + c.tokens);
 		c.parsify();
