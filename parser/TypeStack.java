@@ -61,10 +61,18 @@ public class TypeStack {
 		TokenType next = pop();
         CodeChunk cc = castStuff(top,next);
 
-        boolean useInt = top == TokenType.MP_INTEGER_LIT && next == TokenType.MP_INTEGER_LIT;
-        cc.append(lookup.get(tt) + (useInt? "" : "F"));
+
+        if (lookup.get(tt) == "ORS" || lookup.get(tt) == "ANDS" || lookup.get("MODS")) {
+            cc.append(lookup.get(tt));
+            push(TokenType.MP_INTEGER);
+        } else {
+            boolean useInt = top == TokenType.MP_INTEGER_LIT && next == TokenType.MP_INTEGER_LIT;
+            cc.append(lookup.get(tt) + (useInt? "" : "F"));
+            push(useInt ? TokenType.MP_INTEGER_LIT : TokenType.MP_FLOAT_LIT);
+        }
+
         if (lookup.get(tt)==null){ System.out.println("YO BITCHES " + tt.name()); System.exit(0);}
-        push(useInt ? TokenType.MP_INTEGER_LIT : TokenType.MP_FLOAT_LIT);
+
 
         return cc;
 	}
