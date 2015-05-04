@@ -42,7 +42,6 @@ public class SymbolTableController {
     public void ExitRule(RuleApplication application) {
         switch(application.ruleIndex) {
             case BLOCK:
-                System.out.println(tables.removeFirst());
                 nesting_level--;
                 break;
         }

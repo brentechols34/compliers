@@ -87,7 +87,6 @@ public class SemanticAnalyzer {
                 if (rule.childIndex == 2) {
                     cc.append("BRFS " + lp.peekLabel(0) + ":");
                     labelStack.push(lp.nextLabel());
-                    System.out.println("PUSHED:" + labelStack.peek() + " " + cc);
                     return cc;
                 }
                 if (rule.childIndex == 4) {
@@ -111,7 +110,6 @@ public class SemanticAnalyzer {
                     labelStack.push(endLabel);
                     cc.append(lp.nextLabel() + ":");
                     labelStack.push(lp.peekLabel(-1));
-                    System.out.println(labelStack.peek());
                     cc.append("BRFS " + endLabel);
                     return cc;
                 }
@@ -123,11 +121,11 @@ public class SemanticAnalyzer {
                 ArrayList args = ruleLookup.get(rule);
                 if (rule.childIndex == 1) {
                     args.add(token.val); // Control Variable
-                    System.out.println(token.val);
+                    //System.out.println(token.val);
                 }
                 if (rule.childIndex == 4) {
                     args.add(token.val); // Step Value
-                    System.out.println(token.val + " ####");
+                    //System.out.println(token.val + " ####");
                 }
                 if (rule.childIndex == 5) {
                     String controlVariableLexeme = (String) args.get(0);
@@ -139,7 +137,7 @@ public class SemanticAnalyzer {
                 }
                 if (rule.childIndex == 6) {
                     labelStack.push(lp.nextLabel());
-                    System.out.println("PUSHED:" + labelStack.peek() + " " + cc);
+                    //System.out.println("PUSHED:" + labelStack.peek() + " " + cc);
                     cc.append(labelStack.peek() + ":");
 
                     //Find the control variable
@@ -282,7 +280,7 @@ public class SemanticAnalyzer {
             case 52:
                 return new CodeChunk("WRTS");
             case 53:
-                System.out.println(entry.getSize() + table.getNestingLevel());
+                //System.out.println(entry.getSize() + table.getNestingLevel());
                 cc = new CodeChunk("POP " + entry.getSize() + "(D" + table.getNestingLevel() + ")");
                 return cc;
             case 54:
@@ -301,7 +299,7 @@ public class SemanticAnalyzer {
                 break;
             }
             case 59:
-                System.out.println(labelStack.peek());
+                //System.out.println(labelStack.peek());
                 cc.append("BR " + labelStack.pop());
                 cc.append(labelStack.pop() + ":");
                 return cc;
@@ -312,7 +310,6 @@ public class SemanticAnalyzer {
 
                 String adjust = ((String) args.get(1)).toLowerCase().equals( "to") ? "ADD" : "SUB";
                 String controlVariableLexeme = (String) args.get(0);
-                System.out.println(args.get(1) + "@@@@@@@@@@" + ((String) args.get(1)).toLowerCase());
                 SymbolTable localTable = this.symbolTable.getTable(controlVariableLexeme);
                 TableEntry localEntry = localTable.getEntry(controlVariableLexeme);
 
