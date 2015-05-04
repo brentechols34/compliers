@@ -21,6 +21,7 @@ public class SemanticAnalyzer {
     ArrayList<CodeChunk> savedChunk;
     TypeStack typeStack;
     HashMap<RuleApplication, Boolean> optionalSignLookup;
+    HashMap<RuleApplication, ArrayList<Object>> ruleLookup = new HashMap<RuleApplication, ArrayList<Object>>();
     LabelProvider lp = new LabelProvider();
     Stack<String> labelStack; 
     
@@ -36,6 +37,8 @@ public class SemanticAnalyzer {
         this.savedChunk = new ArrayList<>();
         this.typeStack = new TypeStack();
         this.optionalSignLookup = new HashMap<RuleApplication, Boolean>();
+        this.ruleLookup = new HashMap<RuleApplication, ArrayList<Object>>();
+
         this.lp = lp;
         labelStack = new Stack<>();
     }
@@ -44,6 +47,11 @@ public class SemanticAnalyzer {
         CodeChunk cc = new CodeChunk();
         Token token = tokens.get(rule.tokenIndex);
         SymbolTable table = this.symbolTable.getTable(token.val);
+        TableEntry entry = null;
+        if (table != null) {
+            entry = table.getEntry(token.val);
+        }
+
         switch (rule.ruleIndex) {
             case 28:
                 SymbolTable topTable = this.symbolTable.getTable();
@@ -101,7 +109,43 @@ public class SemanticAnalyzer {
                     cc.append("BRFS " + endLabel);
                     return cc;
                 }
-                
+            case 60:
+                if (!ruleLookup.containsKey(rule)) {
+                    ruleLookup.put(rule, new ArrayList<Object>());
+                }
+
+                ArrayList args = ruleLookup.get(rule);
+                if (rule.childIndex == 1) {
+                    args.add(token.val); // Control Variable
+                }
+                if (rule.childIndex == 4) {
+                    args.add(token.val); // Step Value
+                }
+                if (rule.childIndex == 5) {
+                    String controlVariableLexeme = (String)args.get(0);
+                    SymbolTable localTable = this.symbolTable.getTable(controlVariableLexeme);
+                    TableEntry localEntry = localTable.getEntry(token.val);
+
+                    cc.append("POP " + localEntry.getSize() + "(D" + localTable.getNestingLevel() + ")");
+                    return cc;
+                }
+                if (rule.childIndex == 6) {
+                    labelStack.push(lp.nextLabel());
+                    System.out.println("PUSHED:" + labelStack.peek() + " " + cc);
+                    cc.append(labelStack.peek() + ":");
+
+                    //Find the control variable
+                    String controlVariableLexeme = (String)args.get(0);
+                    SymbolTable localTable = this.symbolTable.getTable(controlVariableLexeme);
+                    TableEntry localEntry = localTable.getEntry(token.val);
+
+                    labelStack.push(lp.nextLabel());
+                    cc.append("BNE " + localEntry.getSize() + "(D" + localTable.getNestingLevel() + ")" + " -1(SP) " + labelStack.peek());
+
+                    return cc;
+                }
+
+                return null;
             default:
                 return null;
         }
@@ -252,7 +296,23 @@ public class SemanticAnalyzer {
                 cc.append(labelStack.pop() + ":");
                 return cc;
             case 60:
-                break;
+                ArrayList args = ruleLookup.get(rule);
+                String exitLabel = labelStack.pop();
+                String entryLabel = labelStack.pop();
+
+                String adjust = ((String)args.get(1)).toLowerCase() == "to"? "ADD" : "SUB";
+                String controlVariableLexeme = (String)args.get(0);
+                SymbolTable localTable = this.symbolTable.getTable(controlVariableLexeme);
+                TableEntry localEntry = localTable.getEntry(token.val);
+
+                String register = localEntry.getSize() + "(D" + localTable.getNestingLevel() + ")");
+                cc.append(adjust + " " + register + " #1 " + register);
+
+                cc.append("BR " + entryLabel);
+                cc.append(exitLabel + ":");
+                cc.append("SUBS SP #1 SP");
+
+                return cc;
             case 61:
                 break;
             case 62:
