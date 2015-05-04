@@ -305,8 +305,9 @@ public class SemanticAnalyzer {
                 String exitLabel = labelStack.pop();
                 String entryLabel = labelStack.pop();
 
-                String adjust = ((String) args.get(1)).toLowerCase() == "to" ? "ADD" : "SUB";
+                String adjust = ((String) args.get(1)).toLowerCase().equals( "to") ? "ADD" : "SUB";
                 String controlVariableLexeme = (String) args.get(0);
+                System.out.println(args.get(1) + "@@@@@@@@@@" + ((String) args.get(1)).toLowerCase());
                 SymbolTable localTable = this.symbolTable.getTable(controlVariableLexeme);
                 TableEntry localEntry = localTable.getEntry(controlVariableLexeme);
 
