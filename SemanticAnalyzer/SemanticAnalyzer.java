@@ -85,7 +85,7 @@ public class SemanticAnalyzer {
                 }
                 return null;
             }
-            case 55: //If Statement
+            case 55: {//If Statement
                 if (rule.childIndex == 2){
                    cc.append("BRFS " + lp.peekLabel(0) + ":");
                    labelStack.push(lp.nextLabel());
@@ -99,6 +99,14 @@ public class SemanticAnalyzer {
                    cc.append(label);
                    return cc;
                 }
+            }
+            case 58: {//Repeat
+            	if (rule.childIndex == 1) {
+            		cc.append(lp.peekLabel(0));
+            		labelStack.push(lp.nextLabel());
+            	}
+            	
+            }
             case 59:
                 if (rule.childIndex == 2){
                     String endLabel = lp.nextLabel();
@@ -286,10 +294,13 @@ public class SemanticAnalyzer {
                 return cc;
             case 56:
                 break;
-            case 57:
+            case 57: 
                 break;
-            case 58:
+            case 58: {//Repeat
+            	//When we are done, we need to add a branch to the beginning if the top of the stack is 1
+            	cc = new CodeChunk("BRTS " + labelStack.pop());
                 break;
+            }
             case 59:
                 System.out.println(labelStack.peek());
                 cc.append("BR " + labelStack.pop());
@@ -305,7 +316,7 @@ public class SemanticAnalyzer {
                 SymbolTable localTable = this.symbolTable.getTable(controlVariableLexeme);
                 TableEntry localEntry = localTable.getEntry(token.val);
 
-                String register = localEntry.getSize() + "(D" + localTable.getNestingLevel() + ")");
+                String register = localEntry.getSize() + "(D" + localTable.getNestingLevel() + ")";
                 cc.append(adjust + " " + register + " #1 " + register);
 
                 cc.append("BR " + entryLabel);
