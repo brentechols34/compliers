@@ -32,7 +32,6 @@ public class TypeStack {
 		if (tt == TokenType.MP_INTEGER) {
 			stack.push(TokenType.MP_INTEGER_LIT);
 		} else {
-			System.out.println(tt);
 			stack.push(tt);
 		}
 	}
