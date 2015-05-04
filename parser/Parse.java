@@ -87,7 +87,7 @@ public class Parse {
         // Process through and generate paths until:
         //  - the path size reaches 0, indicating no valid tree exists
         //  - getNext returns null, indicating all members of the tree are done
-        int lastDepth = 0;
+        int errorToken = 0;
         CodeChunk cc;
         while(path.size() > 0 && this.getNext(path) != null) {
             RuleApplication next = this.getNext(path);
@@ -109,13 +109,14 @@ public class Parse {
                     next.childIndex++;
                     break;
                 case ERROR:
+                    errorToken = tokenIndex;
                     tokenIndex = trimTree(path);
                     break;
             }
         }
 
         if (path.size() == 0) {
-            System.out.println("No valid parse tree found!");
+            System.out.println("No valid parse tree found! Error found at " + tokens.get(errorToken).row + ":" + tokens.get(errorToken).col);
         }
         if (tokenIndex != tokens.size()) {
             System.out.println("Not all tokens processed!");
