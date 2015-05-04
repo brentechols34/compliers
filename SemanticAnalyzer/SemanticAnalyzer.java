@@ -43,9 +43,9 @@ public class SemanticAnalyzer {
         labelStack = new Stack<>();
     }
 
-    public CodeChunk Apply(RuleApplication rule) {
+    public CodeChunk Apply(RuleApplication rule, int tokenIndex) {
         CodeChunk cc = new CodeChunk();
-        Token token = tokens.get(rule.tokenIndex);
+        Token token = tokens.get(tokenIndex);
         SymbolTable table = this.symbolTable.getTable(token.val);
         TableEntry entry = null;
         if (table != null) {
@@ -150,9 +150,9 @@ public class SemanticAnalyzer {
         }
     }
 
-    public CodeChunk ExitRule(RuleApplication rule) {
+    public CodeChunk ExitRule(RuleApplication rule, int tokenIndex) {
         CodeChunk cc = new CodeChunk();
-        Token token = tokens.get(rule.tokenIndex);
+        Token token = tokens.get(tokenIndex);
         SymbolTable table = this.symbolTable.getTable(token.val);
         TableEntry entry = null;
         if (table != null) {
@@ -441,18 +441,21 @@ public class SemanticAnalyzer {
         return null;
     }
 
-    public boolean Undo(RuleApplication rule) {
+    public int Undo(RuleApplication rule) {
         switch (rule.ruleIndex) {
             case 28:
+            case 59:
             case 81:
+                return 1;
             case 55:
-                return true;
+            case 60:
+                return 2;
         }
 
-        return false;
+        return 0;
     }
 
-    public boolean UndoExit(RuleApplication rule) {
+    public int UndoExit(RuleApplication rule) {
         CodeChunk cc = new CodeChunk();
         Token token = tokens.get(rule.tokenIndex);
         SymbolTable table = this.symbolTable.getTable(token.val);
@@ -476,10 +479,10 @@ public class SemanticAnalyzer {
             case 102:
             case 103:
             case 107:
-                return true;
+                return 1;
         }
 
-        return false;
+        return 0;
     }
 
     public void printToFile() {
