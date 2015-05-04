@@ -1,7 +1,9 @@
 package controller;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -47,24 +49,33 @@ public class Controller {
 		tokens.add(new Token(TokenType.MP_EOF,"",-1,-1));
 	}
 
-	public void parsify() throws IOException, IllegalArgumentException { //generate parse tree (TODO: Symbol table)
+	public String parsify() throws IOException, IllegalArgumentException { //generate parse tree (TODO: Symbol table)
 		if (tokens == null) {
 			System.out.println("No: Tokenize first.");
-			return;
+			return null;
 		}
 		pr = new Parse(tokens);
 		parseTree = pr.make();
-		System.out.println(Arrays.toString(parseTree));
+		//System.out.println(Arrays.toString(parseTree));
+		String s = "";
 		for (CodeChunk cc : pr.ccs) {
-			System.out.println(cc);
+			s+=cc+"\n";
 		}
+		return s;
 	}
 
 	public static void main(String[] args) throws IOException, IllegalArgumentException, ScannerException {
-		Controller c = new Controller("Compliers/Resources/7harderWhileTest.up");
+		if (args.length < 2) {
+			System.out.println("Requires file to compile and output file name.");
+			System.exit(0);
+		}
+		Controller c = new Controller(args[0]);
 		c.tokenize();
 		System.out.println("Token Stream: " + c.tokens);
-		c.parsify();
+		String code = c.parsify();
+		PrintWriter pw = new PrintWriter(new File(args[1]));
+		pw.print(code);
+		pw.close();
 	}
 
 

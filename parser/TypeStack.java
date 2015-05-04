@@ -28,6 +28,7 @@ public class TypeStack {
         lookup.put(TokenType.MP_NEQUAL, "CMPNES");
         lookup.put(TokenType.MP_OR, "ORS");
         lookup.put(TokenType.MP_AND, "ANDS");
+        lookup.put(TokenType.MP_MOD, "MODS");
 	}
 
 	public void push(TokenType tt) {
