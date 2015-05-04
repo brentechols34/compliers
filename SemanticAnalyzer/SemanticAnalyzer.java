@@ -56,8 +56,6 @@ public class SemanticAnalyzer {
             case 28:
                 SymbolTable topTable = this.symbolTable.getTable();
                 int size = topTable.localSize();
-
-                ArrayList<CodeChunk> chunks = new ArrayList<>();
                 cc.append("MOV SP D" + topTable.getNestingLevel());
                 cc.append("ADD SP #" + size + " SP");
 

@@ -39,6 +39,12 @@ public class CodeChunk {
 	}
 	
 	public String toString() {
-		return uCode.toString();
+		String s = "";
+		if (uCode.size()==0) return s;
+		for (int i = 0; i < uCode.size()-1; i++) {
+			s+=uCode.get(i)+"\n";
+		}
+		s+=uCode.get(uCode.size()-1);
+		return s;
 	}
 }
