@@ -3,8 +3,9 @@ program Program3;
       B : float;
       C : integer;
    begin
-     while a = 0 do
-        a := 0;
+     A := 0;
+     while A = 0 do
+        A := 0;
      Write('Enter an integer for A: ');
      Read(A);
      Writeln ('A = ', A);

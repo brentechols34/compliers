@@ -96,7 +96,8 @@ public class SemanticAnalyzer {
                     String endLabel = lp.nextLabel();
                     labelStack.push(endLabel);
                     cc.append(lp.nextLabel() + ":");
-                    labelStack.push(lp.peekLabel(0));
+                    labelStack.push(lp.peekLabel(-1));
+                    System.out.println(labelStack.peek());
                     cc.append("BRFS " + endLabel);
                     return cc;
                 }
@@ -230,6 +231,7 @@ public class SemanticAnalyzer {
             case 52:
                 return new CodeChunk("WRTS");
             case 53:
+                System.out.println(entry.getSize() + table.getNestingLevel());
                 cc = new CodeChunk("POP " + entry.getSize() + "(D" + table.getNestingLevel() + ")");
                 return cc;
             case 54:
@@ -245,6 +247,7 @@ public class SemanticAnalyzer {
             case 58:
                 break;
             case 59:
+                System.out.println(labelStack.peek());
                 cc.append("BR " + labelStack.pop());
                 cc.append(labelStack.pop() + ":");
                 return cc;
@@ -386,6 +389,7 @@ public class SemanticAnalyzer {
             case 28:
             case 81:
             case 55:
+            case 59:
                 return true;
         }
 
@@ -406,6 +410,7 @@ public class SemanticAnalyzer {
             case 52:
             case 53:
             case 55:
+            case 59:
             case 73:
             case 82:
             case 91:
