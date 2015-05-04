@@ -110,7 +110,7 @@ public class SemanticAnalyzer {
                     labelStack.push(endLabel);
                     cc.append(lp.nextLabel() + ":");
                     labelStack.push(lp.peekLabel(-1));
-                    cc.append("BRFS " + endLabel +":");
+                    cc.append("BRFS " + endLabel);
                     return cc;
                 }
             case 60:
