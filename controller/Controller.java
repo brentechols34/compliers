@@ -30,7 +30,15 @@ public class Controller {
 
 				t = sc.nextToken();
 				if (t == null) break;
-				tokens.add(t);
+				if (t.type == TokenType.MP_RUN_COMMENT) {
+					System.out.println("Run on comment." + t);
+					System.exit(0);
+				}
+				if (t.type == TokenType.MP_RUN_STRING) {
+					System.out.println("Unclosed String Literal. " + t);
+					System.exit(0);
+				}
+				if (t.type != TokenType.MP_COMMENT) tokens.add(t);
 
 			} while (true);
 		} catch (ScannerException e) {
@@ -53,7 +61,7 @@ public class Controller {
 	}
 
 	public static void main(String[] args) throws IOException, IllegalArgumentException, ScannerException {
-		Controller c = new Controller("Compliers/Resources/test1.mp");
+		Controller c = new Controller("Compliers/Resources/7harderWhileTest.up");
 		c.tokenize();
 		System.out.println("Token Stream: " + c.tokens);
 		c.parsify();

@@ -359,6 +359,7 @@ public class SemanticAnalyzer {
             case 72:
                 break;
             case 73:
+            	System.out.println(token);
                 return new CodeChunk(typeStack.resolve(token.type));
             case 74:
                 break;
@@ -377,6 +378,7 @@ public class SemanticAnalyzer {
             case 81:
                 break;
             case 82:
+            	System.out.println(token);
                 return new CodeChunk(typeStack.resolve(token.type));
             case 83:
                 break;
@@ -395,6 +397,7 @@ public class SemanticAnalyzer {
             case 90:
                 break;
             case 91:
+            	System.out.println(token);
                 return new CodeChunk(typeStack.resolve(token.type));
             case 92:
                 break;

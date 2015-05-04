@@ -135,7 +135,6 @@ public class Parse {
             if (app.branchIndex + 1 >= index.length) {
                 path.remove(i);
                 ccs = new ArrayList(ccs.subList(0, ccs.size() - semanticAnalyzer.Undo(app)));
-
                 RuleApplication parent = app.parent;
                 while(parent != null && parent.isCompleted) {
                     ccs = new ArrayList(ccs.subList(0, ccs.size() - semanticAnalyzer.UndoExit(app)));
