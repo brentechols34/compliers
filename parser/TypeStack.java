@@ -48,9 +48,9 @@ public class TypeStack {
         if (next == top) {
             return cc;
         } else {
-            cc.append("CASTF");
+            cc.append("CASTSF");
             cc.append("SUB SP #1 SP");
-            cc.append("CASTF");
+            cc.append("CASTSF");
             cc.append("ADD SP #1 SP");
             return cc;
         }
