@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b0ce15ff-700f-4f6f-a13c-f45090b0c876" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser/Parse.java" afterPath="$PROJECT_DIR$/parser/Parse.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="compliers.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -70,9 +71,12 @@
       <file leaf-file-name="Parse.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/parser/Parse.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2052275" vertical-offset="1138" max-vertical-offset="3840">
-              <caret line="103" column="26" selection-start-line="103" selection-start-column="26" selection-end-line="103" selection-end-column="26" />
-              <folding />
+            <state vertical-scroll-proportion="0.5361139" vertical-offset="943" max-vertical-offset="3870">
+              <caret line="111" column="65" selection-start-line="111" selection-start-column="65" selection-end-line="111" selection-end-column="65" />
+              <folding>
+                <element signature="e#7786#7787#0" expanded="true" />
+                <element signature="e#7829#7830#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -80,8 +84,8 @@
       <file leaf-file-name="SemanticAnalyzer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2025" max-vertical-offset="7680">
-              <caret line="153" column="29" selection-start-line="153" selection-start-column="21" selection-end-line="153" selection-end-column="29" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2100" max-vertical-offset="7800">
+              <caret line="158" column="29" selection-start-line="158" selection-start-column="21" selection-end-line="158" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#627#663#0" expanded="true" />
@@ -103,8 +107,8 @@
       <file leaf-file-name="TypeStack.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parser/TypeStack.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="62" max-vertical-offset="1095">
-              <caret line="30" column="36" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="32" max-vertical-offset="1080">
+              <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -125,11 +129,11 @@
       <file leaf-file-name="SymbolTableController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parser/SymbolTableController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="467" max-vertical-offset="1755">
-              <caret line="59" column="17" selection-start-line="59" selection-start-column="17" selection-end-line="59" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="437" max-vertical-offset="1740">
+              <caret line="57" column="17" selection-start-line="57" selection-start-column="17" selection-end-line="57" selection-end-column="17" />
               <folding>
-                <element signature="e#3647#3648#0" expanded="false" />
-                <element signature="e#3688#3689#0" expanded="false" />
+                <element signature="e#3589#3590#0" expanded="false" />
+                <element signature="e#3630#3631#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -216,9 +220,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
+    <option name="y" value="120" />
     <option name="width" value="1920" />
-    <option name="height" value="1130" />
+    <option name="height" value="1080" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -530,7 +534,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1920" height="1130" extended-state="6" />
+    <frame x="0" y="120" width="1920" height="1080" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -544,11 +548,11 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.49952874" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.49950543" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.50047123" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.50049454" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32923368" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -631,7 +635,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="525" max-vertical-offset="2370">
           <caret line="35" column="18" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#7786#7787#0" expanded="true" />
+            <element signature="e#7829#7830#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -703,7 +710,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="525" max-vertical-offset="2205">
           <caret line="35" column="18" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#7786#7787#0" expanded="true" />
+            <element signature="e#7829#7830#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -754,7 +764,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1575" max-vertical-offset="1815">
           <caret line="105" column="4" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#7786#7787#0" expanded="true" />
+            <element signature="e#7829#7830#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -907,11 +920,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/parser/SymbolTableController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="467" max-vertical-offset="1755">
-          <caret line="59" column="17" selection-start-line="59" selection-start-column="17" selection-end-line="59" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="437" max-vertical-offset="1740">
+          <caret line="57" column="17" selection-start-line="57" selection-start-column="17" selection-end-line="57" selection-end-column="17" />
           <folding>
-            <element signature="e#3647#3648#0" expanded="false" />
-            <element signature="e#3688#3689#0" expanded="false" />
+            <element signature="e#3589#3590#0" expanded="false" />
+            <element signature="e#3630#3631#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -942,8 +955,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/parser/TypeStack.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="62" max-vertical-offset="1095">
-          <caret line="30" column="36" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="32" max-vertical-offset="1080">
+          <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -960,8 +973,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2025" max-vertical-offset="7680">
-          <caret line="153" column="29" selection-start-line="153" selection-start-column="21" selection-end-line="153" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2100" max-vertical-offset="7800">
+          <caret line="158" column="29" selection-start-line="158" selection-start-column="21" selection-end-line="158" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#627#663#0" expanded="true" />
@@ -971,9 +984,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/parser/Parse.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2052275" vertical-offset="1138" max-vertical-offset="3840">
-          <caret line="103" column="26" selection-start-line="103" selection-start-column="26" selection-end-line="103" selection-end-column="26" />
-          <folding />
+        <state vertical-scroll-proportion="0.5361139" vertical-offset="943" max-vertical-offset="3870">
+          <caret line="111" column="65" selection-start-line="111" selection-start-column="65" selection-end-line="111" selection-end-column="65" />
+          <folding>
+            <element signature="e#7786#7787#0" expanded="true" />
+            <element signature="e#7829#7830#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

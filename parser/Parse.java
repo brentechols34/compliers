@@ -109,7 +109,7 @@ public class Parse {
                     next.childIndex++;
                     break;
                 case ERROR:
-                    errorToken = tokenIndex;
+                    errorToken = Math.max(tokenIndex, errorToken);
                     tokenIndex = trimTree(path);
                     break;
             }
