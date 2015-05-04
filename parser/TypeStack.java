@@ -26,6 +26,9 @@ public class TypeStack {
         lookup.put(TokenType.MP_LEQUAL, "CMPLES");
         lookup.put(TokenType.MP_GEQUAL, "CMPGES");
         lookup.put(TokenType.MP_NEQUAL, "CMPNES");
+        lookup.put(TokenType.MP_OR, "ORS");
+        lookup.put(TokenType.MP_AND, "ANDS");
+        lookup.put(TokenType.MP_MOD, "MODS");
 	}
 
 	public void push(TokenType tt) {
@@ -56,11 +59,11 @@ public class TypeStack {
     public CodeChunk resolve(TokenType tt) {
 		TokenType top = pop();
 		TokenType next = pop();
-
         CodeChunk cc = castStuff(top,next);
 
         boolean useInt = top == TokenType.MP_INTEGER_LIT && next == TokenType.MP_INTEGER_LIT;
         cc.append(lookup.get(tt) + (useInt? "" : "F"));
+        if (lookup.get(tt)==null){ System.out.println("YO BITCHES " + tt.name()); System.exit(0);}
         push(useInt ? TokenType.MP_INTEGER_LIT : TokenType.MP_FLOAT_LIT);
 
         return cc;

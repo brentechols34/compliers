@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import parser.*;
 import util.*;
-import util.CodeChunk;
 
 public class SemanticAnalyzer {
 
@@ -85,24 +84,25 @@ public class SemanticAnalyzer {
             }
             case 55: {//If Statement
                 if (rule.childIndex == 2) {
-                    cc.append("BRFS " + lp.peekLabel(0) + ":");
+                    cc.append("BRFS " + lp.peekLabel(0));
                     labelStack.push(lp.nextLabel());
                     return cc;
                 }
                 if (rule.childIndex == 4) {
                     String label = labelStack.pop();
-                    cc.append("BR " + lp.peekLabel(0) + ":");
+                    cc.append("BR " + lp.peekLabel(0));
                     labelStack.push(lp.nextLabel());
-                    cc.append(label);
+                    cc.append(label +":");
                     return cc;
                 }
             }
             case 58: {//Repeat
             	if (rule.childIndex == 1) {
-            		cc.append(lp.peekLabel(0));
+            		cc.append(lp.peekLabel(0)+":");
             		labelStack.push(lp.nextLabel());
+            		return cc;
             	}
-            	
+            	return null;
             }
             case 59:
                 if (rule.childIndex == 2) {
@@ -110,7 +110,7 @@ public class SemanticAnalyzer {
                     labelStack.push(endLabel);
                     cc.append(lp.nextLabel() + ":");
                     labelStack.push(lp.peekLabel(-1));
-                    cc.append("BRFS " + endLabel);
+                    cc.append("BRFS " + endLabel +":");
                     return cc;
                 }
             case 60:
@@ -156,7 +156,8 @@ public class SemanticAnalyzer {
         }
     }
 
-    public CodeChunk ExitRule(RuleApplication rule, int tokenIndex) {
+    @SuppressWarnings("rawtypes")
+	public CodeChunk ExitRule(RuleApplication rule, int tokenIndex) {
         CodeChunk cc = new CodeChunk();
         Token token = tokens.get(tokenIndex);
         SymbolTable table = this.symbolTable.getTable(token.val);
@@ -166,7 +167,7 @@ public class SemanticAnalyzer {
         }
         switch (rule.ruleIndex) {
             case 0:
-                break;
+            	return new CodeChunk("HLT");
             case 1:
                 break;
             case 2:
@@ -268,6 +269,8 @@ public class SemanticAnalyzer {
                         return new CodeChunk("RDF " + entry.getSize() + "(D" + table.getNestingLevel() + ")");
                     case MP_STRING:
                         return new CodeChunk("RDS " + entry.getSize() + "(D" + table.getNestingLevel() + ")");
+                    default:
+                    	break;
                 }
             case 48:
                 break;
@@ -281,13 +284,24 @@ public class SemanticAnalyzer {
                 return new CodeChunk("WRTS");
             case 53:
                 //System.out.println(entry.getSize() + table.getNestingLevel());
-                cc = new CodeChunk("POP " + entry.getSize() + "(D" + table.getNestingLevel() + ")");
+            	cc = new CodeChunk();
+            	if ((entry.getType() == TokenType.MP_INTEGER) != (typeStack.pop() == TokenType.MP_INTEGER_LIT)) {
+            		if (entry.getType() == TokenType.MP_STRING) {
+            			System.out.println("CAN'T CAST STRINGS");
+            		}
+            		if (entry.getType() == TokenType.MP_INTEGER) {
+            			cc.append("CASTSI");
+            		}
+            		else {
+            			cc.append("CASTSF");
+            		}
+            	}
+                cc.append("POP " + entry.getSize() + "(D" + table.getNestingLevel() + ")");
                 return cc;
             case 54:
                 break;
             case 55:
-                cc.append(labelStack.pop());
-
+                cc.append(labelStack.pop()+":");
                 return cc;
             case 56:
                 break;
@@ -296,7 +310,7 @@ public class SemanticAnalyzer {
             case 58: {//Repeat
             	//When we are done, we need to add a branch to the beginning if the top of the stack is 1
             	cc = new CodeChunk("BRTS " + labelStack.pop());
-                break;
+            	return cc;
             }
             case 59:
                 //System.out.println(labelStack.peek());
@@ -467,7 +481,6 @@ public class SemanticAnalyzer {
     }
 
     public int UndoExit(RuleApplication rule) {
-        CodeChunk cc = new CodeChunk();
         Token token = tokens.get(rule.tokenIndex);
         SymbolTable table = this.symbolTable.getTable(token.val);
         TableEntry entry = null;
