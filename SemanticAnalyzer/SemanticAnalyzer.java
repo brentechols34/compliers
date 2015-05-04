@@ -144,8 +144,12 @@ public class SemanticAnalyzer {
 
                     return cc;
                 }
-
                 return null;
+                
+            case 58://repeat
+                if(rule.childIndex == 1){
+                    cc.append("");
+                }
             default:
                 return null;
         }
@@ -305,7 +309,7 @@ public class SemanticAnalyzer {
                 SymbolTable localTable = this.symbolTable.getTable(controlVariableLexeme);
                 TableEntry localEntry = localTable.getEntry(token.val);
 
-                String register = localEntry.getSize() + "(D" + localTable.getNestingLevel() + ")");
+                String register = localEntry.getSize() + "(D" + localTable.getNestingLevel() + ")";
                 cc.append(adjust + " " + register + " #1 " + register);
 
                 cc.append("BR " + entryLabel);
