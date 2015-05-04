@@ -95,7 +95,7 @@ public class Parse {
             switch (r) {
                 case HUNG:
                     symbolTable.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex, null));
-                    cc = semanticAnalyzer.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex, null));
+                    cc = semanticAnalyzer.Apply(next, tokenIndex);
                     if (cc!= null) ccs.add(cc);next.childIndex++;
                     tokenIndex++;
                     break;
@@ -104,7 +104,7 @@ public class Parse {
                     break;
                 case EXPAND:
                     symbolTable.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex, null));
-                    cc = semanticAnalyzer.Apply(new RuleApplication(next.ruleName, next.ruleIndex, tokenIndex, next.childIndex, next.branchIndex, null));
+                    cc = semanticAnalyzer.Apply(next, tokenIndex);
                     if (cc!= null) ccs.add(cc);
                     next.childIndex++;
                     break;
@@ -134,15 +134,11 @@ public class Parse {
             // If we have exhausted all branching at this path, remove it
             if (app.branchIndex + 1 >= index.length) {
                 path.remove(i);
-                if (semanticAnalyzer.Undo(app)) {
-                    ccs.remove(ccs.size() - 1);
-                }
+                ccs = (ArrayList)ccs.subList(0, ccs.size() - semanticAnalyzer.Undo(app));
 
                 RuleApplication parent = app.parent;
                 while(parent != null && parent.isCompleted) {
-                    if (semanticAnalyzer.UndoExit(parent)) {
-                        ccs.remove(ccs.size() - 1);
-                    }
+                    ccs = (ArrayList)ccs.subList(0, ccs.size() - semanticAnalyzer.UndoExit(app));
 
                     parent.isCompleted = false;
                     parent.childIndex--;
