@@ -275,7 +275,7 @@ public class SemanticAnalyzer {
             case 48:
                 break;
             case 49:
-                return new CodeChunk("WRTLN #");
+                return new CodeChunk("WRTLN #\"\"");
             case 50:
                 break;
             case 51:
