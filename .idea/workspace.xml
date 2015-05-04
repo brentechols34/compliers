@@ -70,8 +70,8 @@
       <file leaf-file-name="Parse.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/parser/Parse.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48112294" vertical-offset="1813" max-vertical-offset="3825">
-              <caret line="167" column="67" selection-start-line="167" selection-start-column="67" selection-end-line="167" selection-end-column="67" />
+            <state vertical-scroll-proportion="0.2052275" vertical-offset="1138" max-vertical-offset="3840">
+              <caret line="103" column="26" selection-start-line="103" selection-start-column="26" selection-end-line="103" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -971,8 +971,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/parser/Parse.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48112294" vertical-offset="1813" max-vertical-offset="3825">
-          <caret line="167" column="67" selection-start-line="167" selection-start-column="67" selection-end-line="167" selection-end-column="67" />
+        <state vertical-scroll-proportion="0.2052275" vertical-offset="1138" max-vertical-offset="3840">
+          <caret line="103" column="26" selection-start-line="103" selection-start-column="26" selection-end-line="103" selection-end-column="26" />
           <folding />
         </state>
       </provider>
