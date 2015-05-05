@@ -43,7 +43,7 @@ public class Parse {
         String expand = rules[rule][child];
         if (isTerminal(expand)) {
         	if (expand.equals(curToken.type.name())) {
-                System.out.println("Hung: '" + curToken.val + "' " + new RuleApplication(ruleName, rule, token, child, 0, null).toString());
+                System.out.println("Hung: " + curToken +'\n');//+ "' " + new RuleApplication(ruleName, rule, token, child, 0, null).toString());
                 return ParseReturn.HUNG;
             } else if (expand.equals("lambda")) {
                 return ParseReturn.LAMBDA;

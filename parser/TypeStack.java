@@ -34,10 +34,14 @@ public class TypeStack {
 	}
 
 	public void push(Token tt) {
-			stack.push(tt);
+		stack.push(tt);
 	}
 
 	public Token pop() {
+		if (stack.isEmpty()) {
+			System.out.println("Well fuck.");
+			System.exit(0);
+		}
 		return stack.pop();
 	}
 
@@ -78,30 +82,24 @@ public class TypeStack {
 			case MP_FLOAT: correctArr = float_ops; break;
 			default: return;
 			}
-			if (!contains(correctArr,top.type)) {
+			if (!contains(correctArr,op.type)) {
 				System.out.println(op.type + " is not a valid operation for type " + top.type + " " + op.row + "," + op.col);
 				System.exit(0);
 			}
 		} else {
 			if (top.type == TokenType.MP_BOOLEAN || next.type == TokenType.MP_BOOLEAN) {
-				System.out.println("Saw a " + top + " and " + next +". Cannot operate on these types." + op.row + "," + op.col);
+				System.out.println("Saw a " + top + " and " + next +". Cannot operate on these types. " + op.row + "," + op.col);
 				System.exit(0);
 			}
 			//one of them is a float
 			if (op.type == TokenType.MP_DIV) {
-				System.out.println("Cannot use DIV on floats or fixed types.");
+				System.out.println("Cannot use DIV on floats or fixed types. " + op.row +","+ op.col);
 				System.exit(0);
 			}
 			//both are numeric types, and we just need to check the right side to determine afterwards to cast shit.
 			//There is no error.
 			
 		}
-		
-		
-		
-		
-		
-		
 	}
 
     public CodeChunk resolve(Token tt) {
@@ -110,13 +108,12 @@ public class TypeStack {
 		errorStuff(top, next, tt);
         CodeChunk cc = castStuff(top.type,next.type);
 
-
-        if (lookup.get(tt).equals("ORS") || lookup.get(tt).equals("ANDS") || lookup.get(tt).equals("MODS")) {
-            cc.append(lookup.get(tt));
+        if (lookup.get(tt.type).equals("ORS") || lookup.get(tt.type).equals("ANDS") || lookup.get(tt.type).equals("MODS")) {
+            cc.append(lookup.get(tt.type));
             push(new Token(TokenType.MP_INTEGER, "", tt.col, tt.row));
         } else {
             boolean useInt = top.type == TokenType.MP_INTEGER && next.type == TokenType.MP_INTEGER;
-            cc.append(lookup.get(tt) + (useInt? "" : "F"));
+            cc.append(lookup.get(tt.type) + (useInt? "" : "F"));
             push(new Token(useInt ? TokenType.MP_INTEGER : TokenType.MP_FLOAT, "", tt.col,tt.row));
         }
 
