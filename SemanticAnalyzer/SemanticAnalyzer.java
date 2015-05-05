@@ -92,14 +92,16 @@ public class SemanticAnalyzer {
                 }
                 if (rule.childIndex == 4) {
                     String elseLabel = labelStack.pop();
-                    cc.append(elseLabel +":");
-
                     String endLabel = lp.nextLabel();
                     cc.append("BR " + endLabel);
                     labelStack.push(endLabel);
+                    cc.append(elseLabel +":");
+
+                    
 
                     return cc;
                 }
+                return null;
             }
             case 58: {//Repeat
             	if (rule.childIndex == 1) {
@@ -118,6 +120,7 @@ public class SemanticAnalyzer {
                     cc.append("BRFS " + endLabel);
                     return cc;
                 }
+                return null;
             case 60:
                 if (!ruleLookup.containsKey(rule)) {
                     ruleLookup.put(rule, new ArrayList<Object>());
