@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b0ce15ff-700f-4f6f-a13c-f45090b0c876" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java" afterPath="$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="compliers.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -70,7 +71,7 @@
       <file leaf-file-name="Parse.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parser/Parse.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="913" max-vertical-offset="3840">
+            <state vertical-scroll-proportion="0.0" vertical-offset="617" max-vertical-offset="3840">
               <caret line="127" column="59" selection-start-line="127" selection-start-column="59" selection-end-line="127" selection-end-column="59" />
               <folding>
                 <element signature="e#7816#7817#0" expanded="true" />
@@ -83,13 +84,10 @@
       <file leaf-file-name="SemanticAnalyzer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7715392" vertical-offset="523" max-vertical-offset="7995">
-              <caret line="88" column="30" selection-start-line="88" selection-start-column="30" selection-end-line="88" selection-end-column="30" />
+            <state vertical-scroll-proportion="3.6757019" vertical-offset="793" max-vertical-offset="8070">
+              <caret line="306" column="22" selection-start-line="306" selection-start-column="22" selection-end-line="306" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#604#640#0" expanded="true" />
-                <element signature="e#1412#1458#0" expanded="true" />
-                <element signature="e#6119#6148#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -98,9 +96,12 @@
       <file leaf-file-name="LabelProvider.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parser/LabelProvider.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="330">
-              <caret line="21" column="27" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="27" />
-              <folding />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+              <caret line="18" column="32" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="32" />
+              <folding>
+                <element signature="e#384#385#0" expanded="true" />
+                <element signature="e#435#436#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -108,7 +109,7 @@
       <file leaf-file-name="TypeStack.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parser/TypeStack.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1275">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1050" max-vertical-offset="1275">
               <caret line="70" column="37" selection-start-line="70" selection-start-column="37" selection-end-line="70" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -122,7 +123,7 @@
       <file leaf-file-name="TableEntry.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parser/TableEntry.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="975">
+            <state vertical-scroll-proportion="0.0" vertical-offset="705" max-vertical-offset="975">
               <caret line="49" column="21" selection-start-line="49" selection-start-column="21" selection-end-line="49" selection-end-column="21" />
               <folding />
             </state>
@@ -132,12 +133,9 @@
       <file leaf-file-name="SymbolTableController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parser/SymbolTableController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="437" max-vertical-offset="1740">
+            <state vertical-scroll-proportion="0.0" vertical-offset="780" max-vertical-offset="1665">
               <caret line="57" column="17" selection-start-line="57" selection-start-column="17" selection-end-line="57" selection-end-column="17" />
-              <folding>
-                <element signature="e#3589#3590#0" expanded="false" />
-                <element signature="e#3630#3631#0" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -145,8 +143,8 @@
       <file leaf-file-name="CleanGrammar2.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Resources/CleanGrammar2.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1815">
-              <caret line="7" column="31" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="208" max-vertical-offset="1815">
+              <caret line="55" column="54" selection-start-line="55" selection-start-column="45" selection-end-line="55" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -155,7 +153,7 @@
       <file leaf-file-name="LLTable.csv" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Resources/LLTable.csv">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1035">
+            <state vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="1035">
               <caret line="30" column="22" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
               <folding />
             </state>
@@ -177,15 +175,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1155">
               <caret line="0" column="15" selection-start-line="0" selection-start-column="15" selection-end-line="0" selection-end-column="15" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#1631#1632#0" expanded="false" />
-                <element signature="e#1659#1660#0" expanded="false" />
-                <element signature="e#1712#1713#0" expanded="false" />
-                <element signature="e#1762#1763#0" expanded="false" />
-                <element signature="e#1809#1810#0" expanded="false" />
-                <element signature="e#1852#1853#0" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -252,6 +242,10 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Problems" />
+        <subPane subId="Project Files" />
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -327,10 +321,6 @@
             </PATH_ELEMENT>
           </PATH>
         </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Problems" />
-        <subPane subId="Project Files" />
       </pane>
       <pane id="PackagesPane">
         <subPane />
@@ -897,7 +887,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="300">
           <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -905,9 +894,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="1320">
           <caret line="27" column="32" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -915,15 +901,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1155">
           <caret line="0" column="15" selection-start-line="0" selection-start-column="15" selection-end-line="0" selection-end-column="15" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#1631#1632#0" expanded="false" />
-            <element signature="e#1659#1660#0" expanded="false" />
-            <element signature="e#1712#1713#0" expanded="false" />
-            <element signature="e#1762#1763#0" expanded="false" />
-            <element signature="e#1809#1810#0" expanded="false" />
-            <element signature="e#1852#1853#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -931,10 +909,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="437" max-vertical-offset="1740">
           <caret line="57" column="17" selection-start-line="57" selection-start-column="17" selection-end-line="57" selection-end-column="17" />
-          <folding>
-            <element signature="e#3589#3590#0" expanded="false" />
-            <element signature="e#3630#3631#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -954,11 +929,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/parser/LabelProvider.java">
+    <entry file="file://$PROJECT_DIR$/parser/TypeStack.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="330">
-          <caret line="21" column="27" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="27" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1275">
+          <caret line="70" column="37" selection-start-line="70" selection-start-column="37" selection-end-line="70" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1175#1176#0" expanded="true" />
+            <element signature="e#1200#1201#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -973,11 +952,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Resources/CleanGrammar2.txt">
+    <entry file="file://$PROJECT_DIR$/parser/LabelProvider.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1815">
-          <caret line="7" column="31" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+          <caret line="18" column="32" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="32" />
+          <folding>
+            <element signature="e#384#385#0" expanded="true" />
+            <element signature="e#435#436#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -989,27 +971,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/parser/TypeStack.java">
+    <entry file="file://$PROJECT_DIR$/Resources/CleanGrammar2.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1275">
-          <caret line="70" column="37" selection-start-line="70" selection-start-column="37" selection-end-line="70" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1175#1176#0" expanded="true" />
-            <element signature="e#1200#1201#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="208" max-vertical-offset="1815">
+          <caret line="55" column="54" selection-start-line="55" selection-start-column="45" selection-end-line="55" selection-end-column="54" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7715392" vertical-offset="523" max-vertical-offset="7995">
-          <caret line="88" column="30" selection-start-line="88" selection-start-column="30" selection-end-line="88" selection-end-column="30" />
+        <state vertical-scroll-proportion="3.6757019" vertical-offset="793" max-vertical-offset="8070">
+          <caret line="306" column="22" selection-start-line="306" selection-start-column="22" selection-end-line="306" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#604#640#0" expanded="true" />
-            <element signature="e#1412#1458#0" expanded="true" />
-            <element signature="e#6119#6148#0" expanded="true" />
           </folding>
         </state>
       </provider>

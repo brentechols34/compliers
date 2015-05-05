@@ -84,15 +84,20 @@ public class SemanticAnalyzer {
             }
             case 55: {//If Statement
                 if (rule.childIndex == 2) {
-                    cc.append("BRFS " + lp.peekLabel(0));
-                    labelStack.push(lp.nextLabel());
+                    String elseLabel = lp.nextLabel();
+
+                    cc.append("BRFS " + elseLabel);
+                    labelStack.push(elseLabel);
                     return cc;
                 }
                 if (rule.childIndex == 4) {
-                    String label = labelStack.pop();
-                    cc.append("BR " + lp.peekLabel(0));
-                    labelStack.push(lp.nextLabel());
-                    cc.append(label +":");
+                    String elseLabel = labelStack.pop();
+                    cc.append(elseLabel +":");
+
+                    String endLabel = lp.nextLabel();
+                    cc.append("BR " + endLabel);
+                    labelStack.push(endLabel);
+
                     return cc;
                 }
             }
