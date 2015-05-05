@@ -5,11 +5,12 @@ import java.util.HashMap;
 import java.util.Stack;
 
 import util.CodeChunk;
+import util.Token;
 import util.TokenType;
 
 public class TypeStack {
 
-	private ArrayDeque<TokenType> stack;
+	private ArrayDeque<Token> stack;
     private HashMap<TokenType, String> lookup;
 
 	public TypeStack() {
@@ -20,6 +21,7 @@ public class TypeStack {
         lookup.put(TokenType.MP_MINUS,  "SUBS");
         lookup.put(TokenType.MP_TIMES,  "MULS");
         lookup.put(TokenType.MP_DIV,    "DIVS");
+        lookup.put(TokenType.MP_FLOAT_DIVIDE, "DIVS");
         lookup.put(TokenType.MP_EQUAL,  "CMPEQS");
         lookup.put(TokenType.MP_LTHAN,  "CMPLTS");
         lookup.put(TokenType.MP_GTHAN,  "CMPGTS");
@@ -31,15 +33,11 @@ public class TypeStack {
         lookup.put(TokenType.MP_MOD, "MODS");
 	}
 
-	public void push(TokenType tt) {
-		if (tt == TokenType.MP_INTEGER) {
-			stack.push(TokenType.MP_INTEGER_LIT);
-		} else {
+	public void push(Token tt) {
 			stack.push(tt);
-		}
 	}
 
-	public TokenType pop() {
+	public Token pop() {
 		return stack.pop();
 	}
 
@@ -55,24 +53,72 @@ public class TypeStack {
             return cc;
         }
     }
+	
+	private boolean contains(TokenType[] arr, TokenType op) {
+		for (TokenType a : arr) if (a==op) return true;
+		return false;
+	}
+	
+	public void errorStuff(Token top, Token next, Token op) {
+		TokenType[] bool_ops = new TokenType[] {TokenType.MP_EQUAL,TokenType.MP_OR,TokenType.MP_AND};
+		TokenType[] int_ops = new TokenType[] {TokenType.MP_PLUS, TokenType.MP_MINUS, 
+											   TokenType.MP_TIMES, TokenType.MP_DIV, TokenType.MP_EQUAL,
+											   TokenType.MP_LTHAN, TokenType.MP_GTHAN, TokenType.MP_LEQUAL,
+											   TokenType.MP_GEQUAL, TokenType.MP_NEQUAL, TokenType.MP_MOD, TokenType.MP_FLOAT_DIVIDE};
+		
+		TokenType[] float_ops = new TokenType[] {TokenType.MP_PLUS, TokenType.MP_MINUS, 
+				   TokenType.MP_TIMES, TokenType.MP_EQUAL,
+				   TokenType.MP_LTHAN, TokenType.MP_GTHAN, TokenType.MP_LEQUAL,
+				   TokenType.MP_GEQUAL, TokenType.MP_NEQUAL, TokenType.MP_FLOAT_DIVIDE};
+		TokenType[] correctArr;
+		if (top.type == next.type) {
+			switch(top.type) {
+			case MP_BOOLEAN: correctArr = bool_ops; break;
+			case MP_INTEGER: correctArr = int_ops; break;
+			case MP_FLOAT: correctArr = float_ops; break;
+			default: return;
+			}
+			if (!contains(correctArr,top.type)) {
+				System.out.println(op.type + " is not a valid operation for type " + top.type + " " + op.row + "," + op.col);
+				System.exit(0);
+			}
+		} else {
+			if (top.type == TokenType.MP_BOOLEAN || next.type == TokenType.MP_BOOLEAN) {
+				System.out.println("Saw a " + top + " and " + next +". Cannot operate on these types." + op.row + "," + op.col);
+				System.exit(0);
+			}
+			//one of them is a float
+			if (op.type == TokenType.MP_DIV) {
+				System.out.println("Cannot use DIV on floats or fixed types.");
+				System.exit(0);
+			}
+			//both are numeric types, and we just need to check the right side to determine afterwards to cast shit.
+			//There is no error.
+			
+		}
+		
+		
+		
+		
+		
+		
+	}
 
-    public CodeChunk resolve(TokenType tt) {
-		TokenType top = pop();
-		TokenType next = pop();
-        CodeChunk cc = castStuff(top,next);
+    public CodeChunk resolve(Token tt) {
+		Token top = pop();
+		Token next = pop();
+		errorStuff(top, next, tt);
+        CodeChunk cc = castStuff(top.type,next.type);
 
 
         if (lookup.get(tt).equals("ORS") || lookup.get(tt).equals("ANDS") || lookup.get(tt).equals("MODS")) {
             cc.append(lookup.get(tt));
-            push(TokenType.MP_INTEGER);
+            push(new Token(TokenType.MP_INTEGER, "", tt.col, tt.row));
         } else {
-            boolean useInt = top == TokenType.MP_INTEGER_LIT && next == TokenType.MP_INTEGER_LIT;
+            boolean useInt = top.type == TokenType.MP_INTEGER && next.type == TokenType.MP_INTEGER;
             cc.append(lookup.get(tt) + (useInt? "" : "F"));
-            push(useInt ? TokenType.MP_INTEGER_LIT : TokenType.MP_FLOAT_LIT);
+            push(new Token(useInt ? TokenType.MP_INTEGER : TokenType.MP_FLOAT, "", tt.col,tt.row));
         }
-
-        if (lookup.get(tt)==null){ System.out.println("YO BITCHES " + tt.name()); System.exit(0);}
-
 
         return cc;
 	}

@@ -290,7 +290,7 @@ public class identifier implements DFAS {
 		switch(lexeme) { // check if it is reserved word
 		case "and": return TokenType.MP_AND;
 		case "begin": return TokenType.MP_BEGIN;
-		case "Boolean": return TokenType.MP_BOOLEAN;
+		case "boolean": return TokenType.MP_BOOLEAN;
 		case "div": return TokenType.MP_DIV;
 		case "do": return TokenType.MP_DO;
 		case "downto": return TokenType.MP_DOWNTO;

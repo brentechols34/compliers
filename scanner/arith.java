@@ -41,7 +41,7 @@ public class arith implements DFAS {
 		case "+": return TokenType.MP_PLUS;
 		case "-": return TokenType.MP_MINUS;
 		case "*": return TokenType.MP_TIMES;
-		case "/": return TokenType.MP_DIV;
+		case "/": return TokenType.MP_FLOAT_DIVIDE;
 		default: return null;
 		}
 	}

@@ -285,7 +285,7 @@ public class SemanticAnalyzer {
             case 53:
                 //System.out.println(entry.getSize() + table.getNestingLevel());
             	cc = new CodeChunk();
-            	if ((entry.getType() == TokenType.MP_INTEGER) != (typeStack.pop() == TokenType.MP_INTEGER_LIT)) {
+            	if ((entry.getType() == TokenType.MP_INTEGER) != (typeStack.pop().type == TokenType.MP_INTEGER_LIT)) {
             		if (entry.getType() == TokenType.MP_STRING) {
             			System.out.println("CAN'T CAST STRINGS");
             		}
@@ -360,7 +360,7 @@ public class SemanticAnalyzer {
             case 72:
                 break;
             case 73:
-                return new CodeChunk(typeStack.resolve(token.type));
+                return new CodeChunk(typeStack.resolve(token));
             case 74:
                 break;
             case 75:
@@ -378,7 +378,7 @@ public class SemanticAnalyzer {
             case 81:
                 break;
             case 82:
-                return new CodeChunk(typeStack.resolve(token.type));
+                return new CodeChunk(typeStack.resolve(token));
             case 83:
                 break;
             case 84:
@@ -396,7 +396,7 @@ public class SemanticAnalyzer {
             case 90:
                 break;
             case 91:
-                return new CodeChunk(typeStack.resolve(token.type));
+                return new CodeChunk(typeStack.resolve(token));
             case 92:
                 break;
             case 93:
@@ -411,23 +411,23 @@ public class SemanticAnalyzer {
                 break;
             case 98:
                 cc = new CodeChunk("PUSH #" + tokens.get(rule.tokenIndex).val);
-                typeStack.push(tokens.get(rule.tokenIndex).type);
+                typeStack.push(tokens.get(rule.tokenIndex));
                 return cc;
             case 99:
                 cc = new CodeChunk("PUSH #" + tokens.get(rule.tokenIndex).val);
-                typeStack.push(tokens.get(rule.tokenIndex).type);
+                typeStack.push(tokens.get(rule.tokenIndex));
                 return cc;
             case 100:
                 cc = new CodeChunk("PUSH #" + tokens.get(rule.tokenIndex).val);
-                typeStack.push(tokens.get(rule.tokenIndex).type);
+                typeStack.push(tokens.get(rule.tokenIndex));
                 return cc;
             case 101:
                 cc = new CodeChunk("PUSH #1");
-                typeStack.push(tokens.get(rule.tokenIndex).type);
+                typeStack.push(tokens.get(rule.tokenIndex));
                 return cc;
             case 102:
                 cc = new CodeChunk("PUSH #0");
-                typeStack.push(tokens.get(rule.tokenIndex).type);
+                typeStack.push(tokens.get(rule.tokenIndex));
                 return cc;
             case 103:
                 return new CodeChunk("NOTS");
@@ -444,7 +444,7 @@ public class SemanticAnalyzer {
                     return null;
                 }
                 cc = new CodeChunk("PUSH " + entry.getSize() + "(D" + table.getNestingLevel() + ")");
-                typeStack.push(entry.getType());
+                typeStack.push(new Token(entry.getType(), "",-1,-1));
                 return cc;
             case 108:
                 break;

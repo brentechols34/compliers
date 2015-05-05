@@ -31,7 +31,7 @@ public class Scanner {
 		while(true){
 			r=pr.read();
 			if(r==-1)return null;
-			c=Character.toUpperCase(Character.toChars(r)[0]);
+			c=Character.toChars(r)[0];
 			if(!Character.isWhitespace(c)){
 				pr.unread(c);
 				break;
@@ -44,7 +44,7 @@ public class Scanner {
 			if (r == -1) {
 				break;
 			}
-			c = Character.toUpperCase(Character.toChars(r)[0]);
+			c = Character.toChars(r)[0];
 			s+=c;
 			for (int i = 0; i < allStates.length; i++) {
 				if (notRejected[i] && allStates[i].rejected(c)) {
