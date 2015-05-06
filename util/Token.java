@@ -11,6 +11,13 @@ public class Token {
 		this.col = col;
 		this.row = row;
 	}
+
+    public Token(Token token) {
+        this.type = token.type;
+        this.val = token.val;
+        this.col = token.col;
+        this.row = token.row;
+    }
 	
 	public String toString() {
 		return "{" + type + ": " + val + ", (" + (1+col) + ", " + (1+row) + ")}"; 

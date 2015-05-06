@@ -34,6 +34,11 @@ public class TypeStack {
 	}
 
 	public void push(Token tt) {
+        if (tt.type == TokenType.MP_INTEGER_LIT) {
+            tt = new Token(tt);
+            tt.type = TokenType.MP_INTEGER;
+        }
+
 		stack.push(tt);
 	}
 
@@ -74,6 +79,7 @@ public class TypeStack {
 				   TokenType.MP_TIMES, TokenType.MP_EQUAL,
 				   TokenType.MP_LTHAN, TokenType.MP_GTHAN, TokenType.MP_LEQUAL,
 				   TokenType.MP_GEQUAL, TokenType.MP_NEQUAL, TokenType.MP_FLOAT_DIVIDE};
+
 		TokenType[] correctArr;
 		if (top.type == next.type) {
 			switch(top.type) {
@@ -113,7 +119,7 @@ public class TypeStack {
             push(new Token(TokenType.MP_INTEGER, "", tt.col, tt.row));
         } else {
             boolean useInt = top.type == TokenType.MP_INTEGER && next.type == TokenType.MP_INTEGER;
-            cc.append(lookup.get(tt.type) + (useInt? "" : "F"));
+            cc.append(lookup.get(tt.type) + (useInt ? "" : "F"));
             push(new Token(useInt ? TokenType.MP_INTEGER : TokenType.MP_FLOAT, "", tt.col,tt.row));
         }
 
