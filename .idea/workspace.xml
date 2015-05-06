@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0ce15ff-700f-4f6f-a13c-f45090b0c876" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/util/Token.java" afterPath="$PROJECT_DIR$/util/Token.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser/TypeStack.java" afterPath="$PROJECT_DIR$/parser/TypeStack.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java" afterPath="$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="compliers.iws" />
@@ -83,11 +82,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SemanticAnalyzer.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SemanticAnalyzer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.407408" vertical-offset="4120" max-vertical-offset="8115">
-              <caret line="297" column="47" selection-start-line="297" selection-start-column="47" selection-end-line="297" selection-end-column="47" />
+            <state vertical-scroll-proportion="4.294004" vertical-offset="0" max-vertical-offset="8100">
+              <caret line="296" column="47" selection-start-line="296" selection-start-column="47" selection-end-line="296" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -95,10 +94,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TypeStack.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TypeStack.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parser/TypeStack.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.78239846" vertical-offset="331" max-vertical-offset="1920">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1920">
               <caret line="82" column="8" selection-start-line="82" selection-start-column="8" selection-end-line="82" selection-end-column="8" />
               <folding />
             </state>
@@ -957,16 +956,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.407408" vertical-offset="4120" max-vertical-offset="8115">
-          <caret line="297" column="47" selection-start-line="297" selection-start-column="47" selection-end-line="297" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/util/Token.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="435">
@@ -977,9 +966,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/parser/TypeStack.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.78239846" vertical-offset="331" max-vertical-offset="1920">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1920">
           <caret line="82" column="8" selection-start-line="82" selection-start-column="8" selection-end-line="82" selection-end-column="8" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SemanticAnalyzer/SemanticAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="4.294004" vertical-offset="0" max-vertical-offset="8100">
+          <caret line="296" column="47" selection-start-line="296" selection-start-column="47" selection-end-line="296" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
