@@ -97,8 +97,7 @@ public class SemanticAnalyzer {
                     labelStack.push(endLabel);
                     cc.append(elseLabel +":");
 
-                    
-
+                
                     return cc;
                 }
                 return null;
@@ -340,7 +339,7 @@ public class SemanticAnalyzer {
 
                 cc.append("BR " + entryLabel);
                 cc.append(exitLabel + ":");
-                cc.append("SUBS SP #1 SP");
+                cc.append("SUB SP #1 SP");
 
                 return cc;
             case 61:
